@@ -4,6 +4,8 @@
     "module": "ESNext",
     "outDir": "./dist/src",
     "rootDirs": ["./src", "./tests"],
+    "baseUrl": "./",
+    "paths": { "*": ["src/*"] },
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -12,6 +14,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
