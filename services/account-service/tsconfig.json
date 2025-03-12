@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "outDir": "./dist/src",
+    "rootDirs": ["./src", "./tests"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "tests/**/*.ts"]
+}

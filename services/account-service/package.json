@@ -1,0 +1,29 @@
+{
+  "name": "account-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.ts",
+  "scripts": {
+    "start": "npx tsx app.ts",
+    "build": "tsc",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/mongoose-unique-validator": "^1.0.9",
+    "@types/node": "^22.13.10",
+    "eslint": "^9.22.0",
+    "globals": "^16.0.0",
+    "tsx": "^4.19.3",
+    "typescript-eslint": "^8.26.1"
+  },
+  "dependencies": {
+    "mongoose": "^7.8.6",
+    "mongoose-unique-validator": "^4.0.1"
+  }
+}
