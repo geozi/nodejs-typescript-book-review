@@ -26,3 +26,37 @@ export const invalidUserInputs = {
   ] as [string, string][],
   ROLE_INVALID: "Executive",
 };
+
+export const validPersonInput = {
+  firstName: "Sebastian",
+  lastName: "Mitchell",
+  ssn: "398-26-1557",
+  phoneNumber: "678-515-7518",
+  address: {
+    streetName: "12th Street",
+    residenceNumber: "91",
+    zipCode: "11551",
+    city: "Hempstead",
+  },
+  username: "puzzlingRange",
+};
+
+export const invalidPersonInputs = {
+  INVALID_FIRST_NAME: "T1m0thy",
+  TOO_SHORT_FIRST_NAME: "T",
+  INVALID_LAST_NAME: "J3nk1ns*",
+  TOO_SHORT_LAST_NAME: "J",
+  INVALID_PHONE_NUMBER: "543*123*",
+  INVALID_SSN_CASES: [
+    ["ssn is missing the hyphens", "398261557 "],
+    ["ssn has an incorrect grouping of digits", "39-826-1557"],
+    ["ssn contains a non-numeric character", "398-2A-1557"],
+    ["ssn exceeds the required number of digits", "398-26-15578"],
+  ] as [string, string][],
+  INVALID_PHONE_NUMBER_CASES: [
+    ["phoneNumber contains  non-numeric characters", "123-ABC-456"],
+    ["phoneNumber starts with a +", "+123-456-789"],
+    ["phoneNumber contains consecutive hyphens", "123--456"],
+    ["phoneNumber ends with a hyphen", "123-456-789-"],
+  ] as [string, string][],
+};
