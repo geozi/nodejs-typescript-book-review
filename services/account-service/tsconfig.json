@@ -17,6 +17,6 @@
     "moduleResolution": "node",
     "types": ["node", "mocha"]
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "include": ["src/**/*.ts", "tests/**/*.ts", "logs/logger.config.ts"],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 import { IUser } from "interfaces/documents/iUser.interface";
 import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
 import { User } from "models/user.model";
-import { appLogger } from "logs/logger.config";
+import { appLogger } from "../../logs/logger.config";
 
 export const getUserByUsername = async (
   username: string
