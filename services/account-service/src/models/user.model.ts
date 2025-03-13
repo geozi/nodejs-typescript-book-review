@@ -1,5 +1,5 @@
-import { IUser } from "interfaces/iUser.interface";
-import { userFailedValidation } from "messages/userValidation.message";
+import { IUser } from "interfaces/documents/iUser.interface";
+import { userFailedValidation } from "messages/validation/userValidation.message";
 import { model, Schema } from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import { userConstants } from "resources/constants/user.constant";
