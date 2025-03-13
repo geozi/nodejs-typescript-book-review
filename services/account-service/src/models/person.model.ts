@@ -1,6 +1,6 @@
 import { IPerson } from "interfaces/documents/iPerson.interface";
-import { personFailedValidation } from "messages/personValidation.message";
-import { userFailedValidation } from "messages/userValidation.message";
+import { personFailedValidation } from "messages/validation/personValidation.message";
+import { userFailedValidation } from "messages/validation/userValidation.message";
 import { model, Schema } from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import { personConstants } from "resources/constants/personConstant";
