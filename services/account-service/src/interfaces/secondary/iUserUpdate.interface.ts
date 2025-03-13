@@ -1,7 +1,7 @@
-import { Schema } from "mongoose";
+import { Types } from "mongoose";
 
 export interface IUserUpdate {
-  id: Schema.Types.ObjectId;
+  id: Types.ObjectId;
   username?: string;
   email?: string;
   password?: string;
