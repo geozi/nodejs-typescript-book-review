@@ -16,6 +16,7 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.0",
     "@types/mocha": "^10.0.10",
     "@types/mongoose-unique-validator": "^1.0.9",
     "@types/node": "^22.13.10",
