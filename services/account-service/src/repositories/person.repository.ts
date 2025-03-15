@@ -2,13 +2,32 @@ import { IPerson } from "interfaces/documents/iPerson.interface";
 import { IPersonUpdate } from "interfaces/secondary/iPersonUpdate.interface";
 import { appLogger } from "../../logs/logger.config";
 import { Person } from "models/person.model";
+import { Error } from "mongoose";
+import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { ServerError } from "errors/serverError.class";
 
 export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
-  const savedPerson = await newPerson.save();
+  try {
+    const savedPerson = await newPerson.save();
 
-  appLogger.info(`Person repository: ${addPerson.name} called successfully`);
+    appLogger.info(`Person repository: ${addPerson.name} called successfully`);
 
-  return savedPerson;
+    return savedPerson;
+  } catch (error) {
+    if (error instanceof Error.ValidationError) {
+      appLogger.error(
+        `Person repository: ${addPerson.name} -> ${error.name} detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    appLogger.error(
+      `Person repository: ${addPerson.name} -> ServerError thrown`
+    );
+
+    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+  }
 };
 
 export const updatePerson = async (
