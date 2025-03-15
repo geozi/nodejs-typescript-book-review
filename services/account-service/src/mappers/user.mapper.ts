@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { RoleType } from "resources/enums/roleType.enum";
 import { IUser } from "interfaces/documents/iUser.interface";
 import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
-import { Types } from "mongoose";
+import { IRequest } from "interfaces/secondary/iRequest.interface";
 
 export const reqBodyToUser = async (req: Request): Promise<IUser> => {
   const { username, email, password, role } = req.body;
@@ -28,11 +28,13 @@ export const reqBodyToUser = async (req: Request): Promise<IUser> => {
   return user;
 };
 
-export const reqBodyToUserUpdate = async (req: Request) => {
-  const { id, username, email, password } = req.body;
+export const reqBodyToUserUpdate = async (req: IRequest) => {
+  const { username, email, password } = req.body;
+
+  const user = req.user;
 
   const userToUpdate: IUserUpdate = {
-    id: new Types.ObjectId(id),
+    id: user._id,
     username: username,
     email: email,
   };
