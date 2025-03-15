@@ -1,8 +1,13 @@
 import { check, ValidationChain } from "express-validator";
 import { userFailedValidation } from "messages/validation/userValidation.message";
+import { commonConstants } from "resources/constants/commonConstant";
 import { userConstants } from "resources/constants/user.constant";
 import { RoleType } from "resources/enums/roleType.enum";
-import { EMAIL_REGEX, PASSWORD_REGEX } from "resources/regExp/validationRegExp";
+import {
+  EMAIL_REGEX,
+  ID_REGEX,
+  PASSWORD_REGEX,
+} from "resources/regExp/validationRegExp";
 
 export const userRegistrationRules = (): ValidationChain[] => {
   return [
@@ -34,5 +39,37 @@ export const userRegistrationRules = (): ValidationChain[] => {
       .bail()
       .isIn([RoleType.Admin, RoleType.User])
       .withMessage(userFailedValidation.ROLE_INVALID_MESSAGE),
+  ];
+};
+
+export const userUpdateRules = (): ValidationChain[] => {
+  return [
+    check("id")
+      .notEmpty()
+      .withMessage(userFailedValidation.USER_ID_REQUIRED_MESSAGE)
+      .bail()
+      .isLength({
+        min: commonConstants.MONGODB_ID_LENGTH,
+        max: commonConstants.MONGODB_ID_LENGTH,
+      })
+      .withMessage(userFailedValidation.USER_ID_OUT_OF_LENGTH_MESSAGE)
+      .matches(ID_REGEX)
+      .withMessage(userFailedValidation.USER_ID_INVALID_MESSAGE),
+    check("username")
+      .optional()
+      .isLength({ min: userConstants.USERNAME_MIN_LENGTH })
+      .withMessage(userFailedValidation.USERNAME_BELOW_MIN_LENGTH_MESSAGE)
+      .isLength({ max: userConstants.USERNAME_MAX_LENGTH })
+      .withMessage(userFailedValidation.USERNAME_ABOVE_MAX_LENGTH_MESSAGE),
+    check("email")
+      .optional()
+      .matches(EMAIL_REGEX)
+      .withMessage(userFailedValidation.EMAIL_INVALID_MESSAGE),
+    check("password")
+      .optional()
+      .isLength({ min: userConstants.PASSWORD_MIN_LENGTH })
+      .withMessage(userFailedValidation.PASSWORD_BELOW_MIN_LENGTH_MESSAGE)
+      .matches(PASSWORD_REGEX)
+      .withMessage(userFailedValidation.PASSWORD_MUST_HAVE_CHARACTERS_MESSAGE),
   ];
 };
