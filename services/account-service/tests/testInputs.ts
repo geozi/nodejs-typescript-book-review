@@ -60,3 +60,18 @@ export const invalidPersonInputs = {
     ["phoneNumber ends with a hyphen", "123-456-789-"],
   ] as [string, string][],
 };
+
+export const invalidObjectIdInputs = {
+  OBJECT_ID_LENGTH_CASES: [
+    ["ObjectId is too short", "67710722913928977"],
+    [
+      "ObjectId is too long",
+      "67710722913928977aa04ea067710722913928977aa04ea0",
+    ],
+  ] as [string, string][],
+  OBJECT_ID_INVALID_CASES: [
+    ["ObjectId contains special symbols", "67*db12ed*29a1*ed143e37e"],
+    ["ObjectId contains white spaces", "6771 722 13928977aa04ea0"],
+    ["ObjectId contains capital letters", "67710722913928977AA04ea0"],
+  ] as [string, string][],
+};
