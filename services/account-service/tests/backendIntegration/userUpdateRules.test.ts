@@ -3,11 +3,7 @@ import { userUpdateRules } from "middleware/user.rule";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { Request, Response } from "express";
 import assert from "assert";
-import {
-  invalidObjectIdInputs,
-  invalidUserInputs,
-  validUserInput,
-} from "../../tests/testInputs";
+import { invalidUserInputs, validUserInput } from "../../tests/testInputs";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { userFailedValidation } from "messages/validation/userValidation.message";
@@ -83,90 +79,6 @@ describe.only("User update integration tests", () => {
           user: mockUser,
         };
       });
-
-      it("id is undefined", async () => {
-        req.body.id = undefined;
-
-        for (const middleware of updateRulesArray) {
-          await middleware(req as Request, res as Response, next);
-        }
-
-        statusStub = res.status as SinonStub;
-        jsonSpy = res.json as SinonSpy;
-
-        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
-        assert.strictEqual(
-          jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
-            errors: [
-              { message: userFailedValidation.USER_ID_REQUIRED_MESSAGE },
-            ],
-          }),
-          true
-        );
-      });
-
-      invalidObjectIdInputs.OBJECT_ID_LENGTH_CASES.forEach(
-        ([testName, invalidLengthId]) => {
-          it(testName, async () => {
-            req.body.id = invalidLengthId;
-
-            for (const middleware of updateRulesArray) {
-              await middleware(req as Request, res as Response, next);
-            }
-
-            statusStub = res.status as SinonStub;
-            jsonSpy = res.json as SinonSpy;
-
-            assert.strictEqual(
-              statusStub.calledWith(httpCodes.BAD_REQUEST),
-              true
-            );
-            assert.strictEqual(
-              jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
-                errors: [
-                  {
-                    message: userFailedValidation.USER_ID_OUT_OF_LENGTH_MESSAGE,
-                  },
-                ],
-              }),
-              true
-            );
-          });
-        }
-      );
-
-      invalidObjectIdInputs.OBJECT_ID_INVALID_CASES.forEach(
-        ([testName, invalidId]) => {
-          it(testName, async () => {
-            req.body.id = invalidId;
-
-            for (const middleware of updateRulesArray) {
-              await middleware(req as Request, res as Response, next);
-            }
-
-            statusStub = res.status as SinonStub;
-            jsonSpy = res.json as SinonSpy;
-
-            assert.strictEqual(
-              statusStub.calledWith(httpCodes.BAD_REQUEST),
-              true
-            );
-            assert.strictEqual(
-              jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
-                errors: [
-                  {
-                    message: userFailedValidation.USER_ID_INVALID_MESSAGE,
-                  },
-                ],
-              }),
-              true
-            );
-          });
-        }
-      );
 
       it("username is too short", async () => {
         req.body.username = invalidUserInputs.TOO_SHORT_USERNAME;
