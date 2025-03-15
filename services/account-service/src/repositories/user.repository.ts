@@ -16,7 +16,7 @@ export const getUserByUsername = async (
 };
 
 export const addUser = async (newUser: IUser): Promise<IUser> => {
-  const savedUser = newUser.save();
+  const savedUser = await newUser.save();
 
   appLogger.info(`User repository: ${addUser.name} called successfully`);
 
