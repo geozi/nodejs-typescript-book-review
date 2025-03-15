@@ -5,6 +5,8 @@ import { appLogger } from "../../logs/logger.config";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { ServerError } from "errors/serverError.class";
+import { NotFoundError } from "errors/notFoundError.class";
+import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 
 export const getUserByUsername = async (
   username: string
@@ -42,17 +44,41 @@ export const addUser = async (newUser: IUser): Promise<IUser> => {
 
 export const updateUser = async (
   updateDataObject: IUserUpdate
-): Promise<IUser | null> => {
-  const { id, username, email, password } = { ...updateDataObject };
-  const userToUpdate = { username: username, email: email, password: password };
+): Promise<IUser> => {
+  try {
+    const { id, username, email, password } = { ...updateDataObject };
+    const userToUpdate = {
+      username: username,
+      email: email,
+      password: password,
+    };
 
-  const updatedUser = await User.findByIdAndUpdate(id, userToUpdate, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  });
+    const updatedUser = await User.findByIdAndUpdate(id, userToUpdate, {
+      new: true,
+      runValidators: true,
+      context: "query",
+    });
 
-  appLogger.info(`User repository: ${updateUser.name} called successfully`);
+    if (updatedUser === null) {
+      throw new NotFoundError(userControllerResponseMessages.USER_NOT_FOUND);
+    }
 
-  return updatedUser;
+    appLogger.info(`User repository: ${updateUser.name} called successfully`);
+
+    return updatedUser;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      appLogger.error(
+        `User repository: ${updateUser.name} -> ${error.name} detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    appLogger.error(
+      `User repository: ${updateUser.name} -> ServerError thrown`
+    );
+
+    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+  }
 };

@@ -13,3 +13,5 @@ export const SSN_REGEX = new RegExp(/^\d{3}-\d{2}-\d{4}$/);
 export const CITY_REGEX = new RegExp(/^[A-Za-z\s-]+$/);
 
 export const PHONE_REGEX = new RegExp(/^\d+(-\d+)*$/);
+
+export const ID_REGEX = new RegExp(/^[a-f0-9]+$/);
