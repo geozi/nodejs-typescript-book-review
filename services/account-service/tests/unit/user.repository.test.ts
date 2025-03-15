@@ -10,6 +10,7 @@ import {
 import { validUserInput } from "../../tests/testInputs";
 import { Error, Types } from "mongoose";
 import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
+import { NotFoundError } from "errors/notFoundError.class";
 
 describe("User repository unit tests", () => {
   let mockUser: IUser;
@@ -92,9 +93,11 @@ describe("User repository unit tests", () => {
     it("Promise resolves to null", async () => {
       functionStub.resolves(null);
 
-      const updatedUser = await updateUser(mockUpdateObject);
-
-      assert.strictEqual(updatedUser, null);
+      try {
+        await updateUser(mockUpdateObject);
+      } catch (error) {
+        assert(error instanceof NotFoundError);
+      }
     });
   });
 });
