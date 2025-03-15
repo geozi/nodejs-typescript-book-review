@@ -8,6 +8,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { NotFoundError } from "errors/notFoundError.class";
+import { IRequest } from "interfaces/secondary/iRequest.interface";
 
 export async function callUserRegistration(
   req: Request,
@@ -47,7 +48,7 @@ export async function callUserRegistration(
 
 export async function callUserUpdate(req: Request, res: Response) {
   try {
-    const userToUpdate = await reqBodyToUserUpdate(req);
+    const userToUpdate = await reqBodyToUserUpdate(req as IRequest);
     const updatedUser = await updateUser(userToUpdate);
 
     res.status(httpCodes.OK).json({
