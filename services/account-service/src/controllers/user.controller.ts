@@ -67,7 +67,7 @@ export async function callUserUpdate(req: Request, res: Response) {
   }
 }
 
-export async function retrieveUser(req: IRequest, res: Response) {
+export function retrieveUser(req: IRequest, res: Response) {
   const retrievedUser = req.user;
 
   res.status(httpCodes.OK).json({
