@@ -11,14 +11,16 @@ import {
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { userFailedValidation } from "messages/validation/userValidation.message";
+import { User } from "models/user.model";
+import { IRequest } from "interfaces/secondary/iRequest.interface";
 
 describe.only("User update integration tests", () => {
-  let req: Partial<Request>;
+  let req: Partial<IRequest>;
   let res: Partial<Response>;
   let next: SinonSpy;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
-  const mockId = "67d59aee899056089d9fdd94";
+  const mockUser = new User(validUserInput);
   const updateRulesArray = [...userUpdateRules(), catchExpressValidationErrors];
 
   describe("Positive scenario(s)", () => {
@@ -35,12 +37,12 @@ describe.only("User update integration tests", () => {
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: mockId,
             username: validUserInput.username,
             email: validUserInput.email,
             password: validUserInput.password,
           })
         ),
+        user: mockUser,
       };
     });
 
@@ -73,12 +75,12 @@ describe.only("User update integration tests", () => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              id: mockId,
               username: validUserInput.username,
               email: validUserInput.email,
               password: validUserInput.password,
             })
           ),
+          user: mockUser,
         };
       });
 
