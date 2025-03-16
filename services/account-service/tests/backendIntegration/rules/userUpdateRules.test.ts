@@ -3,7 +3,7 @@ import { userUpdateRules } from "middleware/user.rule";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { Request, Response } from "express";
 import assert from "assert";
-import { invalidUserInputs, validUserInput } from "../../tests/testInputs";
+import { invalidUserInputs, validUserInput } from "../../testInputs";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { userFailedValidation } from "messages/validation/userValidation.message";

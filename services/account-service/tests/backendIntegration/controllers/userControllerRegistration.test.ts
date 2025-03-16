@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "models/user.model";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validUserInput } from "../../tests/testInputs";
+import { validUserInput } from "../../testInputs";
 import { callUserRegistration } from "controllers/user.controller";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";

@@ -6,7 +6,7 @@ import {
   invalidAddressInputs,
   invalidPersonInputs,
   validPersonInput,
-} from "../testInputs";
+} from "../../testInputs";
 import { IRequest } from "interfaces/secondary/iRequest.interface";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";

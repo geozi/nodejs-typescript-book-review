@@ -1,6 +1,6 @@
 import { Person } from "models/person.model";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validPersonInput, validUserInput } from "../../tests/testInputs";
+import { validPersonInput, validUserInput } from "../../testInputs";
 import { IRequest } from "interfaces/secondary/iRequest.interface";
 import { Response } from "express";
 import { callPersonAddition } from "controllers/person.controller";

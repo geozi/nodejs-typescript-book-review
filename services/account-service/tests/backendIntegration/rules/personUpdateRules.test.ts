@@ -6,7 +6,7 @@ import {
   invalidPersonInputs,
   validPersonInput,
   validUserInput,
-} from "../../tests/testInputs";
+} from "../../testInputs";
 import { personInfoUpdateRules } from "middleware/person.rule";
 import { catchExpressValidationErrors } from "middleware/expressError.catch";
 import { Response } from "express";
@@ -17,7 +17,7 @@ import { commonResponseMessages } from "messages/response/commonResponse.message
 import { personFailedValidation } from "messages/validation/personValidation.message";
 import { addressFailedValidation } from "messages/validation/addressValidation.message";
 
-describe.only("Person update rules integration tests", () => {
+describe("Person update rules integration tests", () => {
   let req: Partial<IRequest>;
   let res: Partial<Response>;
   let next: SinonSpy;

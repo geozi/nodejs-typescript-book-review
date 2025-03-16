@@ -1,6 +1,6 @@
 import { IRequest } from "interfaces/secondary/iRequest.interface";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validUserInput } from "../../tests/testInputs";
+import { validUserInput } from "../../testInputs";
 import { User } from "models/user.model";
 import { Response } from "express";
 import { callUserUpdate } from "controllers/user.controller";

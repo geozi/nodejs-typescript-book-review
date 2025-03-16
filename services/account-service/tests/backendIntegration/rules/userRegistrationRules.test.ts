@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidUserInputs, validUserInput } from "../testInputs";
+import { invalidUserInputs, validUserInput } from "../../testInputs";
 import { userRegistrationRules } from "middleware/user.rule";
 import { catchExpressValidationErrors } from "middleware/expressError.catch";
 import assert from "assert";
