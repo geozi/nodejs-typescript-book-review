@@ -2,12 +2,13 @@ import { ServerError } from "errors/serverError.class";
 import { Response } from "express";
 import { IRequest } from "interfaces/secondary/iRequest.interface";
 import { appLogger } from "../../logs/logger.config";
-import { reqBodyToPerson } from "mappers/person.mapper";
+import { reqBodyToPerson, reqBodyToPersonUpdate } from "mappers/person.mapper";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
 import { Error } from "mongoose";
-import { addPerson } from "repositories/person.repository";
+import { addPerson, updatePerson } from "repositories/person.repository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
+import { NotFoundError } from "errors/notFoundError.class";
 
 export const callPersonAddition = async (req: IRequest, res: Response) => {
   try {
@@ -37,6 +38,27 @@ export const callPersonAddition = async (req: IRequest, res: Response) => {
         message: commonResponseMessages.BAD_REQUEST,
         errors: error.message,
       });
+      return;
+    }
+  }
+};
+
+export const callPersonUpdate = async (req: IRequest, res: Response) => {
+  try {
+    const personToUpdate = reqBodyToPersonUpdate(req);
+    const updatedPerson = await updatePerson(personToUpdate);
+
+    res.status(httpCodes.OK).json({
+      message: personControllerResponseMessages.PERSON_INFO_UPDATED_MESSAGE,
+      data: updatedPerson,
+    });
+  } catch (error) {
+    if (error instanceof ServerError || error instanceof NotFoundError) {
+      appLogger.error(
+        `Person controller: ${callPersonUpdate.name} -> ${error.name} detected and caught`
+      );
+
+      res.status(error.httpCode).json({ message: error.message });
       return;
     }
   }

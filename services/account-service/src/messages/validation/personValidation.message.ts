@@ -1,3 +1,4 @@
+import { commonConstants } from "resources/constants/commonConstant";
 import { personConstants } from "resources/constants/personConstant";
 
 export const personFailedValidation = {
@@ -12,4 +13,7 @@ export const personFailedValidation = {
   PHONE_NUMBER_REQUIRED_MESSAGE: "Phone number is a required field",
   PHONE_NUMBER_INVALID_MESSAGE: `Phone number must only contain digits and/or hyphens`,
   ADDRESS_REQUIRED_MESSAGE: "Address is a required field",
+  PERSON_ID_REQUIRED_MESSAGE: "Person ID is a required field",
+  PERSON_ID_INVALID_MESSAGE: "Person ID must be a string of hex characters",
+  PERSON_ID_OUT_OF_LENGTH_MESSAGE: `Person ID must be ${commonConstants.MONGODB_ID_LENGTH} characters long`,
 };
