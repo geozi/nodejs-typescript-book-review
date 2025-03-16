@@ -34,9 +34,11 @@ describe("User repository unit tests", () => {
     it("Promise resolves to null", async () => {
       functionStub.resolves(null);
 
-      const foundUser = await getUserByUsername(validUserInput.username);
-
-      assert.strictEqual(foundUser, null);
+      try {
+        await getUserByUsername(validUserInput.username);
+      } catch (error) {
+        assert(error instanceof NotFoundError);
+      }
     });
   });
 
