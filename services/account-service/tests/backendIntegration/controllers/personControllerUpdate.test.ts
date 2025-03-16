@@ -10,7 +10,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 
-describe.only("Person update integration tests", () => {
+describe("Person update integration tests", () => {
   let req: Partial<IRequest>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
@@ -108,7 +108,7 @@ describe.only("Person update integration tests", () => {
       );
     });
 
-    it.only("not found (404)", async () => {
+    it("not found (404)", async () => {
       functionStub.resolves(null);
 
       await callPersonUpdate(req as IRequest, res as Response);
