@@ -48,6 +48,12 @@ export const callPersonUpdate = async (req: IRequest, res: Response) => {
     const personToUpdate = reqBodyToPersonUpdate(req);
     const updatedPerson = await updatePerson(personToUpdate);
 
+    if (updatedPerson === null) {
+      throw new NotFoundError(
+        personControllerResponseMessages.PERSON_INFO_NOT_FOUND_MESSAGE
+      );
+    }
+
     res.status(httpCodes.OK).json({
       message: personControllerResponseMessages.PERSON_INFO_UPDATED_MESSAGE,
       data: updatedPerson,
