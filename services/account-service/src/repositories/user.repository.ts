@@ -8,16 +8,34 @@ import { ServerError } from "errors/serverError.class";
 import { NotFoundError } from "errors/notFoundError.class";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 
-export const getUserByUsername = async (
-  username: string
-): Promise<IUser | null> => {
-  const requestedUser = await User.findOne({ username: username });
+export const getUserByUsername = async (username: string): Promise<IUser> => {
+  try {
+    const requestedUser = await User.findOne({ username: username });
 
-  appLogger.info(
-    `User repository: ${getUserByUsername.name} called successfully`
-  );
+    if (requestedUser === null) {
+      throw new NotFoundError(userControllerResponseMessages.USER_NOT_FOUND);
+    }
 
-  return requestedUser;
+    appLogger.info(
+      `User repository: ${getUserByUsername.name} called successfully`
+    );
+
+    return requestedUser;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      appLogger.error(
+        `User repository: ${getUserByUsername.name} -> ${error.name} detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    appLogger.error(
+      `User repository: ${getUserByUsername.name} -> ServerError thrown`
+    );
+
+    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+  }
 };
 
 export const addUser = async (newUser: IUser): Promise<IUser> => {
