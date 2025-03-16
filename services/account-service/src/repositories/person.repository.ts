@@ -6,6 +6,7 @@ import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { ServerError } from "errors/serverError.class";
 import { NotFoundError } from "errors/notFoundError.class";
+import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
 
 export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
   try {
@@ -53,6 +54,12 @@ export const updatePerson = async (
       runValidators: true,
       context: "query",
     });
+
+    if (updatedPerson === null) {
+      throw new NotFoundError(
+        personControllerResponseMessages.PERSON_INFO_NOT_FOUND_MESSAGE
+      );
+    }
 
     appLogger.info(
       `Person repository: ${updatePerson.name} called successfully`
