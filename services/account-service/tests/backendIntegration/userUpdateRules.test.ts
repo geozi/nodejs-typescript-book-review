@@ -10,7 +10,7 @@ import { userFailedValidation } from "messages/validation/userValidation.message
 import { User } from "models/user.model";
 import { IRequest } from "interfaces/secondary/iRequest.interface";
 
-describe("User update integration tests", () => {
+describe("User update rules integration tests", () => {
   let req: Partial<IRequest>;
   let res: Partial<Response>;
   let next: SinonSpy;

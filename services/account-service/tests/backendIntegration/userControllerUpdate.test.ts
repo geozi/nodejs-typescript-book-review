@@ -9,7 +9,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 
-describe("User controller update integration tests", () => {
+describe("User update integration tests", () => {
   let req: Partial<IRequest>;
   let res: Partial<Response>;
   let statusStub: SinonStub;

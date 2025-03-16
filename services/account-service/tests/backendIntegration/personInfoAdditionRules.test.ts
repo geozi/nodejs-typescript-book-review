@@ -14,7 +14,7 @@ import { commonResponseMessages } from "messages/response/commonResponse.message
 import { personFailedValidation } from "messages/validation/personValidation.message";
 import { addressFailedValidation } from "messages/validation/addressValidation.message";
 
-describe("Person info addition integration tests", () => {
+describe("Personal info addition rules integration tests", () => {
   let req: Partial<IRequest>;
   let res: Partial<Response>;
   let next: SinonSpy;

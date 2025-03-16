@@ -9,7 +9,7 @@ import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 
-describe("User controller registration integration tests", () => {
+describe("User registration integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;

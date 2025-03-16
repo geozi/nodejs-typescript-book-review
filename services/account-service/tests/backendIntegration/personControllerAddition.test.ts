@@ -11,7 +11,7 @@ import { User } from "models/user.model";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { Error } from "mongoose";
 
-describe("Person controller info addition integration tests", () => {
+describe("Personal info addition integration tests", () => {
   let req: Partial<IRequest>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
