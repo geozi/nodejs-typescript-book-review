@@ -75,3 +75,12 @@ export const invalidObjectIdInputs = {
     ["ObjectId contains capital letters", "67710722913928977AA04ea0"],
   ] as [string, string][],
 };
+
+export const invalidAddressInputs = {
+  TOO_SHORT_STREET_NAME: "street",
+  NEGATIVE_RESIDENCE_NUMBER: "-1",
+  INVALID_RESIDENCE_NUMBER: "1a",
+  ZIP_CODE_OUT_OF_LENGTH: "1231352",
+  INVALID_ZIP_CODE: "P1234",
+  INVALID_CITY: "Imag1nary c1ty",
+};
