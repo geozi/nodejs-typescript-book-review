@@ -46,9 +46,9 @@ export async function callUserRegistration(
   }
 }
 
-export async function callUserUpdate(req: Request, res: Response) {
+export async function callUserUpdate(req: IRequest, res: Response) {
   try {
-    const userToUpdate = await reqBodyToUserUpdate(req as IRequest);
+    const userToUpdate = await reqBodyToUserUpdate(req);
     const updatedUser = await updateUser(userToUpdate);
 
     res.status(httpCodes.OK).json({

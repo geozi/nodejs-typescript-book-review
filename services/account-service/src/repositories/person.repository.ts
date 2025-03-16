@@ -5,6 +5,7 @@ import { Person } from "models/person.model";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { ServerError } from "errors/serverError.class";
+import { NotFoundError } from "errors/notFoundError.class";
 
 export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
   try {
@@ -33,28 +34,46 @@ export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
 export const updatePerson = async (
   updateDataObject: IPersonUpdate
 ): Promise<IPerson | null> => {
-  const { id, firstName, lastName, ssn, phoneNumber, address, username } = {
-    ...updateDataObject,
-  };
+  try {
+    const { id, firstName, lastName, ssn, phoneNumber, address, username } = {
+      ...updateDataObject,
+    };
 
-  const personToUpdate = {
-    firstName: firstName,
-    lastName: lastName,
-    ssn: ssn,
-    phoneNumber: phoneNumber,
-    address: address,
-    username: username,
-  };
+    const personToUpdate = {
+      firstName: firstName,
+      lastName: lastName,
+      ssn: ssn,
+      phoneNumber: phoneNumber,
+      address: address,
+      username: username,
+    };
 
-  const updatedPerson = await Person.findByIdAndUpdate(id, personToUpdate, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  });
+    const updatedPerson = await Person.findByIdAndUpdate(id, personToUpdate, {
+      new: true,
+      runValidators: true,
+      context: "query",
+    });
 
-  appLogger.info(`Person repository: ${updatePerson.name} called successfully`);
+    appLogger.info(
+      `Person repository: ${updatePerson.name} called successfully`
+    );
 
-  return updatedPerson;
+    return updatedPerson;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      appLogger.error(
+        `Person repository: ${updatePerson.name} -> ${error.name} detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    appLogger.error(
+      `Person repository: ${updatePerson.name} -> ServerError thrown`
+    );
+
+    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+  }
 };
 
 export const getPersonByUsername = async (
