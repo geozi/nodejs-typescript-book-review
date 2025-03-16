@@ -34,7 +34,7 @@ export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
 
 export const updatePerson = async (
   updateDataObject: IPersonUpdate
-): Promise<IPerson | null> => {
+): Promise<IPerson> => {
   try {
     const { id, firstName, lastName, ssn, phoneNumber, address, username } = {
       ...updateDataObject,
@@ -85,12 +85,34 @@ export const updatePerson = async (
 
 export const getPersonByUsername = async (
   username: string
-): Promise<IPerson | null> => {
-  const foundPerson = await Person.findOne({ username: username });
+): Promise<IPerson> => {
+  try {
+    const foundPerson = await Person.findOne({ username: username });
 
-  appLogger.info(
-    `Person repository: ${getPersonByUsername.name} called successfully`
-  );
+    if (foundPerson === null) {
+      throw new NotFoundError(
+        personControllerResponseMessages.PERSON_INFO_NOT_FOUND_MESSAGE
+      );
+    }
 
-  return foundPerson;
+    appLogger.info(
+      `Person repository: ${getPersonByUsername.name} called successfully`
+    );
+
+    return foundPerson;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      appLogger.error(
+        `Person repository: ${getPersonByUsername.name} -> ${error.name} detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    appLogger.error(
+      `Person repository: ${getPersonByUsername.name} -> ServerError thrown`
+    );
+
+    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+  }
 };

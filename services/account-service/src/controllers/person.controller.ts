@@ -6,7 +6,11 @@ import { reqBodyToPerson, reqBodyToPersonUpdate } from "mappers/person.mapper";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
 import { Error } from "mongoose";
-import { addPerson, updatePerson } from "repositories/person.repository";
+import {
+  addPerson,
+  getPersonByUsername,
+  updatePerson,
+} from "repositories/person.repository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { NotFoundError } from "errors/notFoundError.class";
 
@@ -56,6 +60,27 @@ export const callPersonUpdate = async (req: IRequest, res: Response) => {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
         `Person controller: ${callPersonUpdate.name} -> ${error.name} detected and caught`
+      );
+
+      res.status(error.httpCode).json({ message: error.message });
+      return;
+    }
+  }
+};
+
+export const retrievePersonInfo = async (req: IRequest, res: Response) => {
+  try {
+    const username = req.user.username;
+    const retrievedPerson = await getPersonByUsername(username);
+
+    res.status(httpCodes.OK).json({
+      message: personControllerResponseMessages.PERSON_INFO_RETRIEVED_MESSAGE,
+      data: retrievedPerson,
+    });
+  } catch (error) {
+    if (error instanceof ServerError || error instanceof NotFoundError) {
+      appLogger.error(
+        `Person controller: ${retrievePersonInfo.name} -> ${error.name} detected and caught`
       );
 
       res.status(error.httpCode).json({ message: error.message });
