@@ -10,7 +10,7 @@ import { loginUser } from "auth/auth.controller";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { authResponseMessages } from "auth/authResponse.message";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
-import { ServerError } from "errors/serverError.class";
+import { AbortError, ErrorReply } from "redis";
 
 describe("User login integration tests", () => {
   let req: Partial<Request>;
@@ -138,10 +138,10 @@ describe("User login integration tests", () => {
       );
     });
 
-    it("redis server error (500)", async () => {
+    it("ErrorReply (500)", async () => {
       findOneStub.resolves(mockUser);
       bcryptCompareStub.resolves(true);
-      redisSetStub.rejects(new ServerError("Redis server error"));
+      redisSetStub.rejects(new ErrorReply(commonResponseMessages.REDIS_ERROR));
 
       await loginUser(req as Request, res as Response);
 
@@ -153,7 +153,27 @@ describe("User login integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: "Redis server error" }),
+        jsonSpy.calledWith({ message: commonResponseMessages.REDIS_ERROR }),
+        true
+      );
+    });
+
+    it("AbortError (500)", async () => {
+      findOneStub.resolves(mockUser);
+      bcryptCompareStub.resolves(true);
+      redisSetStub.rejects(new AbortError());
+
+      await loginUser(req as Request, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
+      assert.strictEqual(
+        jsonSpy.calledWith({ message: commonResponseMessages.REDIS_ERROR }),
         true
       );
     });

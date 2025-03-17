@@ -10,6 +10,7 @@ import { userControllerResponseMessages } from "messages/response/userController
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import bcrypt from "bcryptjs";
 import { redisClient } from "../../../redis.config";
+import { AbortError, ErrorReply } from "redis";
 
 describe("User update integration tests", () => {
   let req: Partial<IRequest>;
@@ -142,6 +143,43 @@ describe("User update integration tests", () => {
         jsonSpy.calledWith({
           message: userControllerResponseMessages.USER_NOT_FOUND,
         }),
+        true
+      );
+    });
+
+    it("ErrorReply (500)", async () => {
+      redisDelStub.rejects(new ErrorReply(commonResponseMessages.REDIS_ERROR));
+
+      await callUserUpdate(req as IRequest, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
+      assert.strictEqual(
+        jsonSpy.calledWith({ message: commonResponseMessages.REDIS_ERROR }),
+        true
+      );
+    });
+
+    it("AbortError (500)", async () => {
+      redisDelStub.resolves("OK");
+      redisSetStub.rejects(new AbortError());
+
+      await callUserUpdate(req as IRequest, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
+      assert.strictEqual(
+        jsonSpy.calledWith({ message: commonResponseMessages.REDIS_ERROR }),
         true
       );
     });
