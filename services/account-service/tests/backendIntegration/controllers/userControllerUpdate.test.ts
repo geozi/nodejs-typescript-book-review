@@ -8,19 +8,28 @@ import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
+import bcrypt from "bcryptjs";
+import { redisClient } from "../../../redis.config";
 
 describe("User update integration tests", () => {
   let req: Partial<IRequest>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
-  let functionStub: SinonStub;
-  const mockUser = new User(validUserInput);
+  let bcryptHashStub: SinonStub;
+  let redisDelStub: SinonStub;
+  let redisSetStub: SinonStub;
+  let userFindByIdAndUpdateStub: SinonStub;
+  const mockUser = new User({
+    username: validUserInput.username,
+    email: validUserInput.email,
+    password: "hashed_password",
+    role: validUserInput.role,
+  });
 
   describe("Positive scenario(s)", () => {
     beforeEach(() => {
       sinon.restore();
-      functionStub = sinon.stub(User, "findByIdAndUpdate");
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -38,10 +47,18 @@ describe("User update integration tests", () => {
         ),
         user: mockUser,
       };
+
+      redisDelStub = sinon.stub(redisClient, "del");
+      redisSetStub = sinon.stub(redisClient, "hSet");
+      bcryptHashStub = sinon.stub(bcrypt, "hash");
+      userFindByIdAndUpdateStub = sinon.stub(User, "findByIdAndUpdate");
     });
 
     it("ok (200)", async () => {
-      functionStub.resolves(mockUser);
+      redisDelStub.resolves("OK");
+      redisSetStub.resolves("OK");
+      bcryptHashStub.resolves("hashed_password");
+      userFindByIdAndUpdateStub.resolves(mockUser);
 
       await callUserUpdate(req as IRequest, res as Response);
 
@@ -62,7 +79,6 @@ describe("User update integration tests", () => {
   describe("Negative scenarios", () => {
     beforeEach(() => {
       sinon.restore();
-      functionStub = sinon.stub(User, "findByIdAndUpdate");
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -80,10 +96,18 @@ describe("User update integration tests", () => {
         ),
         user: mockUser,
       };
+
+      redisDelStub = sinon.stub(redisClient, "del");
+      redisSetStub = sinon.stub(redisClient, "hSet");
+      bcryptHashStub = sinon.stub(bcrypt, "hash");
+      userFindByIdAndUpdateStub = sinon.stub(User, "findByIdAndUpdate");
     });
 
     it("server error (500)", async () => {
-      functionStub.rejects();
+      redisDelStub.resolves("OK");
+      redisSetStub.resolves("OK");
+      bcryptHashStub.resolves("hashed_password");
+      userFindByIdAndUpdateStub.rejects();
 
       await callUserUpdate(req as IRequest, res as Response);
 
@@ -103,7 +127,10 @@ describe("User update integration tests", () => {
     });
 
     it("not found (404)", async () => {
-      functionStub.resolves(null);
+      redisDelStub.resolves("OK");
+      redisSetStub.resolves("OK");
+      bcryptHashStub.resolves("hashed_password");
+      userFindByIdAndUpdateStub.resolves(null);
 
       await callUserUpdate(req as IRequest, res as Response);
 

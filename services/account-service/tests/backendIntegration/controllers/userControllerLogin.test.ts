@@ -42,7 +42,7 @@ describe("User login integration tests", () => {
       findOneStub = sinon.stub(User, "findOne");
       bcryptCompareStub = sinon.stub(bcrypt, "compare");
       jwtSignStub = sinon.stub(jwt, "sign");
-      redisSetStub = sinon.stub(redisClient, "set");
+      redisSetStub = sinon.stub(redisClient, "hSet");
     });
 
     it("request has valid inputs", async () => {
@@ -82,7 +82,7 @@ describe("User login integration tests", () => {
       findOneStub = sinon.stub(User, "findOne");
       bcryptCompareStub = sinon.stub(bcrypt, "compare");
       jwtSignStub = sinon.stub(jwt, "sign");
-      redisSetStub = sinon.stub(redisClient, "set");
+      redisSetStub = sinon.stub(redisClient, "hSet");
     });
 
     it("server error (500)", async () => {
