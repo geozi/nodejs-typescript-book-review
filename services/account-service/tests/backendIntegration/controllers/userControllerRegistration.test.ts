@@ -8,19 +8,20 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
+import bcrypt from "bcryptjs";
 
 describe("User registration integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
-  let functionStub: SinonStub;
+  let userSaveStub: SinonStub;
+  let bcryptHashStub: SinonStub;
   const mockUser = new User(validUserInput);
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
       sinon.restore();
-      functionStub = sinon.stub(User.prototype, "save");
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -29,10 +30,13 @@ describe("User registration integration tests", () => {
       };
 
       req = { body: JSON.parse(JSON.stringify(validUserInput)) };
+      userSaveStub = sinon.stub(User.prototype, "save");
+      bcryptHashStub = sinon.stub(bcrypt, "hash");
     });
 
     it("created (201)", async () => {
-      functionStub.resolves(mockUser);
+      bcryptHashStub.resolves("hashed_password");
+      userSaveStub.resolves(mockUser);
 
       await callUserRegistration(req as Request, res as Response);
 
@@ -53,7 +57,7 @@ describe("User registration integration tests", () => {
   describe("Negative scenarios", () => {
     beforeEach(() => {
       sinon.restore();
-      functionStub = sinon.stub(User.prototype, "save");
+
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -62,10 +66,13 @@ describe("User registration integration tests", () => {
       };
 
       req = { body: JSON.parse(JSON.stringify(validUserInput)) };
+      bcryptHashStub = sinon.stub(bcrypt, "hash");
+      userSaveStub = sinon.stub(User.prototype, "save");
     });
 
     it("server error (500)", async () => {
-      functionStub.rejects();
+      bcryptHashStub.resolves("hashed_password");
+      userSaveStub.rejects();
 
       await callUserRegistration(req as Request, res as Response);
 
@@ -83,7 +90,8 @@ describe("User registration integration tests", () => {
     });
 
     it("Error.ValidationError (400)", async () => {
-      functionStub.rejects(new Error.ValidationError());
+      bcryptHashStub.resolves("hashed_password");
+      userSaveStub.rejects(new Error.ValidationError());
 
       await callUserRegistration(req as Request, res as Response);
 
