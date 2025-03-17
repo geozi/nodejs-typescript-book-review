@@ -9,6 +9,7 @@ import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { NotFoundError } from "errors/notFoundError.class";
 import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { ErrorReply, AbortError } from "redis";
 
 export async function callUserRegistration(
   req: Request,
@@ -62,6 +63,17 @@ export async function callUserUpdate(req: IRequest, res: Response) {
       );
 
       res.status(error.httpCode).json({ message: error.message });
+      return;
+    }
+
+    if (error instanceof ErrorReply || error instanceof AbortError) {
+      appLogger.error(
+        `User controller: ${callUserUpdate.name} -> ${error.name} detected and caught`
+      );
+
+      res
+        .status(httpCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: commonResponseMessages.REDIS_ERROR });
       return;
     }
   }
