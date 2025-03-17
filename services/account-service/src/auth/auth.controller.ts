@@ -10,6 +10,8 @@ import { NotFoundError } from "errors/notFoundError.class";
 import { appLogger } from "../../logs/logger.config";
 import { ServerError } from "errors/serverError.class";
 import { redisClient } from "../../redis.config";
+import { AbortError, ErrorReply } from "redis";
+import { commonResponseMessages } from "messages/response/commonResponse.message";
 dotenv.config();
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -68,6 +70,17 @@ export const loginUser = async (req: Request, res: Response) => {
       );
 
       res.status(error.httpCode).json({ message: error.message });
+      return;
+    }
+
+    if (error instanceof ErrorReply || error instanceof AbortError) {
+      appLogger.error(
+        `Auth controller: ${loginUser.name} -> ${error.name} detected and caught`
+      );
+
+      res
+        .status(httpCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: commonResponseMessages.REDIS_ERROR });
       return;
     }
   }
