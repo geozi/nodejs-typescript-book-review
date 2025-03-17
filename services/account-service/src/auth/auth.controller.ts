@@ -9,6 +9,7 @@ import * as dotenv from "dotenv";
 import { NotFoundError } from "errors/notFoundError.class";
 import { appLogger } from "../../logs/logger.config";
 import { ServerError } from "errors/serverError.class";
+import { redisClient } from "../../redis.config";
 dotenv.config();
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -31,6 +32,8 @@ export const loginUser = async (req: Request, res: Response) => {
         .json({ message: authResponseMessages.AUTHENTICATION_FAILED });
       return;
     }
+
+    await redisClient.set(user.username, user._id.toString());
 
     let token: string;
     if (user.role === RoleType.User) {
