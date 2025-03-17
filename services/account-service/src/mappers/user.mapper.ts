@@ -5,6 +5,7 @@ import { RoleType } from "resources/enums/roleType.enum";
 import { IUser } from "interfaces/documents/iUser.interface";
 import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
 import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { redisClient } from "../../redis.config";
 
 export const reqBodyToUser = async (req: Request): Promise<IUser> => {
   const { username, email, password, role } = req.body;
@@ -32,6 +33,14 @@ export const reqBodyToUserUpdate = async (req: IRequest) => {
   const { username, email, password } = req.body;
 
   const user = req.user;
+
+  if (user && username) {
+    await redisClient.del(user.username);
+    await redisClient.hSet(username, {
+      userId: user._id.toString(),
+      added: new Date().toISOString(),
+    });
+  }
 
   const userToUpdate: IUserUpdate = {
     id: user._id,

@@ -26,7 +26,10 @@ export const loginUser = async (req: Request, res: Response) => {
       return;
     }
 
-    await redisClient.set(user.username, user._id.toString());
+    await redisClient.hSet(user.username, {
+      userId: user._id.toString(),
+      added: new Date().toISOString(),
+    });
 
     let token: string;
     if (user.role === RoleType.User) {
