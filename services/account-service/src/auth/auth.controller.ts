@@ -17,13 +17,6 @@ export const loginUser = async (req: Request, res: Response) => {
     const { username, password } = req.body;
     const user = await getUserByUsername(username);
 
-    if (!user) {
-      res
-        .status(httpCodes.UNAUTHORIZED)
-        .json({ message: authResponseMessages.AUTHENTICATION_FAILED });
-      return;
-    }
-
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
