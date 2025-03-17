@@ -8,7 +8,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { userFailedValidation } from "messages/validation/userValidation.message";
 
-describe.only("User login rules integration tests", () => {
+describe("User login rules integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
