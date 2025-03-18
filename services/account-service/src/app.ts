@@ -2,6 +2,11 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express";
 import { redisClient } from "../redis.config";
+import { authRouter } from "routes/auth.route";
+import { userRouter } from "routes/user.route";
+import passport from "passport";
+import { regRouter } from "routes/reg.route";
+import { personRouter } from "routes/person.route";
 dotenv.config();
 const app = express();
 const port = 3000;
@@ -16,6 +21,26 @@ async function connectToDb() {
     console.log("Failed to connect to database", error);
   }
 }
+
+app.use(express.json());
+
+// Open routes
+
+app.use("/api/login", authRouter);
+app.use("/api/register", regRouter);
+
+//Protected routes
+
+app.use(
+  "/api/p/users",
+  passport.authenticate("user-strategy", { session: false }),
+  userRouter
+);
+app.use(
+  "/api/p/persons",
+  passport.authenticate("user-strategy", { session: false }),
+  personRouter
+);
 
 app.listen(port, () => {
   console.log(`Server is listening on port: ${port}`);

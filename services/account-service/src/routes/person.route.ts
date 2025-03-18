@@ -23,4 +23,4 @@ personRouter.put(
   catchExpressValidationErrors,
   callPersonUpdate
 );
-personRouter.get("/", retrievePersonInfo);
+personRouter.get("/username", retrievePersonInfo);
