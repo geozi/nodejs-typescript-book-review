@@ -19,10 +19,13 @@ export async function callUserRegistration(
     const newUser = await reqBodyToUser(req);
     const savedUser = await addUser(newUser);
 
-    res.status(httpCodes.CREATED).json({
-      message: userControllerResponseMessages.USER_REGISTERED,
-      data: savedUser,
-    });
+    res
+      .status(httpCodes.CREATED)
+      .json({
+        message: userControllerResponseMessages.USER_REGISTERED,
+        data: savedUser,
+      })
+      .setHeader("x-api-version", "1.0");
   } catch (error) {
     if (error instanceof ServerError) {
       appLogger.error(
@@ -53,10 +56,13 @@ export async function callUserUpdate(req: Request, res: Response) {
     const userToUpdate = await reqBodyToUserUpdate(reqAsIRequest);
     const updatedUser = await updateUser(userToUpdate);
 
-    res.status(httpCodes.OK).json({
-      message: userControllerResponseMessages.USER_UPDATED,
-      data: updatedUser,
-    });
+    res
+      .status(httpCodes.OK)
+      .json({
+        message: userControllerResponseMessages.USER_UPDATED,
+        data: updatedUser,
+      })
+      .setHeader("x-api-version", "1.0");
   } catch (error) {
     if (error instanceof NotFoundError || error instanceof ServerError) {
       appLogger.error(
@@ -84,8 +90,11 @@ export function retrieveUser(req: Request, res: Response) {
   const reqAsIRequest = recastReqToIReq(req);
   const retrievedUser = reqAsIRequest.user;
 
-  res.status(httpCodes.OK).json({
-    message: userControllerResponseMessages.USER_RETRIEVED,
-    data: retrievedUser,
-  });
+  res
+    .status(httpCodes.OK)
+    .json({
+      message: userControllerResponseMessages.USER_RETRIEVED,
+      data: retrievedUser,
+    })
+    .setHeader("x-api-version", "1.0");
 }

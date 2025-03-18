@@ -48,10 +48,13 @@ export const loginUser = async (req: Request, res: Response) => {
       );
     }
 
-    res.status(httpCodes.OK).json({
-      message: authResponseMessages.AUTHENTICATION_SUCCESS,
-      token: token,
-    });
+    res
+      .status(httpCodes.OK)
+      .json({
+        message: authResponseMessages.AUTHENTICATION_SUCCESS,
+        token: token,
+      })
+      .setHeader("x-api-version", "1.0");
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(
