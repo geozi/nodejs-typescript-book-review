@@ -1,17 +1,16 @@
 import { Person } from "models/person.model";
 import mongoose, { ConnectOptions } from "mongoose";
 import sinon, { SinonStub } from "sinon";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { validPersonInput } from "../testInputs";
 import { validUserInput } from "../testInputs";
 import { User } from "models/user.model";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
 import { callPersonAddition } from "controllers/person.controller";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import assert from "assert";
 
 describe("Person collection integration tests", () => {
-  let req: Partial<IRequest>;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   const mockUser = new User(validUserInput);
@@ -50,7 +49,7 @@ describe("Person collection integration tests", () => {
   });
 
   it("new person added (201)", async () => {
-    await callPersonAddition(req as IRequest, res as Response);
+    await callPersonAddition(req as Request, res as Response);
 
     statusStub = res.status as SinonStub;
 

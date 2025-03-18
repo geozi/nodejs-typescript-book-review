@@ -1,15 +1,14 @@
 import { User } from "models/user.model";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validUserInput } from "../testInputs";
-import { Response } from "express";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { Request, Response } from "express";
 import { retrieveUser } from "controllers/user.controller";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 
 describe("User controller unit tests", () => {
-  let req: Partial<IRequest>;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
@@ -38,7 +37,7 @@ describe("User controller unit tests", () => {
     });
 
     it("request has valid inputs", async () => {
-      retrieveUser(req as IRequest, res as Response);
+      retrieveUser(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;

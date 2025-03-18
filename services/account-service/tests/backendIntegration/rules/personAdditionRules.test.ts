@@ -1,13 +1,12 @@
 import { catchExpressValidationErrors } from "middleware/expressError.catch";
 import { personInfoAdditionRules } from "middleware/person.rule";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { Response } from "express";
+import { Request, Response } from "express";
 import {
   invalidAddressInputs,
   invalidPersonInputs,
   validPersonInput,
 } from "../../testInputs";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
@@ -15,7 +14,7 @@ import { personFailedValidation } from "messages/validation/personValidation.mes
 import { addressFailedValidation } from "messages/validation/addressValidation.message";
 
 describe("Personal info addition rules integration tests", () => {
-  let req: Partial<IRequest>;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
   let statusStub: SinonStub;
@@ -41,7 +40,7 @@ describe("Personal info addition rules integration tests", () => {
 
     it("request has valid inputs", async () => {
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -70,7 +69,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.firstName = undefined;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -92,7 +91,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.firstName = invalidPersonInputs.TOO_SHORT_FIRST_NAME;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -117,7 +116,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.firstName = invalidPersonInputs.INVALID_FIRST_NAME;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -141,7 +140,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.lastName = undefined;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -165,7 +164,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.lastName = invalidPersonInputs.TOO_SHORT_LAST_NAME;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -190,7 +189,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.lastName = invalidPersonInputs.INVALID_LAST_NAME;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -214,7 +213,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.ssn = undefined;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -239,7 +238,7 @@ describe("Personal info addition rules integration tests", () => {
         req.body.ssn = invalidSsn;
 
         for (const middleware of infoAdditionArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -264,7 +263,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.phoneNumber = undefined;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -290,7 +289,7 @@ describe("Personal info addition rules integration tests", () => {
           req.body.phoneNumber = invalidPhoneNumber;
 
           for (const middleware of infoAdditionArray) {
-            await middleware(req as IRequest, res as Response, next);
+            await middleware(req as Request, res as Response, next);
           }
 
           statusStub = res.status as SinonStub;
@@ -319,7 +318,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.address = undefined;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -343,7 +342,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.address.streetName = undefined;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -367,7 +366,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.address.streetName = invalidAddressInputs.TOO_SHORT_STREET_NAME;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -392,7 +391,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.address.residenceNumber = undefined;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -418,7 +417,7 @@ describe("Personal info addition rules integration tests", () => {
         invalidAddressInputs.INVALID_RESIDENCE_NUMBER;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -443,7 +442,7 @@ describe("Personal info addition rules integration tests", () => {
         invalidAddressInputs.NEGATIVE_RESIDENCE_NUMBER;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -468,7 +467,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.address.zipCode = invalidAddressInputs.ZIP_CODE_OUT_OF_LENGTH;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -492,7 +491,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.address.zipCode = invalidAddressInputs.INVALID_ZIP_CODE;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -516,7 +515,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.address.city = undefined;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -540,7 +539,7 @@ describe("Personal info addition rules integration tests", () => {
       req.body.address.city = invalidAddressInputs.INVALID_CITY;
 
       for (const middleware of infoAdditionArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;

@@ -8,10 +8,9 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { userFailedValidation } from "messages/validation/userValidation.message";
 import { User } from "models/user.model";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
 
 describe("User update rules integration tests", () => {
-  let req: Partial<IRequest>;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
   let statusStub: SinonStub;

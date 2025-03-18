@@ -1,4 +1,3 @@
-import { IRequest } from "interfaces/secondary/iRequest.interface";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import {
   invalidAddressInputs,
@@ -9,7 +8,7 @@ import {
 } from "../../testInputs";
 import { personInfoUpdateRules } from "middleware/person.rule";
 import { catchExpressValidationErrors } from "middleware/expressError.catch";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { User } from "models/user.model";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
@@ -18,7 +17,7 @@ import { personFailedValidation } from "messages/validation/personValidation.mes
 import { addressFailedValidation } from "messages/validation/addressValidation.message";
 
 describe("Person update rules integration tests", () => {
-  let req: Partial<IRequest>;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
   let statusStub: SinonStub;
@@ -58,7 +57,7 @@ describe("Person update rules integration tests", () => {
 
     it("request has valid inputs", async () => {
       for (const middleware of updateRulesArray) {
-        await middleware(req as IRequest, res as Response, next);
+        await middleware(req as Request, res as Response, next);
       }
 
       statusStub = res.status as SinonStub;
@@ -100,7 +99,7 @@ describe("Person update rules integration tests", () => {
         req.body.id = undefined;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -124,7 +123,7 @@ describe("Person update rules integration tests", () => {
             req.body.id = invalidLengthId;
 
             for (const middleware of updateRulesArray) {
-              await middleware(req as IRequest, res as Response, next);
+              await middleware(req as Request, res as Response, next);
             }
 
             statusStub = res.status as SinonStub;
@@ -156,7 +155,7 @@ describe("Person update rules integration tests", () => {
             req.body.id = invalidId;
 
             for (const middleware of updateRulesArray) {
-              await middleware(req as IRequest, res as Response, next);
+              await middleware(req as Request, res as Response, next);
             }
 
             statusStub = res.status as SinonStub;
@@ -183,7 +182,7 @@ describe("Person update rules integration tests", () => {
         req.body.firstName = invalidPersonInputs.TOO_SHORT_FIRST_NAME;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -208,7 +207,7 @@ describe("Person update rules integration tests", () => {
         req.body.firstName = invalidPersonInputs.INVALID_FIRST_NAME;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -232,7 +231,7 @@ describe("Person update rules integration tests", () => {
         req.body.lastName = invalidPersonInputs.TOO_SHORT_LAST_NAME;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -257,7 +256,7 @@ describe("Person update rules integration tests", () => {
         req.body.lastName = invalidPersonInputs.INVALID_LAST_NAME;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -283,7 +282,7 @@ describe("Person update rules integration tests", () => {
             req.body.ssn = invalidSsn;
 
             for (const middleware of updateRulesArray) {
-              await middleware(req as IRequest, res as Response, next);
+              await middleware(req as Request, res as Response, next);
             }
 
             statusStub = res.status as SinonStub;
@@ -314,7 +313,7 @@ describe("Person update rules integration tests", () => {
             req.body.phoneNumber = invalidPhoneNumber;
 
             for (const middleware of updateRulesArray) {
-              await middleware(req as IRequest, res as Response, next);
+              await middleware(req as Request, res as Response, next);
             }
 
             statusStub = res.status as SinonStub;
@@ -345,7 +344,7 @@ describe("Person update rules integration tests", () => {
           invalidAddressInputs.TOO_SHORT_STREET_NAME;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -371,7 +370,7 @@ describe("Person update rules integration tests", () => {
           invalidAddressInputs.INVALID_RESIDENCE_NUMBER;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -397,7 +396,7 @@ describe("Person update rules integration tests", () => {
           invalidAddressInputs.NEGATIVE_RESIDENCE_NUMBER;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -422,7 +421,7 @@ describe("Person update rules integration tests", () => {
         req.body.address.zipCode = invalidAddressInputs.ZIP_CODE_OUT_OF_LENGTH;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -446,7 +445,7 @@ describe("Person update rules integration tests", () => {
         req.body.address.zipCode = invalidAddressInputs.INVALID_ZIP_CODE;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
@@ -470,7 +469,7 @@ describe("Person update rules integration tests", () => {
         req.body.address.city = invalidAddressInputs.INVALID_CITY;
 
         for (const middleware of updateRulesArray) {
-          await middleware(req as IRequest, res as Response, next);
+          await middleware(req as Request, res as Response, next);
         }
 
         statusStub = res.status as SinonStub;
