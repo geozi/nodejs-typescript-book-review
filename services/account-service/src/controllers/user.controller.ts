@@ -8,8 +8,8 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { NotFoundError } from "errors/notFoundError.class";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
 import { ErrorReply, AbortError } from "redis";
+import { recastReqToIReq } from "mappers/common.mapper";
 
 export async function callUserRegistration(
   req: Request,
@@ -47,9 +47,10 @@ export async function callUserRegistration(
   }
 }
 
-export async function callUserUpdate(req: IRequest, res: Response) {
+export async function callUserUpdate(req: Request, res: Response) {
   try {
-    const userToUpdate = await reqBodyToUserUpdate(req);
+    const reqAsIRequest = recastReqToIReq(req);
+    const userToUpdate = await reqBodyToUserUpdate(reqAsIRequest);
     const updatedUser = await updateUser(userToUpdate);
 
     res.status(httpCodes.OK).json({
@@ -79,8 +80,9 @@ export async function callUserUpdate(req: IRequest, res: Response) {
   }
 }
 
-export function retrieveUser(req: IRequest, res: Response) {
-  const retrievedUser = req.user;
+export function retrieveUser(req: Request, res: Response) {
+  const reqAsIRequest = recastReqToIReq(req);
+  const retrievedUser = reqAsIRequest.user;
 
   res.status(httpCodes.OK).json({
     message: userControllerResponseMessages.USER_RETRIEVED,

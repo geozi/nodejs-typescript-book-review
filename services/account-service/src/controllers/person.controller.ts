@@ -1,6 +1,5 @@
 import { ServerError } from "errors/serverError.class";
-import { Response } from "express";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
 import { reqBodyToPerson, reqBodyToPersonUpdate } from "mappers/person.mapper";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
@@ -13,10 +12,12 @@ import {
 } from "repositories/person.repository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { NotFoundError } from "errors/notFoundError.class";
+import { recastReqToIReq } from "mappers/common.mapper";
 
-export const callPersonAddition = async (req: IRequest, res: Response) => {
+export const callPersonAddition = async (req: Request, res: Response) => {
   try {
-    const newPerson = reqBodyToPerson(req);
+    const reqAsIRequest = recastReqToIReq(req);
+    const newPerson = reqBodyToPerson(reqAsIRequest);
     const savedPerson = await addPerson(newPerson);
 
     res.status(httpCodes.CREATED).json({
@@ -47,9 +48,10 @@ export const callPersonAddition = async (req: IRequest, res: Response) => {
   }
 };
 
-export const callPersonUpdate = async (req: IRequest, res: Response) => {
+export const callPersonUpdate = async (req: Request, res: Response) => {
   try {
-    const personToUpdate = reqBodyToPersonUpdate(req);
+    const reqAsIRequest = recastReqToIReq(req);
+    const personToUpdate = reqBodyToPersonUpdate(reqAsIRequest);
     const updatedPerson = await updatePerson(personToUpdate);
 
     res.status(httpCodes.OK).json({
@@ -68,9 +70,10 @@ export const callPersonUpdate = async (req: IRequest, res: Response) => {
   }
 };
 
-export const retrievePersonInfo = async (req: IRequest, res: Response) => {
+export const retrievePersonInfo = async (req: Request, res: Response) => {
   try {
-    const username = req.user.username;
+    const reqAsIRequest = recastReqToIReq(req);
+    const username = reqAsIRequest.user.username;
     const retrievedPerson = await getPersonByUsername(username);
 
     res.status(httpCodes.OK).json({
