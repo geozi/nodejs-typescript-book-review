@@ -13,6 +13,7 @@ import {
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { NotFoundError } from "errors/notFoundError.class";
 import { recastReqToIReq } from "mappers/common.mapper";
+import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 
 export const callPersonAddition = async (req: Request, res: Response) => {
   try {
@@ -21,12 +22,12 @@ export const callPersonAddition = async (req: Request, res: Response) => {
     const savedPerson = await addPerson(newPerson);
 
     res
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
         message: personControllerResponseMessages.PERSON_INFO_ADDED_MESSAGE,
         data: savedPerson,
-      })
-      .setHeader("x-api-version", "1.0");
+      });
   } catch (error) {
     if (error instanceof ServerError) {
       appLogger.error(
@@ -58,12 +59,12 @@ export const callPersonUpdate = async (req: Request, res: Response) => {
     const updatedPerson = await updatePerson(personToUpdate);
 
     res
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: personControllerResponseMessages.PERSON_INFO_UPDATED_MESSAGE,
         data: updatedPerson,
-      })
-      .setHeader("x-api-version", "1.0");
+      });
   } catch (error) {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
@@ -83,12 +84,12 @@ export const retrievePersonInfo = async (req: Request, res: Response) => {
     const retrievedPerson = await getPersonByUsername(username);
 
     res
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: personControllerResponseMessages.PERSON_INFO_RETRIEVED_MESSAGE,
         data: retrievedPerson,
-      })
-      .setHeader("x-api-version", "1.0");
+      });
   } catch (error) {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
