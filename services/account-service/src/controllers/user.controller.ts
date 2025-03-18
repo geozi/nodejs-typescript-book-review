@@ -11,6 +11,7 @@ import { NotFoundError } from "errors/notFoundError.class";
 import { ErrorReply, AbortError } from "redis";
 import { recastReqToIReq } from "mappers/common.mapper";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { redisClient } from "../../redis.config";
 
 export async function callUserRegistration(
   req: Request,
@@ -56,6 +57,15 @@ export async function callUserUpdate(req: Request, res: Response) {
     const reqAsIRequest = recastReqToIReq(req);
     const userToUpdate = await reqBodyToUserUpdate(reqAsIRequest);
     const updatedUser = await updateUser(userToUpdate);
+
+    await redisClient.del(reqAsIRequest.user.username);
+    await redisClient.hSet(updatedUser.username, {
+      id: updatedUser.id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+      password: "<PROTECTED>",
+      role: updatedUser.role,
+    });
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)

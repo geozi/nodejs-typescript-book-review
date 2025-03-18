@@ -30,8 +30,11 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     await redisClient.hSet(user.username, {
-      userId: user._id.toString(),
-      added: new Date().toISOString(),
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      password: "<PROTECTED>",
+      role: user.role,
     });
 
     let token: string;

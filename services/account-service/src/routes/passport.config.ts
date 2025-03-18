@@ -15,8 +15,8 @@ passport.use(
   "user-strategy",
   new Strategy(user_strategy_options, async (payload, done) => {
     try {
-      const user = await redisClient.exists(payload.loggedInUser);
-      if (user === 1) {
+      const user = await redisClient.hGetAll(payload.loggedInUser);
+      if (Object.keys(user).length !== 0) {
         return done(null, user);
       } else {
         return done(null, false);
@@ -38,8 +38,8 @@ passport.use(
   "admin-strategy",
   new Strategy(admin_strategy_options, async (payload, done) => {
     try {
-      const user = await redisClient.exists(payload.loggedInUser);
-      if (user === 1) {
+      const user = await redisClient.hGetAll(payload.loggedInUser);
+      if (Object.keys(user).length !== 0) {
         return done(null, user);
       } else {
         return done(null, false);
