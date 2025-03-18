@@ -20,10 +20,13 @@ export const callPersonAddition = async (req: Request, res: Response) => {
     const newPerson = reqBodyToPerson(reqAsIRequest);
     const savedPerson = await addPerson(newPerson);
 
-    res.status(httpCodes.CREATED).json({
-      message: personControllerResponseMessages.PERSON_INFO_ADDED_MESSAGE,
-      data: savedPerson,
-    });
+    res
+      .status(httpCodes.CREATED)
+      .json({
+        message: personControllerResponseMessages.PERSON_INFO_ADDED_MESSAGE,
+        data: savedPerson,
+      })
+      .setHeader("x-api-version", "1.0");
   } catch (error) {
     if (error instanceof ServerError) {
       appLogger.error(
@@ -54,10 +57,13 @@ export const callPersonUpdate = async (req: Request, res: Response) => {
     const personToUpdate = reqBodyToPersonUpdate(reqAsIRequest);
     const updatedPerson = await updatePerson(personToUpdate);
 
-    res.status(httpCodes.OK).json({
-      message: personControllerResponseMessages.PERSON_INFO_UPDATED_MESSAGE,
-      data: updatedPerson,
-    });
+    res
+      .status(httpCodes.OK)
+      .json({
+        message: personControllerResponseMessages.PERSON_INFO_UPDATED_MESSAGE,
+        data: updatedPerson,
+      })
+      .setHeader("x-api-version", "1.0");
   } catch (error) {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
@@ -76,10 +82,13 @@ export const retrievePersonInfo = async (req: Request, res: Response) => {
     const username = reqAsIRequest.user.username;
     const retrievedPerson = await getPersonByUsername(username);
 
-    res.status(httpCodes.OK).json({
-      message: personControllerResponseMessages.PERSON_INFO_RETRIEVED_MESSAGE,
-      data: retrievedPerson,
-    });
+    res
+      .status(httpCodes.OK)
+      .json({
+        message: personControllerResponseMessages.PERSON_INFO_RETRIEVED_MESSAGE,
+        data: retrievedPerson,
+      })
+      .setHeader("x-api-version", "1.0");
   } catch (error) {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
