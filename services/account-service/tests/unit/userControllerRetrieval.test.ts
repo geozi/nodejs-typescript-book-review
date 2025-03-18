@@ -7,20 +7,20 @@ import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 
-describe("User controller unit tests", () => {
+describe.only("User controller unit tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
+  let setHeaderStub: SinonStub;
   const mockUser = new User(validUserInput);
 
   describe("Positive scenario(s)", () => {
     beforeEach(() => {
       sinon.restore();
       res = {
-        status: sinon.stub().callsFake(() => {
-          return res;
-        }) as unknown as SinonStub,
+        setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
+        status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };
 
@@ -39,9 +39,11 @@ describe("User controller unit tests", () => {
     it("request has valid inputs", async () => {
       retrieveUser(req as Request, res as Response);
 
+      setHeaderStub = res.setHeader as SinonStub;
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
 
+      assert.strictEqual(setHeaderStub.called, true);
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
