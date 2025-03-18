@@ -5,6 +5,7 @@ import { redisClient } from "../redis.config";
 import { authRouter } from "routes/auth.route";
 import { userRouter } from "routes/user.route";
 import passport from "passport";
+import "../src/routes/passport.config";
 import { regRouter } from "routes/reg.route";
 import { personRouter } from "routes/person.route";
 dotenv.config();
