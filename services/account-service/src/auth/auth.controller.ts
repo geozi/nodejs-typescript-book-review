@@ -12,6 +12,7 @@ import { ServerError } from "errors/serverError.class";
 import { redisClient } from "../../redis.config";
 import { AbortError, ErrorReply } from "redis";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 dotenv.config();
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -49,12 +50,12 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     res
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: authResponseMessages.AUTHENTICATION_SUCCESS,
         token: token,
-      })
-      .setHeader("x-api-version", "1.0");
+      });
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(

@@ -10,6 +10,7 @@ import { commonResponseMessages } from "messages/response/commonResponse.message
 import { NotFoundError } from "errors/notFoundError.class";
 import { ErrorReply, AbortError } from "redis";
 import { recastReqToIReq } from "mappers/common.mapper";
+import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 
 export async function callUserRegistration(
   req: Request,
@@ -20,12 +21,12 @@ export async function callUserRegistration(
     const savedUser = await addUser(newUser);
 
     res
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
         message: userControllerResponseMessages.USER_REGISTERED,
         data: savedUser,
-      })
-      .setHeader("x-api-version", "1.0");
+      });
   } catch (error) {
     if (error instanceof ServerError) {
       appLogger.error(
@@ -57,12 +58,12 @@ export async function callUserUpdate(req: Request, res: Response) {
     const updatedUser = await updateUser(userToUpdate);
 
     res
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: userControllerResponseMessages.USER_UPDATED,
         data: updatedUser,
-      })
-      .setHeader("x-api-version", "1.0");
+      });
   } catch (error) {
     if (error instanceof NotFoundError || error instanceof ServerError) {
       appLogger.error(
@@ -91,10 +92,10 @@ export function retrieveUser(req: Request, res: Response) {
   const retrievedUser = reqAsIRequest.user;
 
   res
+    .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
     .status(httpCodes.OK)
     .json({
       message: userControllerResponseMessages.USER_RETRIEVED,
       data: retrievedUser,
-    })
-    .setHeader("x-api-version", "1.0");
+    });
 }
