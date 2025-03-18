@@ -17,6 +17,7 @@ describe("User update integration tests", () => {
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
+  let setHeaderStub: SinonStub;
   let bcryptHashStub: SinonStub;
   let redisDelStub: SinonStub;
   let redisSetStub: SinonStub;
@@ -32,6 +33,7 @@ describe("User update integration tests", () => {
     beforeEach(() => {
       sinon.restore();
       res = {
+        setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
@@ -65,7 +67,9 @@ describe("User update integration tests", () => {
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
+      setHeaderStub = res.setHeader as SinonStub;
 
+      assert.strictEqual(setHeaderStub.called, true);
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({

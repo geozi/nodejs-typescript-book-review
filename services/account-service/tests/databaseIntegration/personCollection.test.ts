@@ -12,6 +12,7 @@ import assert from "assert";
 describe("Person collection integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
+  let setHeaderStub: SinonStub;
   let statusStub: SinonStub;
   const mockUser = new User(validUserInput);
 
@@ -30,6 +31,7 @@ describe("Person collection integration tests", () => {
   beforeEach(() => {
     sinon.restore();
     res = {
+      setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
       status: sinon.stub().callsFake(() => {
         return res;
       }) as unknown as SinonStub,
@@ -52,7 +54,9 @@ describe("Person collection integration tests", () => {
     await callPersonAddition(req as Request, res as Response);
 
     statusStub = res.status as SinonStub;
+    setHeaderStub = res.setHeader as SinonStub;
 
+    assert.strictEqual(setHeaderStub.called, true);
     assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
   });
 });

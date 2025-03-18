@@ -15,6 +15,7 @@ describe("User registration integration tests", () => {
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
+  let setHeaderStub: SinonStub;
   let userSaveStub: SinonStub;
   let bcryptHashStub: SinonStub;
   const mockUser = new User(validUserInput);
@@ -23,6 +24,7 @@ describe("User registration integration tests", () => {
     beforeEach(() => {
       sinon.restore();
       res = {
+        setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
@@ -42,7 +44,9 @@ describe("User registration integration tests", () => {
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
+      setHeaderStub = res.setHeader as SinonStub;
 
+      assert.strictEqual(setHeaderStub.called, true);
       assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
       assert.strictEqual(
         jsonSpy.calledWith({

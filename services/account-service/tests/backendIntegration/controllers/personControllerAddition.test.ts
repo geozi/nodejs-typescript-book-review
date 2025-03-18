@@ -16,6 +16,7 @@ describe("Personal info addition integration tests", () => {
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
+  let setHeaderStub: SinonStub;
   let functionStub: SinonStub;
   const mockPerson = new Person(validPersonInput);
   const mockUser = new User(validUserInput);
@@ -25,6 +26,7 @@ describe("Personal info addition integration tests", () => {
       sinon.restore();
       functionStub = sinon.stub(Person.prototype, "save");
       res = {
+        setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
@@ -44,7 +46,9 @@ describe("Personal info addition integration tests", () => {
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
+      setHeaderStub = res.setHeader as SinonStub;
 
+      assert.strictEqual(setHeaderStub.called, true);
       assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
       assert.strictEqual(
         jsonSpy.calledWith({

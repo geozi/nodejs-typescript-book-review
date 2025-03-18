@@ -12,6 +12,7 @@ dotenv.config();
 describe("User collection integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
+  let setHeaderStub: SinonStub;
   let statusStub: SinonStub;
 
   before(async () => {
@@ -29,6 +30,7 @@ describe("User collection integration tests", () => {
   beforeEach(() => {
     sinon.restore();
     res = {
+      setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
       status: sinon.stub().callsFake(() => {
         return res;
       }) as unknown as SinonStub,
@@ -49,7 +51,9 @@ describe("User collection integration tests", () => {
     await callUserRegistration(req as Request, res as Response);
 
     statusStub = res.status as SinonStub;
+    setHeaderStub = res.setHeader as SinonStub;
 
+    assert.strictEqual(setHeaderStub.called, true);
     assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
   });
 });
