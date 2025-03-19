@@ -1,3 +1,7 @@
+/**
+ * Person controller.
+ * @module src/controllers/person.controller
+ */
 import { ServerError } from "errors/serverError.class";
 import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
@@ -15,7 +19,17 @@ import { NotFoundError } from "errors/notFoundError.class";
 import { recastReqToIReq } from "mappers/common.mapper";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 
-export const callPersonAddition = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for person info addition.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export const callPersonAddition = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const reqAsIRequest = recastReqToIReq(req);
     const newPerson = reqBodyToPerson(reqAsIRequest);
@@ -52,7 +66,17 @@ export const callPersonAddition = async (req: Request, res: Response) => {
   }
 };
 
-export const callPersonUpdate = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for person info update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export const callPersonUpdate = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const reqAsIRequest = recastReqToIReq(req);
     const personToUpdate = reqBodyToPersonUpdate(reqAsIRequest);
@@ -77,7 +101,17 @@ export const callPersonUpdate = async (req: Request, res: Response) => {
   }
 };
 
-export const retrievePersonInfo = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for person info retrieval.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export const retrievePersonInfo = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const reqAsIRequest = recastReqToIReq(req);
     const username = reqAsIRequest.user.username;

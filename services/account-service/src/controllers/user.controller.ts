@@ -1,3 +1,7 @@
+/**
+ * User controller.
+ * @module src/controllers/user.controller
+ */
 import { ServerError } from "errors/serverError.class";
 import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
@@ -13,6 +17,13 @@ import { recastReqToIReq } from "mappers/common.mapper";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { redisClient } from "../../redis.config";
 
+/**
+ * Handles HTTP requests for user registration.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export async function callUserRegistration(
   req: Request,
   res: Response
@@ -52,7 +63,17 @@ export async function callUserRegistration(
   }
 }
 
-export async function callUserUpdate(req: Request, res: Response) {
+/**
+ * Handles HTTP requests for user update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export async function callUserUpdate(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const reqAsIRequest = recastReqToIReq(req);
     const userToUpdate = await reqBodyToUserUpdate(reqAsIRequest);
@@ -96,6 +117,13 @@ export async function callUserUpdate(req: Request, res: Response) {
   }
 }
 
+/**
+/**
+ * Handles HTTP requests for user retrieval.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ */
 export function retrieveUser(req: Request, res: Response) {
   const reqAsIRequest = recastReqToIReq(req);
   const retrievedUser = reqAsIRequest.user;
