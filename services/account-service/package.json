@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "test": "mocha",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'tsx' src/app.ts",
-    "generateDocs": "npx typedoc"
+    "generateDocs": "npx typedoc --name account-service"
   },
   "keywords": [],
   "author": "",
