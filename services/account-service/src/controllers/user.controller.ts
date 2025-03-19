@@ -36,7 +36,7 @@ export async function callUserRegistration(
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
-        message: userControllerResponseMessages.USER_REGISTERED,
+        message: userControllerResponseMessages.USER_REGISTERED_MESSAGE,
         data: savedUser,
       });
   } catch (error) {
@@ -91,7 +91,7 @@ export async function callUserUpdate(
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: userControllerResponseMessages.USER_UPDATED,
+        message: userControllerResponseMessages.USER_UPDATED_MESSAGE,
         data: updatedUser,
       });
   } catch (error) {
@@ -132,7 +132,7 @@ export function retrieveUser(req: Request, res: Response) {
     .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
     .status(httpCodes.OK)
     .json({
-      message: userControllerResponseMessages.USER_RETRIEVED,
+      message: userControllerResponseMessages.USER_RETRIEVED_MESSAGE,
       data: retrievedUser,
     });
 }
