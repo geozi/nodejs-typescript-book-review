@@ -8,6 +8,7 @@ import passport from "passport";
 import "../src/routes/passport.config";
 import { regRouter } from "routes/reg.route";
 import { personRouter } from "routes/person.route";
+import { catchJSONerror } from "middleware/jsonError.catch";
 dotenv.config();
 const app = express();
 const port = 3000;
@@ -24,6 +25,7 @@ async function connectToDb() {
 }
 
 app.use(express.json());
+app.use(catchJSONerror);
 
 // Open routes
 
