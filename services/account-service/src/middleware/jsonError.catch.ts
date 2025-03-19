@@ -3,7 +3,7 @@ import { commonResponseMessages } from "messages/response/commonResponse.message
 
 export const catchJSONerror = (
   err: unknown,
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction
 ) => {
