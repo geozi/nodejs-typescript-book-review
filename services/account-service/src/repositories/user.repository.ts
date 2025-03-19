@@ -13,7 +13,9 @@ export const getUserByUsername = async (username: string): Promise<IUser> => {
     const requestedUser = await User.findOne({ username: username });
 
     if (requestedUser === null) {
-      throw new NotFoundError(userControllerResponseMessages.USER_NOT_FOUND);
+      throw new NotFoundError(
+        userControllerResponseMessages.USER_NOT_FOUND_MESSAGE
+      );
     }
 
     appLogger.info(
@@ -34,7 +36,7 @@ export const getUserByUsername = async (username: string): Promise<IUser> => {
       `User repository: ${getUserByUsername.name} -> ServerError thrown`
     );
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };
 
@@ -56,7 +58,7 @@ export const addUser = async (newUser: IUser): Promise<IUser> => {
 
     appLogger.error(`User repository: ${addUser.name} -> ServerError thrown`);
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };
 
@@ -77,7 +79,9 @@ export const updateUser = async (
     });
 
     if (updatedUser === null) {
-      throw new NotFoundError(userControllerResponseMessages.USER_NOT_FOUND);
+      throw new NotFoundError(
+        userControllerResponseMessages.USER_NOT_FOUND_MESSAGE
+      );
     }
 
     appLogger.info(`User repository: ${updateUser.name} called successfully`);
@@ -96,6 +100,6 @@ export const updateUser = async (
       `User repository: ${updateUser.name} -> ServerError thrown`
     );
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };

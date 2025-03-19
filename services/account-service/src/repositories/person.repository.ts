@@ -28,7 +28,7 @@ export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
       `Person repository: ${addPerson.name} -> ServerError thrown`
     );
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };
 
@@ -79,7 +79,7 @@ export const updatePerson = async (
       `Person repository: ${updatePerson.name} -> ServerError thrown`
     );
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };
 
@@ -113,6 +113,6 @@ export const getPersonByUsername = async (
       `Person repository: ${getPersonByUsername.name} -> ServerError thrown`
     );
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };
