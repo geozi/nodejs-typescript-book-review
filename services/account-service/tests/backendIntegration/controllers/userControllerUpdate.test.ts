@@ -2,7 +2,7 @@ import { IRequest } from "interfaces/secondary/iRequest.interface";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validUserInput } from "../../testInputs";
 import { User } from "models/user.model";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { callUserUpdate } from "controllers/user.controller";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
@@ -19,7 +19,6 @@ describe("User update integration tests", () => {
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
   let bcryptHashStub: SinonStub;
-  let redisDelStub: SinonStub;
   let redisSetStub: SinonStub;
   let userFindByIdAndUpdateStub: SinonStub;
   const mockUser = new User({
@@ -51,14 +50,12 @@ describe("User update integration tests", () => {
         user: mockUser,
       };
 
-      redisDelStub = sinon.stub(redisClient, "del");
       redisSetStub = sinon.stub(redisClient, "hSet");
       bcryptHashStub = sinon.stub(bcrypt, "hash");
       userFindByIdAndUpdateStub = sinon.stub(User, "findByIdAndUpdate");
     });
 
     it("ok (200)", async () => {
-      redisDelStub.resolves("OK");
       redisSetStub.resolves("OK");
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.resolves(mockUser);
@@ -102,14 +99,12 @@ describe("User update integration tests", () => {
         user: mockUser,
       };
 
-      redisDelStub = sinon.stub(redisClient, "del");
       redisSetStub = sinon.stub(redisClient, "hSet");
       bcryptHashStub = sinon.stub(bcrypt, "hash");
       userFindByIdAndUpdateStub = sinon.stub(User, "findByIdAndUpdate");
     });
 
     it("server error (500)", async () => {
-      redisDelStub.resolves("OK");
       redisSetStub.resolves("OK");
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.rejects();
@@ -132,7 +127,6 @@ describe("User update integration tests", () => {
     });
 
     it("not found (404)", async () => {
-      redisDelStub.resolves("OK");
       redisSetStub.resolves("OK");
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.resolves(null);
@@ -152,9 +146,11 @@ describe("User update integration tests", () => {
     });
 
     it("ErrorReply (500)", async () => {
-      redisDelStub.rejects(new ErrorReply(commonResponseMessages.REDIS_ERROR));
+      bcryptHashStub.resolves("hashed_password");
+      userFindByIdAndUpdateStub.resolves(mockUser);
+      redisSetStub.rejects(new ErrorReply(commonResponseMessages.REDIS_ERROR));
 
-      await callUserUpdate(req as IRequest, res as Response);
+      await callUserUpdate(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -170,10 +166,11 @@ describe("User update integration tests", () => {
     });
 
     it("AbortError (500)", async () => {
-      redisDelStub.resolves("OK");
+      bcryptHashStub.resolves("hashed_password");
+      userFindByIdAndUpdateStub.resolves(mockUser);
       redisSetStub.rejects(new AbortError());
 
-      await callUserUpdate(req as IRequest, res as Response);
+      await callUserUpdate(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;

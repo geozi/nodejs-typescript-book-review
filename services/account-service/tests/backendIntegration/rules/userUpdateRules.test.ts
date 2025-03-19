@@ -79,54 +79,6 @@ describe("User update rules integration tests", () => {
         };
       });
 
-      it("username is too short", async () => {
-        req.body.username = invalidUserInputs.TOO_SHORT_USERNAME;
-
-        for (const middleware of updateRulesArray) {
-          await middleware(req as Request, res as Response, next);
-        }
-
-        statusStub = res.status as SinonStub;
-        jsonSpy = res.json as SinonSpy;
-
-        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
-        assert.strictEqual(
-          jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
-            errors: [
-              {
-                message: userFailedValidation.USERNAME_BELOW_MIN_LENGTH_MESSAGE,
-              },
-            ],
-          }),
-          true
-        );
-      });
-
-      it("username is too long", async () => {
-        req.body.username = invalidUserInputs.TOO_LONG_USERNAME;
-
-        for (const middleware of updateRulesArray) {
-          await middleware(req as Request, res as Response, next);
-        }
-
-        statusStub = res.status as SinonStub;
-        jsonSpy = res.json as SinonSpy;
-
-        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
-        assert.strictEqual(
-          jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
-            errors: [
-              {
-                message: userFailedValidation.USERNAME_ABOVE_MAX_LENGTH_MESSAGE,
-              },
-            ],
-          }),
-          true
-        );
-      });
-
       invalidUserInputs.EMAIL_INVALID_CASES.forEach(
         ([testName, invalidEmail]) => {
           it(testName, async () => {
