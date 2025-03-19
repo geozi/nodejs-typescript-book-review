@@ -20,7 +20,7 @@ export const catchExpressValidationErrors = async (
     );
 
     res.status(httpCodes.BAD_REQUEST).json({
-      message: commonResponseMessages.BAD_REQUEST,
+      message: commonResponseMessages.BAD_REQUEST_MESSAGE,
       errors: errorMessage,
     });
     return;

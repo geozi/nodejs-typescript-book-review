@@ -9,8 +9,8 @@ export const catchJSONerror = (
 ) => {
   if (err instanceof SyntaxError && "body" in err) {
     res.status(400).send({
-      message: commonResponseMessages.BAD_REQUEST,
-      error: commonResponseMessages.INVALID_JSON,
+      message: commonResponseMessages.BAD_REQUEST_MESSAGE,
+      error: commonResponseMessages.INVALID_JSON_MESSAGE,
     });
     return;
   }

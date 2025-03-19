@@ -58,7 +58,7 @@ export const callPersonAddition = async (
       );
 
       res.status(httpCodes.BAD_REQUEST).json({
-        message: commonResponseMessages.BAD_REQUEST,
+        message: commonResponseMessages.BAD_REQUEST_MESSAGE,
         errors: error.message,
       });
       return;

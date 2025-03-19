@@ -98,7 +98,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
       res
         .status(httpCodes.INTERNAL_SERVER_ERROR)
-        .json({ message: commonResponseMessages.REDIS_ERROR });
+        .json({ message: commonResponseMessages.REDIS_ERROR_MESSAGE });
       return;
     }
   }

@@ -55,7 +55,7 @@ export async function callUserRegistration(
       );
 
       res.status(httpCodes.BAD_REQUEST).json({
-        message: commonResponseMessages.BAD_REQUEST,
+        message: commonResponseMessages.BAD_REQUEST_MESSAGE,
         errors: error.message,
       });
       return;
@@ -111,7 +111,7 @@ export async function callUserUpdate(
 
       res
         .status(httpCodes.INTERNAL_SERVER_ERROR)
-        .json({ message: commonResponseMessages.REDIS_ERROR });
+        .json({ message: commonResponseMessages.REDIS_ERROR_MESSAGE });
       return;
     }
   }
