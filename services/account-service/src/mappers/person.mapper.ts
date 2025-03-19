@@ -31,15 +31,7 @@ export const reqBodyToPerson = function (req: IRequest): IPerson {
 
 export const reqBodyToPersonUpdate = function (req: IRequest): IPersonUpdate {
   const { id, firstName, lastName, ssn, phoneNumber, address } = req.body;
-  const { streetName, residenceNumber, zipCode, city } = address;
   const username = req.user.username;
-
-  const addressToSave: IAddress = {
-    streetName: streetName,
-    residenceNumber: residenceNumber,
-    zipCode: zipCode,
-    city: city,
-  };
 
   const personToUpdate: IPersonUpdate = {
     id: new Types.ObjectId(id),
@@ -47,9 +39,21 @@ export const reqBodyToPersonUpdate = function (req: IRequest): IPersonUpdate {
     lastName: lastName,
     ssn: ssn,
     phoneNumber: phoneNumber,
-    address: addressToSave,
     username: username,
   };
+
+  let addressToSave: IAddress;
+  if (address) {
+    const { streetName, residenceNumber, zipCode, city } = address;
+    addressToSave = {
+      streetName: streetName,
+      residenceNumber: residenceNumber,
+      zipCode: zipCode,
+      city: city,
+    };
+
+    personToUpdate.address = addressToSave;
+  }
 
   return personToUpdate;
 };
