@@ -58,7 +58,6 @@ export async function callUserUpdate(req: Request, res: Response) {
     const userToUpdate = await reqBodyToUserUpdate(reqAsIRequest);
     const updatedUser = await updateUser(userToUpdate);
 
-    await redisClient.del(reqAsIRequest.user.username);
     await redisClient.hSet(updatedUser.username, {
       id: updatedUser.id,
       username: updatedUser.username,

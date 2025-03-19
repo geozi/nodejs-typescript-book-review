@@ -29,12 +29,11 @@ export const reqBodyToUser = async (req: Request): Promise<IUser> => {
 };
 
 export const reqBodyToUserUpdate = async (req: IRequest) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
   const user = req.user;
 
   const userToUpdate: IUserUpdate = {
     id: user.id,
-    username: username,
     email: email,
   };
 

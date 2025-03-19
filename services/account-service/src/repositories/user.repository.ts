@@ -64,9 +64,8 @@ export const updateUser = async (
   updateDataObject: IUserUpdate
 ): Promise<IUser> => {
   try {
-    const { id, username, email, password } = { ...updateDataObject };
+    const { id, email, password } = { ...updateDataObject };
     const userToUpdate = {
-      username: username,
       email: email,
       password: password,
     };
