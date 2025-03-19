@@ -1,8 +1,16 @@
+/**
+ * Express validation rules for user authentication.
+ * @module src/auth/auth.rules
+ */
 import { check, ValidationChain } from "express-validator";
 import { userFailedValidation } from "messages/validation/userValidation.message";
 import { userConstants } from "resources/constants/user.constant";
 import { PASSWORD_REGEX } from "resources/regExp/validationRegExp";
 
+/**
+ * Returns a validation chain for user login.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const userLoginRules = (): ValidationChain[] => {
   return [
     check("username")
