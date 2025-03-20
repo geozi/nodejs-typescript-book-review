@@ -1,3 +1,7 @@
+/**
+ * Person model schema.
+ * @module src/models/person.model
+ */
 import { IPerson } from "interfaces/documents/iPerson.interface";
 import { personFailedValidation } from "messages/validation/personValidation.message";
 import { userFailedValidation } from "messages/validation/userValidation.message";
@@ -10,6 +14,17 @@ import {
   SSN_REGEX,
 } from "resources/regExp/validationRegExp";
 
+/**
+ * Person schema for persistence in MongoDB.
+ *
+ * @type {Schema<IPerson>}
+ * @property {string} firstName - The first name of a person.
+ * @property {string} lastName - The last name of a person.
+ * @property {string} ssn - The social security number of a person.
+ * @property {string} phoneNumber - The phone number of a person.
+ * @property {Schema.Types.Mixed} address - The address of a person.
+ * @property {string} username - The username assigned to a person.
+ */
 const personSchema = new Schema<IPerson>(
   {
     firstName: {
