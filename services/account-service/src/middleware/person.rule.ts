@@ -5,9 +5,9 @@
 import { body, check, ValidationChain } from "express-validator";
 import { addressFailedValidation } from "messages/validation/addressValidation.message";
 import { personFailedValidation } from "messages/validation/personValidation.message";
-import { addressConstants } from "resources/constants/addressConstant";
-import { commonConstants } from "resources/constants/commonConstant";
-import { personConstants } from "resources/constants/personConstant";
+import { addressConstants } from "resources/constants/address.constant";
+import { commonConstants } from "resources/constants/common.constant";
+import { personConstants } from "resources/constants/person.constant";
 import {
   CITY_REGEX,
   ID_REGEX,

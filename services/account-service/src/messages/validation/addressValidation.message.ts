@@ -2,7 +2,7 @@
  * Address validation error messages.
  * @module src/messages/validation/addressValidation.message
  */
-import { addressConstants } from "resources/constants/addressConstant";
+import { addressConstants } from "resources/constants/address.constant";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CITY_REGEX } from "resources/regExp/validationRegExp";
 

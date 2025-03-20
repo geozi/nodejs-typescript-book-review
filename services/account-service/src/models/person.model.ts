@@ -7,7 +7,7 @@ import { personFailedValidation } from "messages/validation/personValidation.mes
 import { userFailedValidation } from "messages/validation/userValidation.message";
 import { model, Schema } from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
-import { personConstants } from "resources/constants/personConstant";
+import { personConstants } from "resources/constants/person.constant";
 import {
   NAME_REGEX,
   PHONE_REGEX,
