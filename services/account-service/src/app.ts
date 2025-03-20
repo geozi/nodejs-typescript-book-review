@@ -54,4 +54,3 @@ app.listen(port, () => {
 });
 
 connectToDb();
-console.log(swaggerDocs);
