@@ -75,7 +75,7 @@ describe("User registration rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               { message: userFailedValidation.USERNAME_REQUIRED_MESSAGE },
             ],
@@ -97,7 +97,7 @@ describe("User registration rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: userFailedValidation.USERNAME_BELOW_MIN_LENGTH_MESSAGE,
@@ -121,7 +121,7 @@ describe("User registration rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: userFailedValidation.USERNAME_ABOVE_MAX_LENGTH_MESSAGE,
@@ -145,7 +145,7 @@ describe("User registration rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: userFailedValidation.EMAIL_REQUIRED_MESSAGE,
@@ -174,7 +174,7 @@ describe("User registration rules integration tests", () => {
             );
             assert.strictEqual(
               jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
+                message: commonResponseMessages.BAD_REQUEST_MESSAGE,
                 errors: [
                   {
                     message: userFailedValidation.EMAIL_INVALID_MESSAGE,
@@ -200,7 +200,7 @@ describe("User registration rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: userFailedValidation.PASSWORD_REQUIRED_MESSAGE,
@@ -224,7 +224,7 @@ describe("User registration rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: userFailedValidation.PASSWORD_BELOW_MIN_LENGTH_MESSAGE,
@@ -253,7 +253,7 @@ describe("User registration rules integration tests", () => {
             );
             assert.strictEqual(
               jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
+                message: commonResponseMessages.BAD_REQUEST_MESSAGE,
                 errors: [
                   {
                     message:
@@ -280,7 +280,7 @@ describe("User registration rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: userFailedValidation.ROLE_REQUIRED_MESSAGE,
@@ -304,7 +304,7 @@ describe("User registration rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: userFailedValidation.ROLE_INVALID_MESSAGE,

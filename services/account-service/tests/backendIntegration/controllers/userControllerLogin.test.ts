@@ -102,7 +102,9 @@ describe("User login integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonResponseMessages.SERVER_ERROR }),
+        jsonSpy.calledWith({
+          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
+        }),
         true
       );
     });
@@ -145,7 +147,9 @@ describe("User login integration tests", () => {
     it("ErrorReply (500)", async () => {
       findOneStub.resolves(mockUser);
       bcryptCompareStub.resolves(true);
-      redisSetStub.rejects(new ErrorReply(commonResponseMessages.REDIS_ERROR));
+      redisSetStub.rejects(
+        new ErrorReply(commonResponseMessages.REDIS_ERROR_MESSAGE)
+      );
 
       await loginUser(req as Request, res as Response);
 
@@ -157,7 +161,9 @@ describe("User login integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonResponseMessages.REDIS_ERROR }),
+        jsonSpy.calledWith({
+          message: commonResponseMessages.REDIS_ERROR_MESSAGE,
+        }),
         true
       );
     });
@@ -177,7 +183,9 @@ describe("User login integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonResponseMessages.REDIS_ERROR }),
+        jsonSpy.calledWith({
+          message: commonResponseMessages.REDIS_ERROR_MESSAGE,
+        }),
         true
       );
     });

@@ -97,7 +97,7 @@ describe("User update rules integration tests", () => {
             );
             assert.strictEqual(
               jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
+                message: commonResponseMessages.BAD_REQUEST_MESSAGE,
                 errors: [
                   {
                     message: userFailedValidation.EMAIL_INVALID_MESSAGE,
@@ -123,7 +123,7 @@ describe("User update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: userFailedValidation.PASSWORD_BELOW_MIN_LENGTH_MESSAGE,
@@ -152,7 +152,7 @@ describe("User update rules integration tests", () => {
             );
             assert.strictEqual(
               jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
+                message: commonResponseMessages.BAD_REQUEST_MESSAGE,
                 errors: [
                   {
                     message:

@@ -90,7 +90,9 @@ describe("Personal info addition integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonResponseMessages.SERVER_ERROR }),
+        jsonSpy.calledWith({
+          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
+        }),
         true
       );
     });
@@ -106,7 +108,7 @@ describe("Personal info addition integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: commonResponseMessages.BAD_REQUEST,
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: "Validation failed",
         }),
         true

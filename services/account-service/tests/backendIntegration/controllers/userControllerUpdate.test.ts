@@ -70,7 +70,7 @@ describe("User update integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: userControllerResponseMessages.USER_UPDATED,
+          message: userControllerResponseMessages.USER_UPDATED_MESSAGE,
           data: mockUser,
         }),
         true
@@ -120,7 +120,7 @@ describe("User update integration tests", () => {
       );
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: commonResponseMessages.SERVER_ERROR,
+          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
         }),
         true
       );
@@ -139,7 +139,7 @@ describe("User update integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: userControllerResponseMessages.USER_NOT_FOUND,
+          message: userControllerResponseMessages.USER_NOT_FOUND_MESSAGE,
         }),
         true
       );
@@ -148,7 +148,9 @@ describe("User update integration tests", () => {
     it("ErrorReply (500)", async () => {
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.resolves(mockUser);
-      redisSetStub.rejects(new ErrorReply(commonResponseMessages.REDIS_ERROR));
+      redisSetStub.rejects(
+        new ErrorReply(commonResponseMessages.REDIS_ERROR_MESSAGE)
+      );
 
       await callUserUpdate(req as Request, res as Response);
 
@@ -160,7 +162,9 @@ describe("User update integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonResponseMessages.REDIS_ERROR }),
+        jsonSpy.calledWith({
+          message: commonResponseMessages.REDIS_ERROR_MESSAGE,
+        }),
         true
       );
     });
@@ -180,7 +184,9 @@ describe("User update integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonResponseMessages.REDIS_ERROR }),
+        jsonSpy.calledWith({
+          message: commonResponseMessages.REDIS_ERROR_MESSAGE,
+        }),
         true
       );
     });

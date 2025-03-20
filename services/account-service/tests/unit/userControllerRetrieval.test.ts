@@ -47,7 +47,7 @@ describe("User controller unit tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: userControllerResponseMessages.USER_RETRIEVED,
+          message: userControllerResponseMessages.USER_RETRIEVED_MESSAGE,
           data: mockUser,
         }),
         true

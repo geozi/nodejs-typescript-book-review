@@ -50,7 +50,7 @@ describe("User registration integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: userControllerResponseMessages.USER_REGISTERED,
+          message: userControllerResponseMessages.USER_REGISTERED_MESSAGE,
           data: mockUser,
         }),
         true
@@ -88,7 +88,9 @@ describe("User registration integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonResponseMessages.SERVER_ERROR }),
+        jsonSpy.calledWith({
+          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
+        }),
         true
       );
     });
@@ -105,7 +107,7 @@ describe("User registration integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: commonResponseMessages.BAD_REQUEST,
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: "Validation failed",
         }),
         true

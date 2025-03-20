@@ -108,7 +108,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               { message: personFailedValidation.PERSON_ID_REQUIRED_MESSAGE },
             ],
@@ -135,7 +135,7 @@ describe("Person update rules integration tests", () => {
             );
             assert.strictEqual(
               jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
+                message: commonResponseMessages.BAD_REQUEST_MESSAGE,
                 errors: [
                   {
                     message:
@@ -167,7 +167,7 @@ describe("Person update rules integration tests", () => {
             );
             assert.strictEqual(
               jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
+                message: commonResponseMessages.BAD_REQUEST_MESSAGE,
                 errors: [
                   { message: personFailedValidation.PERSON_ID_INVALID_MESSAGE },
                 ],
@@ -191,7 +191,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message:
@@ -216,7 +216,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: personFailedValidation.FIRST_NAME_INVALID_MESSAGE,
@@ -240,7 +240,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message:
@@ -265,7 +265,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: personFailedValidation.LAST_NAME_INVALID_MESSAGE,
@@ -294,7 +294,7 @@ describe("Person update rules integration tests", () => {
             );
             assert.strictEqual(
               jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
+                message: commonResponseMessages.BAD_REQUEST_MESSAGE,
                 errors: [
                   {
                     message: personFailedValidation.SSN_INVALID_MESSAGE,
@@ -325,7 +325,7 @@ describe("Person update rules integration tests", () => {
             );
             assert.strictEqual(
               jsonSpy.calledWith({
-                message: commonResponseMessages.BAD_REQUEST,
+                message: commonResponseMessages.BAD_REQUEST_MESSAGE,
                 errors: [
                   {
                     message:
@@ -353,7 +353,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message:
@@ -379,7 +379,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message:
@@ -405,7 +405,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message:
@@ -430,7 +430,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: addressFailedValidation.ZIP_CODE_OUT_OF_LENGTH_MESSAGE,
@@ -454,7 +454,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: addressFailedValidation.ZIP_CODE_INVALID_MESSAGE,
@@ -478,7 +478,7 @@ describe("Person update rules integration tests", () => {
         assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
-            message: commonResponseMessages.BAD_REQUEST,
+            message: commonResponseMessages.BAD_REQUEST_MESSAGE,
             errors: [
               {
                 message: addressFailedValidation.CITY_INVALID_MESSAGE,

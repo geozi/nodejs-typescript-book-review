@@ -111,7 +111,9 @@ describe("Person info retrieval integration tests", () => {
         true
       );
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonResponseMessages.SERVER_ERROR }),
+        jsonSpy.calledWith({
+          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
+        }),
         true
       );
     });
