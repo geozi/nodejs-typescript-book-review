@@ -1,3 +1,7 @@
+/**
+ * Person routes.
+ * @module src/routes/person.route
+ */
 import {
   callPersonAddition,
   callPersonUpdate,

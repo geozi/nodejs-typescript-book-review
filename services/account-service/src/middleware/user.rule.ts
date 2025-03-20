@@ -1,9 +1,17 @@
+/**
+ * Express validation rules for user registration and update operations.
+ * @module src/middleware/user.rule
+ */
 import { check, ValidationChain } from "express-validator";
 import { userFailedValidation } from "messages/validation/userValidation.message";
 import { userConstants } from "resources/constants/user.constant";
 import { RoleType } from "resources/enums/roleType.enum";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "resources/regExp/validationRegExp";
 
+/**
+ * Returns a validation chain for user registration.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const userRegistrationRules = (): ValidationChain[] => {
   return [
     check("username")
@@ -37,6 +45,10 @@ export const userRegistrationRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for user update.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const userUpdateRules = (): ValidationChain[] => {
   return [
     check("email")

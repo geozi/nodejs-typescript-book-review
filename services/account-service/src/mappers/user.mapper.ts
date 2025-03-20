@@ -1,3 +1,7 @@
+/**
+ * User mapper.
+ * @module src/mappers/user.mapper
+ */
 import { Request } from "express";
 import { User } from "models/user.model";
 import bcrypt from "bcryptjs";
@@ -6,6 +10,12 @@ import { IUser } from "interfaces/documents/iUser.interface";
 import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
 import { IRequest } from "interfaces/secondary/iRequest.interface";
 
+/**
+ * Converts an HTTP request to an {@link IUser} object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object.
+ */
 export const reqBodyToUser = async (req: Request): Promise<IUser> => {
   const { username, email, password, role } = req.body;
   const user = new User({
@@ -28,7 +38,15 @@ export const reqBodyToUser = async (req: Request): Promise<IUser> => {
   return user;
 };
 
-export const reqBodyToUserUpdate = async (req: IRequest) => {
+/**
+ * Converts an {@link IRequest} object to an {@link IUserUpdate} object.
+ *
+ * @param {IRequest} req - An HTTP request.
+ * @returns {Promise<IUserUpdate>} A promise that resolves to an {@link IUserUpdate} object.
+ */
+export const reqBodyToUserUpdate = async (
+  req: IRequest
+): Promise<IUserUpdate> => {
   const { email, password } = req.body;
   const user = req.user;
 

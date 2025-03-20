@@ -1,3 +1,12 @@
+/**
+ * AbstractError class.
+ * @module src/errors/abstractError.class
+ */
+
+/**
+ * Enables the inheritance of common properties among its sub-classes.
+ * @extends {Error}
+ */
 export abstract class AbstractError extends Error {
   public httpCode: number;
 

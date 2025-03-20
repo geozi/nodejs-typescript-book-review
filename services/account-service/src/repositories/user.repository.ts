@@ -1,3 +1,7 @@
+/**
+ * User repository.
+ * @module src/repositories/user.repository
+ */
 import { IUser } from "interfaces/documents/iUser.interface";
 import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
 import { User } from "models/user.model";
@@ -8,12 +12,20 @@ import { ServerError } from "errors/serverError.class";
 import { NotFoundError } from "errors/notFoundError.class";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 
+/**
+ * Returns a user with the specified username.
+ *
+ * @param {string} username - The username of a user.
+ * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object.
+ */
 export const getUserByUsername = async (username: string): Promise<IUser> => {
   try {
     const requestedUser = await User.findOne({ username: username });
 
     if (requestedUser === null) {
-      throw new NotFoundError(userControllerResponseMessages.USER_NOT_FOUND);
+      throw new NotFoundError(
+        userControllerResponseMessages.USER_NOT_FOUND_MESSAGE
+      );
     }
 
     appLogger.info(
@@ -34,10 +46,16 @@ export const getUserByUsername = async (username: string): Promise<IUser> => {
       `User repository: ${getUserByUsername.name} -> ServerError thrown`
     );
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };
 
+/**
+ * Adds a new user to the database.
+ *
+ * @param {IUser} newUser - The new information to be persisted.
+ * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object representing the newly saved document.
+ */
 export const addUser = async (newUser: IUser): Promise<IUser> => {
   try {
     const savedUser = await newUser.save();
@@ -56,10 +74,16 @@ export const addUser = async (newUser: IUser): Promise<IUser> => {
 
     appLogger.error(`User repository: ${addUser.name} -> ServerError thrown`);
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };
 
+/**
+ * Updates the information of an existing user in the database.
+ *
+ * @param {IUserUpdate} updateDataObject - The new information to be persisted.
+ * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object representing the updated document.
+ */
 export const updateUser = async (
   updateDataObject: IUserUpdate
 ): Promise<IUser> => {
@@ -77,7 +101,9 @@ export const updateUser = async (
     });
 
     if (updatedUser === null) {
-      throw new NotFoundError(userControllerResponseMessages.USER_NOT_FOUND);
+      throw new NotFoundError(
+        userControllerResponseMessages.USER_NOT_FOUND_MESSAGE
+      );
     }
 
     appLogger.info(`User repository: ${updateUser.name} called successfully`);
@@ -96,6 +122,6 @@ export const updateUser = async (
       `User repository: ${updateUser.name} -> ServerError thrown`
     );
 
-    throw new ServerError(commonResponseMessages.SERVER_ERROR);
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };

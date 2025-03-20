@@ -1,3 +1,7 @@
+/**
+ * User controller.
+ * @module src/controllers/user.controller
+ */
 import { ServerError } from "errors/serverError.class";
 import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
@@ -13,6 +17,13 @@ import { recastReqToIReq } from "mappers/common.mapper";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { redisClient } from "../../redis.config";
 
+/**
+ * Handles HTTP requests for user registration.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export async function callUserRegistration(
   req: Request,
   res: Response
@@ -25,7 +36,7 @@ export async function callUserRegistration(
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
-        message: userControllerResponseMessages.USER_REGISTERED,
+        message: userControllerResponseMessages.USER_REGISTERED_MESSAGE,
         data: savedUser,
       });
   } catch (error) {
@@ -44,7 +55,7 @@ export async function callUserRegistration(
       );
 
       res.status(httpCodes.BAD_REQUEST).json({
-        message: commonResponseMessages.BAD_REQUEST,
+        message: commonResponseMessages.BAD_REQUEST_MESSAGE,
         errors: error.message,
       });
       return;
@@ -52,7 +63,17 @@ export async function callUserRegistration(
   }
 }
 
-export async function callUserUpdate(req: Request, res: Response) {
+/**
+ * Handles HTTP requests for user update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export async function callUserUpdate(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const reqAsIRequest = recastReqToIReq(req);
     const userToUpdate = await reqBodyToUserUpdate(reqAsIRequest);
@@ -70,7 +91,7 @@ export async function callUserUpdate(req: Request, res: Response) {
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: userControllerResponseMessages.USER_UPDATED,
+        message: userControllerResponseMessages.USER_UPDATED_MESSAGE,
         data: updatedUser,
       });
   } catch (error) {
@@ -90,12 +111,19 @@ export async function callUserUpdate(req: Request, res: Response) {
 
       res
         .status(httpCodes.INTERNAL_SERVER_ERROR)
-        .json({ message: commonResponseMessages.REDIS_ERROR });
+        .json({ message: commonResponseMessages.REDIS_ERROR_MESSAGE });
       return;
     }
   }
 }
 
+/**
+/**
+ * Handles HTTP requests for user retrieval.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ */
 export function retrieveUser(req: Request, res: Response) {
   const reqAsIRequest = recastReqToIReq(req);
   const retrievedUser = reqAsIRequest.user;
@@ -104,7 +132,7 @@ export function retrieveUser(req: Request, res: Response) {
     .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
     .status(httpCodes.OK)
     .json({
-      message: userControllerResponseMessages.USER_RETRIEVED,
+      message: userControllerResponseMessages.USER_RETRIEVED_MESSAGE,
       data: retrievedUser,
     });
 }

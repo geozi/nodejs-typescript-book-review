@@ -1,9 +1,13 @@
+/**
+ * Express validation rules for personal info addition and update.
+ * @module src/middleware/person.rule
+ */
 import { body, check, ValidationChain } from "express-validator";
 import { addressFailedValidation } from "messages/validation/addressValidation.message";
 import { personFailedValidation } from "messages/validation/personValidation.message";
-import { addressConstants } from "resources/constants/addressConstant";
-import { commonConstants } from "resources/constants/commonConstant";
-import { personConstants } from "resources/constants/personConstant";
+import { addressConstants } from "resources/constants/address.constant";
+import { commonConstants } from "resources/constants/common.constant";
+import { personConstants } from "resources/constants/person.constant";
 import {
   CITY_REGEX,
   ID_REGEX,
@@ -12,6 +16,10 @@ import {
   SSN_REGEX,
 } from "resources/regExp/validationRegExp";
 
+/**
+ * Returns a validation chain for personal info addition.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const personInfoAdditionRules = (): ValidationChain[] => {
   return [
     check("firstName")
@@ -89,6 +97,10 @@ export const personInfoAdditionRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for personal info update.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const personInfoUpdateRules = (): ValidationChain[] => {
   return [
     check("id")

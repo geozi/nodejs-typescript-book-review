@@ -1,3 +1,7 @@
+/**
+ * Registration route.
+ * @module src/routes/reg.route
+ */
 import { callUserRegistration } from "controllers/user.controller";
 import { Router } from "express";
 import { catchExpressValidationErrors } from "middleware/expressError.catch";

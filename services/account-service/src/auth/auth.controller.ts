@@ -1,3 +1,7 @@
+/**
+ * Auth controller.
+ * @module src/auth/auth.controller
+ */
 import { Request, Response } from "express";
 import { getUserByUsername } from "repositories/user.repository";
 import bcrypt from "bcryptjs";
@@ -15,7 +19,14 @@ import { commonResponseMessages } from "messages/response/commonResponse.message
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 dotenv.config();
 
-export const loginUser = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for user login.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export const loginUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, password } = req.body;
     const user = await getUserByUsername(username);
@@ -87,7 +98,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
       res
         .status(httpCodes.INTERNAL_SERVER_ERROR)
-        .json({ message: commonResponseMessages.REDIS_ERROR });
+        .json({ message: commonResponseMessages.REDIS_ERROR_MESSAGE });
       return;
     }
   }
