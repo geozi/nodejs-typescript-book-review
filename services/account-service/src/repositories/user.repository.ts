@@ -1,3 +1,7 @@
+/**
+ * User repository.
+ * @module src/repositories/user.repository
+ */
 import { IUser } from "interfaces/documents/iUser.interface";
 import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
 import { User } from "models/user.model";
@@ -8,6 +12,12 @@ import { ServerError } from "errors/serverError.class";
 import { NotFoundError } from "errors/notFoundError.class";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 
+/**
+ * Returns a user with the specified username.
+ *
+ * @param {string} username - The username of a user.
+ * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object.
+ */
 export const getUserByUsername = async (username: string): Promise<IUser> => {
   try {
     const requestedUser = await User.findOne({ username: username });
@@ -40,6 +50,12 @@ export const getUserByUsername = async (username: string): Promise<IUser> => {
   }
 };
 
+/**
+ * Adds a new user to the database.
+ *
+ * @param {IUser} newUser - The new information to be persisted.
+ * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object representing the newly saved document.
+ */
 export const addUser = async (newUser: IUser): Promise<IUser> => {
   try {
     const savedUser = await newUser.save();
@@ -62,6 +78,12 @@ export const addUser = async (newUser: IUser): Promise<IUser> => {
   }
 };
 
+/**
+ * Updates the information of an existing user in the database.
+ *
+ * @param {IUserUpdate} updateDataObject - The new information to be persisted.
+ * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object representing the updated document.
+ */
 export const updateUser = async (
   updateDataObject: IUserUpdate
 ): Promise<IUser> => {

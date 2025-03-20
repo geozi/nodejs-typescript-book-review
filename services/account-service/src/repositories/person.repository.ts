@@ -1,3 +1,7 @@
+/**
+ * Person repository.
+ * @module src/repositories/person.repository
+ */
 import { IPerson } from "interfaces/documents/iPerson.interface";
 import { IPersonUpdate } from "interfaces/secondary/iPersonUpdate.interface";
 import { appLogger } from "../../logs/logger.config";
@@ -8,6 +12,12 @@ import { ServerError } from "errors/serverError.class";
 import { NotFoundError } from "errors/notFoundError.class";
 import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
 
+/**
+ * Adds the personal information of a user to the database.
+ *
+ * @param {IPerson} newPerson - The new information to be persisted.
+ * @returns {Promise<IPerson>} A promise that resolves to an {@link IPerson} object representing the newly saved document.
+ */
 export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
   try {
     const savedPerson = await newPerson.save();
@@ -32,6 +42,12 @@ export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
   }
 };
 
+/**
+ * Updates the personal information of a user in the database.
+ *
+ * @param {IPersonUpdate} updateDataObject - The new information to be persisted.
+ * @returns {Promise<IPerson>} A promise that resolves to an {@link IPerson} object representing the updated document.
+ */
 export const updatePerson = async (
   updateDataObject: IPersonUpdate
 ): Promise<IPerson> => {
@@ -83,6 +99,12 @@ export const updatePerson = async (
   }
 };
 
+/**
+ * Returns the personal information of a user with the specified username.
+ *
+ * @param {string} username - The username of the user.
+ * @returns {Promise<IPerson>} A promise that resolves to an {@link IPerson} object.
+ */
 export const getPersonByUsername = async (
   username: string
 ): Promise<IPerson> => {
