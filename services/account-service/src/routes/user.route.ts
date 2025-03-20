@@ -1,3 +1,7 @@
+/**
+ * User routes.
+ * @module src/routes/user.route
+ */
 import { Router } from "express";
 import { callUserUpdate, retrieveUser } from "controllers/user.controller";
 import { userUpdateRules } from "middleware/user.rule";
