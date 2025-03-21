@@ -28,7 +28,6 @@ app.use(express.json());
 app.use(catchJSONerror);
 
 // Open routes
-
 app.use("/api/login", authRouter);
 app.use("/api/register", regRouter);
 
