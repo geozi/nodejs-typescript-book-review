@@ -9,13 +9,9 @@ import "../src/routes/passport.config";
 import { regRouter } from "routes/reg.route";
 import { personRouter } from "routes/person.route";
 import { catchJSONerror } from "middleware/jsonError.catch";
-import swaggerUi from "swagger-ui-express";
-import { swaggerOptions } from "../swagger.config";
-import swaggerJSDoc from "swagger-jsdoc";
 dotenv.config();
 const app = express();
 const port = 3000;
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 async function connectToDb() {
   try {
@@ -32,7 +28,6 @@ app.use(express.json());
 app.use(catchJSONerror);
 
 // Open routes
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/api/login", authRouter);
 app.use("/api/register", regRouter);
 
