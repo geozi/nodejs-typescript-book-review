@@ -1,0 +1,12 @@
+{
+  "name": "book-service",
+  "version": "1.0.0",
+  "description": "The Book service exposes book-related endpoints.",
+  "license": "ISC",
+  "author": "geozi",
+  "type": "module",
+  "main": "src/app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
