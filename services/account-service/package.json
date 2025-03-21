@@ -1,7 +1,7 @@
 {
   "name": "account-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "The Account service exposes account-related endpoints.",
   "main": "src/app.ts",
   "scripts": {
     "start": "npx tsx src/app.ts",
@@ -11,8 +11,11 @@
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'tsx' src/app.ts",
     "generateDocs": "npx typedoc --name account-service"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "microservice",
+    "REST"
+  ],
+  "author": "geozi",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
