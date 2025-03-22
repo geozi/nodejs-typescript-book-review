@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["ES6", "ES2020"],
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "rootDir": "./src",
+    "outDir": "./build",
+    "baseUrl": "./",
+    "paths": { "*": ["src/*"] },
+    "types": ["node"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules"]
+}
