@@ -1,7 +1,8 @@
 import { Author } from "entities/Author";
-import { validAuthorInput } from "../testInputs";
+import { invalidAuthorInput, validAuthorInput } from "../testInputs";
 import { validateSync } from "class-validator";
 import assert from "assert";
+import { authorFailedValidation } from "messages/authorValidationMessages";
 
 describe("Author model entity unit tests", () => {
   let author: Author;
@@ -23,15 +24,55 @@ describe("Author model entity unit tests", () => {
   });
   describe("Negative scenarios", () => {
     describe("validation-oriented", () => {
-      beforeEach(() => [
-        (author = new Author(
+      beforeEach(() => {
+        author = new Author(
           validAuthorInput.firstName,
           validAuthorInput.lastName
-        )),
-      ]);
+        );
+      });
 
-      it("first_name is not a string", () => {
-        author.first_name = "1";
+      it("first_name is invalid", () => {
+        author.first_name = invalidAuthorInput.NAME_INVALID;
+
+        const errors = validateSync(author);
+
+        assert.strictEqual(errors[0].value, invalidAuthorInput.NAME_INVALID);
+        assert.deepStrictEqual(errors[0].constraints, {
+          matches: authorFailedValidation.FIRST_NAME_INVALID,
+        });
+      });
+
+      it("first_name is too short", () => {
+        author.first_name = invalidAuthorInput.NAME_TOO_SHORT;
+
+        const errors = validateSync(author);
+
+        assert.strictEqual(errors[0].value, invalidAuthorInput.NAME_TOO_SHORT);
+        assert.deepStrictEqual(errors[0].constraints, {
+          minLength: authorFailedValidation.FIRST_NAME_BELOW_MIN_LENGTH_MESSAGE,
+        });
+      });
+
+      it("last_name is invalid", () => {
+        author.last_name = invalidAuthorInput.NAME_INVALID;
+
+        const errors = validateSync(author);
+
+        assert.strictEqual(errors[0].value, invalidAuthorInput.NAME_INVALID);
+        assert.deepStrictEqual(errors[0].constraints, {
+          matches: authorFailedValidation.LAST_NAME_INVALID,
+        });
+      });
+
+      it("last_name is too short", () => {
+        author.last_name = invalidAuthorInput.NAME_TOO_SHORT;
+
+        const errors = validateSync(author);
+
+        assert.strictEqual(errors[0].value, invalidAuthorInput.NAME_TOO_SHORT);
+        assert.deepStrictEqual(errors[0].constraints, {
+          minLength: authorFailedValidation.LAST_NAME_BELOW_MIN_LENGTH_MESSAGE,
+        });
       });
     });
   });
