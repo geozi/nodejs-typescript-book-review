@@ -5,6 +5,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Author {
+  // Columns
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -13,12 +14,19 @@ export class Author {
   @MinLength(authorConstants.NAME_MIN_LENGTH, {
     message: authorFailedValidation.FIRST_NAME_BELOW_MIN_LENGTH_MESSAGE,
   })
-  first_name!: string;
+  first_name: string;
 
   @Column({ type: "varchar" })
   @IsString()
   @MinLength(authorConstants.NAME_MIN_LENGTH, {
     message: authorFailedValidation.LAST_NAME_BELOW_MIN_LENGTH_MESSAGE,
   })
-  last_name!: string;
+  last_name: string;
+
+  // Constructor
+
+  constructor(firstName?: string, lastName?: string) {
+    this.first_name = firstName || "";
+    this.last_name = lastName || "";
+  }
 }
