@@ -1,0 +1,8 @@
+export const editionConstants = {
+  ISBN_10_LENGTH: 10,
+  ISBN_13_LENGTH: 13,
+  PUBLISHER_MIN_LENGTH: 10,
+  PUBLISHER_MAX_LENGTH: 70,
+  MIN_PAGE_COUNT: 5,
+  LANGUAGE_MIN_LENGTH: 1,
+};

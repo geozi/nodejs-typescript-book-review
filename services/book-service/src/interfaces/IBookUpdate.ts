@@ -1,4 +1,4 @@
-import { Genre } from "enum/Genre";
+import { Genre } from "resources/enum/Genre";
 
 export interface IBookUpdate {
   title?: string;
