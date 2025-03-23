@@ -18,7 +18,7 @@ export class Author {
   @Matches(ALPHABETIC_REGEX, {
     message: authorFailedValidation.FIRST_NAME_INVALID,
   })
-  first_name: string;
+  first_name!: string;
 
   @Column({ type: "varchar" })
   @IsString()
@@ -28,12 +28,5 @@ export class Author {
   @Matches(ALPHABETIC_REGEX, {
     message: authorFailedValidation.LAST_NAME_INVALID,
   })
-  last_name: string;
-
-  // Constructor
-
-  constructor(firstName?: string, lastName?: string) {
-    this.first_name = firstName || "";
-    this.last_name = lastName || "";
-  }
+  last_name!: string;
 }
