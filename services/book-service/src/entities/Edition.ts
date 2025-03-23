@@ -8,12 +8,14 @@ import {
   IsISBN,
   IsPositive,
   IsString,
+  Matches,
   MaxLength,
   Min,
   MinLength,
 } from "class-validator";
 import { editionConstants } from "resources/constants/editionConstants";
 import { editionFailedValidation } from "messages/editionValidationMessages";
+import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
 
 @Entity()
 export class Edition {
@@ -61,6 +63,9 @@ export class Edition {
   @IsString()
   @MinLength(editionConstants.LANGUAGE_MIN_LENGTH, {
     message: editionFailedValidation.LANGUAGE_MIN_LENGTH_MESSAGE,
+  })
+  @Matches(ALPHABETIC_REGEX, {
+    message: editionFailedValidation.LANGUAGE_INVALID,
   })
   book_language!: string;
 

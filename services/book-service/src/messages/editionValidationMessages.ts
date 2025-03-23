@@ -10,5 +10,6 @@ export const editionFailedValidation = {
   PAGE_COUNT_NEGATIVE_MESSAGE: "Page count must be a positive number",
   PAGE_COUNT_MINIMUM_MESSAGE: `Page count must be at least ${editionConstants.MIN_PAGE_COUNT}`,
   BOOK_FORMAT_INVALID_MESSAGE: `Book format must be either ${BookFormat.EBOOK} or ${BookFormat.HARDCOVER}`,
+  LANGUAGE_INVALID: "Book language must only contain letters",
   LANGUAGE_MIN_LENGTH_MESSAGE: `Book language must be at least ${editionConstants.LANGUAGE_MIN_LENGTH} characters long`,
 };
