@@ -8,10 +8,9 @@ describe("Author model entity unit tests", () => {
   let author: Author;
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      author = new Author(
-        validAuthorInput.firstName,
-        validAuthorInput.lastName
-      );
+      author = new Author();
+      author.first_name = validAuthorInput.firstName;
+      author.last_name = validAuthorInput.lastName;
     });
 
     it("author has valid inputs", () => {
@@ -25,10 +24,9 @@ describe("Author model entity unit tests", () => {
   describe("Negative scenarios", () => {
     describe("validation-oriented", () => {
       beforeEach(() => {
-        author = new Author(
-          validAuthorInput.firstName,
-          validAuthorInput.lastName
-        );
+        author = new Author();
+        author.first_name = validAuthorInput.firstName;
+        author.last_name = validAuthorInput.lastName;
       });
 
       it("first_name is invalid", () => {
