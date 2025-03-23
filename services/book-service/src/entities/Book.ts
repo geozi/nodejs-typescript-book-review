@@ -8,9 +8,10 @@ import {
 } from "typeorm";
 import { Edition } from "./Edition";
 import { Author } from "./Author";
-import { Genre, genreArray } from "resources/enum/Genre";
-import { IsString, IsIn, Length } from "class-validator";
+import { Genre } from "resources/enum/Genre";
+import { IsString, MinLength, MaxLength, IsEnum } from "class-validator";
 import { bookConstants } from "resources/constants/bookConstants";
+import { bookFailedValidation } from "messages/bookValidationMessages";
 
 @Entity()
 export class Book {
@@ -20,14 +21,19 @@ export class Book {
 
   @Column({ type: "varchar", unique: true })
   @IsString()
-  @Length(bookConstants.TITLE_MIN_LENGTH, bookConstants.TITLE_MAX_LENGTH)
+  @MinLength(bookConstants.TITLE_MIN_LENGTH, {
+    message: bookFailedValidation.TITLE_BELOW_MIN_LENGTH_MESSAGE,
+  })
+  @MaxLength(bookConstants.TITLE_MAX_LENGTH, {
+    message: bookFailedValidation.TITLE_ABOVE_MAX_LENGTH_MESSAGE,
+  })
   title!: string;
 
   @Column({
     type: "enum",
     enum: Genre,
   })
-  @IsIn([genreArray])
+  @IsEnum(Genre, { message: bookFailedValidation.GENRE_INVALID_MESSAGE })
   genre!: Genre;
 
   // Relations
