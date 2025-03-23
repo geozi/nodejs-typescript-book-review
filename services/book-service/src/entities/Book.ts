@@ -8,7 +8,8 @@ import {
 } from "typeorm";
 import { Edition } from "./Edition";
 import { Author } from "./Author";
-import { Genre } from "enum/Genre";
+import { Genre, genreArray } from "enum/Genre";
+import { IsString, IsIn, Length } from "class-validator";
 
 @Entity()
 export class Book {
@@ -17,12 +18,15 @@ export class Book {
   id!: number;
 
   @Column({ type: "varchar", unique: true })
+  @IsString()
+  @Length(10, 100)
   title!: string;
 
   @Column({
     type: "enum",
     enum: Genre,
   })
+  @IsIn([genreArray])
   genre!: Genre;
 
   // Relations
