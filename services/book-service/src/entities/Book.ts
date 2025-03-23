@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { Edition } from "./Edition";
 import { Author } from "./Author";
-import { Genre, genreArray } from "enum/Genre";
+import { Genre, genreArray } from "resources/enum/Genre";
 import { IsString, IsIn, Length } from "class-validator";
 
 @Entity()

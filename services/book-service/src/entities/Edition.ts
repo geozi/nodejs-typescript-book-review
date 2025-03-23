@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Book } from "./Book";
-import { BookFormat } from "enum/BookFormat";
+import { BookFormat } from "resources/enum/BookFormat";
+
 @Entity()
 export class Edition {
   // Columns
