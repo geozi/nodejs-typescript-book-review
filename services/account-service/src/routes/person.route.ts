@@ -6,7 +6,7 @@ import {
   callPersonAddition,
   callPersonUpdate,
   retrievePersonInfo,
-} from "controllers/person.controller";
+} from "controllers/personController";
 import { Router } from "express";
 import { catchExpressValidationErrors } from "middleware/expressError.catch";
 import {

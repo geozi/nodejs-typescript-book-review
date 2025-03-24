@@ -3,7 +3,7 @@
  * @module src/routes/user.route
  */
 import { Router } from "express";
-import { callUserUpdate, retrieveUser } from "controllers/user.controller";
+import { callUserUpdate, retrieveUser } from "controllers/userController";
 import { userUpdateRules } from "middleware/user.rule";
 import { catchExpressValidationErrors } from "middleware/expressError.catch";
 

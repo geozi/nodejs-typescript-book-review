@@ -1,6 +1,6 @@
 /**
  * Person controller.
- * @module src/controllers/person.controller
+ * @module src/controllers/personController
  */
 import { ServerError } from "errors/serverError.class";
 import { Request, Response } from "express";

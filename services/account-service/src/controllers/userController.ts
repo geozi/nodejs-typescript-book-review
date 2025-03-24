@@ -1,6 +1,6 @@
 /**
  * User controller.
- * @module src/controllers/user.controller
+ * @module src/controllers/userController
  */
 import { ServerError } from "errors/serverError.class";
 import { Request, Response } from "express";
