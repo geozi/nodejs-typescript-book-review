@@ -2,7 +2,7 @@ import { Author } from "entities/Author";
 import { invalidAuthorInputs, validAuthorInputs } from "../testInputs";
 import { validateSync } from "class-validator";
 import assert from "assert";
-import { authorFailedValidation } from "messages/authorValidationMessages";
+import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 
 describe("Author model entity unit tests", () => {
   let author: Author;

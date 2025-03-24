@@ -3,7 +3,7 @@ import { Edition } from "entities/Edition";
 import { invalidEditionInputs, validEditionInputs } from "../testInputs";
 import { validateSync } from "class-validator";
 import assert from "assert";
-import { editionFailedValidation } from "messages/editionValidationMessages";
+import { editionFailedValidation } from "messages/validation/editionValidationMessages";
 
 describe("Edition model entity unit tests", () => {
   let edition: Edition;

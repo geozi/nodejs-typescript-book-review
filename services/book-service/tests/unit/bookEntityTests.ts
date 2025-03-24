@@ -2,7 +2,7 @@ import { Book } from "entities/Book";
 import { invalidBookInputs, validBookInputs } from "../testInputs";
 import { validateSync } from "class-validator";
 import assert from "assert";
-import { bookFailedValidation } from "messages/bookValidationMessages";
+import { bookFailedValidation } from "messages/validation/bookValidationMessages";
 
 describe("Book model entity unit tests", () => {
   let book: Book;
