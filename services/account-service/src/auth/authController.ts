@@ -1,12 +1,12 @@
 /**
  * Auth controller.
- * @module src/auth/auth.controller
+ * @module src/auth/authController
  */
 import { Request, Response } from "express";
 import { getUserByUsername } from "repositories/user.repository";
 import bcrypt from "bcryptjs";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { authResponseMessages } from "./authResponse.message";
+import { authResponseMessages } from "./authResponseMessages";
 import { RoleType } from "resources/enums/roleType.enum";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";

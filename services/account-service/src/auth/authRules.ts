@@ -1,6 +1,6 @@
 /**
  * Express validation rules for user authentication.
- * @module src/auth/auth.rules
+ * @module src/auth/authRules
  */
 import { check, ValidationChain } from "express-validator";
 import { userFailedValidation } from "messages/validation/userValidation.message";

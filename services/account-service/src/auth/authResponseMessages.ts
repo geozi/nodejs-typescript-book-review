@@ -1,6 +1,6 @@
 /**
  * HTTP response messages for authentication.
- * @module src/auth/authResponse.message
+ * @module src/auth/authResponseMessages
  */
 
 /**
