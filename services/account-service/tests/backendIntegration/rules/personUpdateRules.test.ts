@@ -6,15 +6,15 @@ import {
   validPersonInput,
   validUserInput,
 } from "../../testInputs";
-import { personInfoUpdateRules } from "middleware/person.rule";
-import { catchExpressValidationErrors } from "middleware/expressError.catch";
+import { personInfoUpdateRules } from "middleware/rules/personRules";
+import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import { Request, Response } from "express";
-import { User } from "models/user.model";
+import { User } from "models/User";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
-import { personFailedValidation } from "messages/validation/personValidation.message";
-import { addressFailedValidation } from "messages/validation/addressValidation.message";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { personFailedValidation } from "messages/validation/personValidationMessages";
+import { addressFailedValidation } from "messages/validation/addressValidationMessages";
 
 describe("Person update rules integration tests", () => {
   let req: Partial<Request>;

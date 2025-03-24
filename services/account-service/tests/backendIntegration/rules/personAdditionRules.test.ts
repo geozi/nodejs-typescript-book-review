@@ -1,5 +1,5 @@
-import { catchExpressValidationErrors } from "middleware/expressError.catch";
-import { personInfoAdditionRules } from "middleware/person.rule";
+import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
+import { personInfoAdditionRules } from "middleware/rules/personRules";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { Request, Response } from "express";
 import {
@@ -9,9 +9,9 @@ import {
 } from "../../testInputs";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
-import { personFailedValidation } from "messages/validation/personValidation.message";
-import { addressFailedValidation } from "messages/validation/addressValidation.message";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { personFailedValidation } from "messages/validation/personValidationMessages";
+import { addressFailedValidation } from "messages/validation/addressValidationMessages";
 
 describe("Personal info addition rules integration tests", () => {
   let req: Partial<Request>;
