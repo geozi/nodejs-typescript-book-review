@@ -139,21 +139,20 @@ describe("Edition model entity unit tests", () => {
         });
       });
 
-      // it("book_language is too short", () => {
-      //   edition.book_language = invalidEditionInput.LANGUAGE_TOO_SHORT;
+      it("book_language is too short", () => {
+        edition.book_language = invalidEditionInput.LANGUAGE_TOO_SHORT;
 
-      //   const errors = validateSync(edition);
-      //   console.log(errors);
+        const errors = validateSync(edition);
 
-      //   assert.strictEqual(errors.length, 1);
-      //   assert.strictEqual(
-      //     errors[0].value,
-      //     invalidEditionInput.LANGUAGE_TOO_SHORT
-      //   );
-      //   assert.deepEqual(errors[0].constraints, {
-      //     minLength: editionFailedValidation.LANGUAGE_MIN_LENGTH_MESSAGE,
-      //   });
-      // });
+        assert.strictEqual(errors.length, 1);
+        assert.strictEqual(
+          errors[0].value,
+          invalidEditionInput.LANGUAGE_TOO_SHORT
+        );
+        assert.deepEqual(errors[0].constraints, {
+          minLength: editionFailedValidation.LANGUAGE_MIN_LENGTH_MESSAGE,
+        });
+      });
     });
   });
 });
