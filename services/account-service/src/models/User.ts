@@ -7,7 +7,7 @@ import { userFailedValidation } from "messages/validation/userValidationMessages
 import { model, Schema } from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import { userConstants } from "resources/constants/userConstants";
-import { roleTypeArray } from "resources/enums/roleType.enum";
+import { roleTypeArray } from "resources/enums/roleTypeEnums";
 import { EMAIL_REGEX } from "resources/regExp/validationRegExp";
 
 /**

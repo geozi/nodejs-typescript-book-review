@@ -1,6 +1,6 @@
 /**
  * RoleType enums.
- * @module src/resources/enums/roleType.enum
+ * @module src/resources/enums/roleTypeEnums
  */
 
 /**

@@ -7,7 +7,7 @@ import { getUserByUsername } from "repositories/userRepository";
 import bcrypt from "bcryptjs";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { authResponseMessages } from "./authResponseMessages";
-import { RoleType } from "resources/enums/roleType.enum";
+import { RoleType } from "resources/enums/roleTypeEnums";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import { NotFoundError } from "errors/notFoundErrorClass";

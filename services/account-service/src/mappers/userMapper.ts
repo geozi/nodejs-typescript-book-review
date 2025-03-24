@@ -5,7 +5,7 @@
 import { Request } from "express";
 import { User } from "models/User";
 import bcrypt from "bcryptjs";
-import { RoleType } from "resources/enums/roleType.enum";
+import { RoleType } from "resources/enums/roleTypeEnums";
 import { IUser } from "interfaces/documents/IUser";
 import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
 import { IRequest } from "interfaces/secondary/IRequest";

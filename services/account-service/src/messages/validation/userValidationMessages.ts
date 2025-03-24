@@ -3,7 +3,7 @@
  * @module src/messages/validation/userValidationMessages
  */
 import { userConstants } from "resources/constants/userConstants";
-import { RoleType } from "resources/enums/roleType.enum";
+import { RoleType } from "resources/enums/roleTypeEnums";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { EMAIL_REGEX, PASSWORD_REGEX } from "resources/regExp/validationRegExp";
 
