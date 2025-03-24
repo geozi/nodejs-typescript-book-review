@@ -3,8 +3,8 @@
  * @module src/models/person.model
  */
 import { IPerson } from "interfaces/documents/IPerson";
-import { personFailedValidation } from "messages/validation/personValidation.message";
-import { userFailedValidation } from "messages/validation/userValidation.message";
+import { personFailedValidation } from "messages/validation/personValidationMessages";
+import { userFailedValidation } from "messages/validation/userValidationMessages";
 import { model, Schema } from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import { personConstants } from "resources/constants/person.constant";

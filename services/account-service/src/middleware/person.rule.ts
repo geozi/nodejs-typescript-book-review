@@ -3,8 +3,8 @@
  * @module src/middleware/person.rule
  */
 import { body, check, ValidationChain } from "express-validator";
-import { addressFailedValidation } from "messages/validation/addressValidation.message";
-import { personFailedValidation } from "messages/validation/personValidation.message";
+import { addressFailedValidation } from "messages/validation/addressValidationMessages";
+import { personFailedValidation } from "messages/validation/personValidationMessages";
 import { addressConstants } from "resources/constants/address.constant";
 import { commonConstants } from "resources/constants/common.constant";
 import { personConstants } from "resources/constants/person.constant";

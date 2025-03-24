@@ -1,6 +1,6 @@
 /**
  * User validation error messages.
- * @module src/messages/validation/userValidation.message
+ * @module src/messages/validation/userValidationMessages
  */
 import { userConstants } from "resources/constants/user.constant";
 import { RoleType } from "resources/enums/roleType.enum";

@@ -3,7 +3,7 @@
  * @module src/auth/authRules
  */
 import { check, ValidationChain } from "express-validator";
-import { userFailedValidation } from "messages/validation/userValidation.message";
+import { userFailedValidation } from "messages/validation/userValidationMessages";
 import { userConstants } from "resources/constants/user.constant";
 import { PASSWORD_REGEX } from "resources/regExp/validationRegExp";
 

@@ -1,6 +1,6 @@
 /**
  * Person validation error messages.
- * @module src/messages/validation/personValidation.message
+ * @module src/messages/validation/personValidationMessages
  */
 import { commonConstants } from "resources/constants/common.constant";
 import { personConstants } from "resources/constants/person.constant";
