@@ -5,7 +5,7 @@
 import { IUser } from "interfaces/documents/IUser";
 import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
 import { User } from "models/User";
-import { appLogger } from "../../logs/logger.config";
+import { appLogger } from "../../logs/loggerConfig";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { ServerError } from "errors/serverErrorClass";

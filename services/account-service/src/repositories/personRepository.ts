@@ -4,7 +4,7 @@
  */
 import { IPerson } from "interfaces/documents/IPerson";
 import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
-import { appLogger } from "../../logs/logger.config";
+import { appLogger } from "../../logs/loggerConfig";
 import { Person } from "models/Person";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
