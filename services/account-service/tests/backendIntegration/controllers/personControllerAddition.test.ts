@@ -1,14 +1,14 @@
-import { Person } from "models/person.model";
+import { Person } from "models/Person";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validPersonInput, validUserInput } from "../../testInputs";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { IRequest } from "interfaces/secondary/IRequest";
 import { Response } from "express";
-import { callPersonAddition } from "controllers/person.controller";
+import { callPersonAddition } from "controllers/personController";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
-import { User } from "models/user.model";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";
+import { User } from "models/User";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { Error } from "mongoose";
 
 describe("Personal info addition integration tests", () => {

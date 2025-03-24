@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { User } from "models/user.model";
+import { User } from "models/User";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validUserInput } from "../../testInputs";
-import { callUserRegistration } from "controllers/user.controller";
+import { callUserRegistration } from "controllers/userController";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Error } from "mongoose";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
-import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
 import bcrypt from "bcryptjs";
 
 describe("User registration integration tests", () => {

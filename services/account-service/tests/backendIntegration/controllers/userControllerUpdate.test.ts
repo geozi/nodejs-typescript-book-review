@@ -1,13 +1,13 @@
-import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { IRequest } from "interfaces/secondary/IRequest";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validUserInput } from "../../testInputs";
-import { User } from "models/user.model";
+import { User } from "models/User";
 import { Request, Response } from "express";
-import { callUserUpdate } from "controllers/user.controller";
+import { callUserUpdate } from "controllers/userController";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import bcrypt from "bcryptjs";
 import { redisClient } from "../../../redis.config";
 import { AbortError, ErrorReply } from "redis";

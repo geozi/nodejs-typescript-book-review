@@ -2,14 +2,14 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import { testToken, validUserInput } from "../../testInputs";
 import { Request, Response } from "express";
 import assert from "assert";
-import { User } from "models/user.model";
+import { User } from "models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { redisClient } from "../../../redis.config";
-import { loginUser } from "auth/auth.controller";
+import { loginUser } from "auth/authController";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { authResponseMessages } from "auth/authResponse.message";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { authResponseMessages } from "auth/authResponseMessages";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { AbortError, ErrorReply } from "redis";
 
 describe("User login integration tests", () => {
