@@ -1,6 +1,6 @@
 /**
  * Person model schema.
- * @module src/models/person.model
+ * @module src/models/Person
  */
 import { IPerson } from "interfaces/documents/IPerson";
 import { personFailedValidation } from "messages/validation/personValidationMessages";

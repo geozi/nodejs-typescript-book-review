@@ -1,6 +1,6 @@
 /**
  * User model schema.
- * @module src/models/user.model
+ * @module src/models/User
  */
 import { IUser } from "interfaces/documents/IUser";
 import { userFailedValidation } from "messages/validation/userValidationMessages";

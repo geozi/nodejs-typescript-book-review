@@ -3,7 +3,7 @@
  * @module src/mappers/userMapper
  */
 import { Request } from "express";
-import { User } from "models/user.model";
+import { User } from "models/User";
 import bcrypt from "bcryptjs";
 import { RoleType } from "resources/enums/roleType.enum";
 import { IUser } from "interfaces/documents/IUser";

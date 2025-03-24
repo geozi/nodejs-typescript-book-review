@@ -6,7 +6,7 @@ import { IPerson } from "interfaces/documents/IPerson";
 import { IAddress } from "interfaces/secondary/IAddress";
 import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
 import { IRequest } from "interfaces/secondary/IRequest";
-import { Person } from "models/person.model";
+import { Person } from "models/Person";
 import { Types } from "mongoose";
 
 /**
