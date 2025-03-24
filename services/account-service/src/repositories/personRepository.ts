@@ -22,8 +22,6 @@ export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
   try {
     const savedPerson = await newPerson.save();
 
-    appLogger.info(`Person repository: ${addPerson.name} called successfully`);
-
     return savedPerson;
   } catch (error) {
     if (error instanceof Error.ValidationError) {
@@ -77,10 +75,6 @@ export const updatePerson = async (
       );
     }
 
-    appLogger.info(
-      `Person repository: ${updatePerson.name} called successfully`
-    );
-
     return updatedPerson;
   } catch (error) {
     if (error instanceof NotFoundError) {
@@ -116,10 +110,6 @@ export const getPersonByUsername = async (
         personControllerResponseMessages.PERSON_INFO_NOT_FOUND_MESSAGE
       );
     }
-
-    appLogger.info(
-      `Person repository: ${getPersonByUsername.name} called successfully`
-    );
 
     return foundPerson;
   } catch (error) {

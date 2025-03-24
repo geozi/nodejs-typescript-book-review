@@ -28,10 +28,6 @@ export const getUserByUsername = async (username: string): Promise<IUser> => {
       );
     }
 
-    appLogger.info(
-      `User repository: ${getUserByUsername.name} called successfully`
-    );
-
     return requestedUser;
   } catch (error) {
     if (error instanceof NotFoundError) {
@@ -59,9 +55,6 @@ export const getUserByUsername = async (username: string): Promise<IUser> => {
 export const addUser = async (newUser: IUser): Promise<IUser> => {
   try {
     const savedUser = await newUser.save();
-
-    appLogger.info(`User repository: ${addUser.name} called successfully`);
-
     return savedUser;
   } catch (error) {
     if (error instanceof Error.ValidationError) {
@@ -105,8 +98,6 @@ export const updateUser = async (
         userControllerResponseMessages.USER_NOT_FOUND_MESSAGE
       );
     }
-
-    appLogger.info(`User repository: ${updateUser.name} called successfully`);
 
     return updatedUser;
   } catch (error) {
