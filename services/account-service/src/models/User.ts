@@ -6,7 +6,7 @@ import { IUser } from "interfaces/documents/IUser";
 import { userFailedValidation } from "messages/validation/userValidationMessages";
 import { model, Schema } from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
-import { userConstants } from "resources/constants/user.constant";
+import { userConstants } from "resources/constants/userConstants";
 import { roleTypeArray } from "resources/enums/roleType.enum";
 import { EMAIL_REGEX } from "resources/regExp/validationRegExp";
 

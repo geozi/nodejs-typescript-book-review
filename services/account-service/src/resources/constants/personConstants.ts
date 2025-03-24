@@ -1,6 +1,6 @@
 /**
  * Person constants.
- * @module src/resources/constants/person.constant
+ * @module src/resources/constants/personConstants
  */
 
 /**

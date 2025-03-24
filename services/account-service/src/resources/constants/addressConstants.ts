@@ -1,6 +1,6 @@
 /**
  * Address constants.
- * @module src/resources/constants/address.constant
+ * @module src/resources/constants/addressConstants
  */
 
 /**

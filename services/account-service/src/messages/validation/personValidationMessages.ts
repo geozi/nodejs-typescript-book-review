@@ -2,8 +2,8 @@
  * Person validation error messages.
  * @module src/messages/validation/personValidationMessages
  */
-import { commonConstants } from "resources/constants/common.constant";
-import { personConstants } from "resources/constants/person.constant";
+import { commonConstants } from "resources/constants/commonConstants";
+import { personConstants } from "resources/constants/personConstants";
 import {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   NAME_REGEX,

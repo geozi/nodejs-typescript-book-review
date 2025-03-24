@@ -4,7 +4,7 @@
  */
 import { check, ValidationChain } from "express-validator";
 import { userFailedValidation } from "messages/validation/userValidationMessages";
-import { userConstants } from "resources/constants/user.constant";
+import { userConstants } from "resources/constants/userConstants";
 import { PASSWORD_REGEX } from "resources/regExp/validationRegExp";
 
 /**

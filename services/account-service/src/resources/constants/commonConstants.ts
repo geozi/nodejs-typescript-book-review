@@ -1,6 +1,6 @@
 /**
  * Common constants.
- * @module src/resources/constants/common.constant
+ * @module src/resources/constants/commonConstants
  */
 
 /**

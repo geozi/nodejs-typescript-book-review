@@ -1,6 +1,6 @@
 /**
  * User constants.
- * @module src/resources/constants/user.constant
+ * @module src/resources/constants/userConstants
  */
 
 /**
