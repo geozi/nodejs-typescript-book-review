@@ -5,7 +5,7 @@
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
-import { reqBodyToUser, reqBodyToUserUpdate } from "mappers/user.mapper";
+import { reqBodyToUser, reqBodyToUserUpdate } from "mappers/userMapper";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 import { addUser, updateUser } from "repositories/user.repository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
@@ -13,7 +13,7 @@ import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ErrorReply, AbortError } from "redis";
-import { recastReqToIReq } from "mappers/common.mapper";
+import { recastReqToIReq } from "mappers/commonMapper";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { redisClient } from "../../redis.config";
 

@@ -1,6 +1,6 @@
 /**
  * User mapper.
- * @module src/mappers/user.mapper
+ * @module src/mappers/userMapper
  */
 import { Request } from "express";
 import { User } from "models/user.model";

@@ -1,6 +1,6 @@
 /**
  * Common mapper.
- * @module src/mappers/common.mapper
+ * @module src/mappers/commonMapper
  */
 import { Request } from "express";
 import { IRequest } from "interfaces/secondary/IRequest";

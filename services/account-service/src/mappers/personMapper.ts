@@ -1,6 +1,6 @@
 /**
  * Person mapper.
- * @module src/mappers/person.mapper
+ * @module src/mappers/personMapper
  */
 import { IPerson } from "interfaces/documents/IPerson";
 import { IAddress } from "interfaces/secondary/IAddress";
