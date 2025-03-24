@@ -1,4 +1,5 @@
 import { BookFormat } from "resources/enum/BookFormat";
+import { Genre } from "resources/enum/Genre";
 
 export const validAuthorInput = {
   firstName: "Lilah",
@@ -28,4 +29,9 @@ export const invalidEditionInput = {
   PAGE_COUNT_MIN: 1,
   INVALID_LANGUAGE: "Engl1sh",
   LANGUAGE_TOO_SHORT: "u",
+};
+
+export const validBookInput = {
+  title: "The Hunger Games",
+  genre: Genre.FICTION,
 };
