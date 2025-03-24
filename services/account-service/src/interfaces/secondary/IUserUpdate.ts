@@ -1,6 +1,6 @@
 /**
  * IUserUpdate interface.
- * @module src/interfaces/secondary/iUserUpdate.interface
+ * @module src/interfaces/secondary/IUserUpdate
  */
 import { Types } from "mongoose";
 

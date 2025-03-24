@@ -3,9 +3,9 @@
  * @module src/mappers/person.mapper
  */
 import { IPerson } from "interfaces/documents/IPerson";
-import { IAddress } from "interfaces/secondary/iAddress.interface";
-import { IPersonUpdate } from "interfaces/secondary/iPersonUpdate.interface";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { IAddress } from "interfaces/secondary/IAddress";
+import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
+import { IRequest } from "interfaces/secondary/IRequest";
 import { Person } from "models/person.model";
 import { Types } from "mongoose";
 

@@ -1,6 +1,6 @@
 /**
  * IAddress interface.
- * @module src/interfaces/secondary/iAddress.interface
+ * @module src/interfaces/secondary/IAddress
  */
 
 /**

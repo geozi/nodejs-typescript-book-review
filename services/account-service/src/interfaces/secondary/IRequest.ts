@@ -1,6 +1,6 @@
 /**
  * IRequest interface.
- * @module src/interfaces/secondary/iRequest.interface
+ * @module src/interfaces/secondary/IRequest
  */
 import { Request } from "express";
 import { IUser } from "interfaces/documents/IUser";

@@ -3,7 +3,7 @@
  * @module src/mappers/common.mapper
  */
 import { Request } from "express";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { IRequest } from "interfaces/secondary/IRequest";
 
 /**
  * Converts an HTTP request to an {@link IRequest} object.

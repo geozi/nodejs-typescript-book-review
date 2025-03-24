@@ -7,8 +7,8 @@ import { User } from "models/user.model";
 import bcrypt from "bcryptjs";
 import { RoleType } from "resources/enums/roleType.enum";
 import { IUser } from "interfaces/documents/IUser";
-import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
-import { IRequest } from "interfaces/secondary/iRequest.interface";
+import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
+import { IRequest } from "interfaces/secondary/IRequest";
 
 /**
  * Converts an HTTP request to an {@link IUser} object.

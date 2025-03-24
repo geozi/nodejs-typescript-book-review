@@ -2,7 +2,7 @@
  * IPerson interface.
  * @module src/interfaces/documents/IPerson
  */
-import { IAddress } from "interfaces/secondary/iAddress.interface";
+import { IAddress } from "interfaces/secondary/IAddress";
 import { Document } from "mongoose";
 
 /**

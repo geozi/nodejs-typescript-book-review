@@ -1,9 +1,9 @@
 /**
  * IPersonUpdate interface.
- * @module src/interfaces/secondary/iPersonUpdate.interface
+ * @module src/interfaces/secondary/IPersonUpdate
  */
 import { Types } from "mongoose";
-import { IAddress } from "./iAddress.interface";
+import { IAddress } from "./IAddress";
 
 /**
  * Represents a data object used to update the personal

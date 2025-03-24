@@ -3,7 +3,7 @@
  * @module src/repositories/person.repository
  */
 import { IPerson } from "interfaces/documents/IPerson";
-import { IPersonUpdate } from "interfaces/secondary/iPersonUpdate.interface";
+import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
 import { appLogger } from "../../logs/logger.config";
 import { Person } from "models/person.model";
 import { Error } from "mongoose";

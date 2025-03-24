@@ -3,7 +3,7 @@
  * @module src/repositories/user.repository
  */
 import { IUser } from "interfaces/documents/IUser";
-import { IUserUpdate } from "interfaces/secondary/iUserUpdate.interface";
+import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
 import { User } from "models/user.model";
 import { appLogger } from "../../logs/logger.config";
 import { Error } from "mongoose";
