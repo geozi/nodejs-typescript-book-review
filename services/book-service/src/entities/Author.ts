@@ -1,5 +1,5 @@
 import { IsString, Matches, MinLength } from "class-validator";
-import { authorFailedValidation } from "messages/authorValidationMessages";
+import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 import { authorConstants } from "resources/constants/authorConstants";
 import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";

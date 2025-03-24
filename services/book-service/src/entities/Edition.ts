@@ -14,7 +14,7 @@ import {
   MinLength,
 } from "class-validator";
 import { editionConstants } from "resources/constants/editionConstants";
-import { editionFailedValidation } from "messages/editionValidationMessages";
+import { editionFailedValidation } from "messages/validation/editionValidationMessages";
 import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
 
 @Entity()
