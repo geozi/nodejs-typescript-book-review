@@ -5,7 +5,7 @@
 import { loginUser } from "auth/auth.controller";
 import { userLoginRules } from "auth/auth.rules";
 import { Router } from "express";
-import { catchExpressValidationErrors } from "middleware/expressError.catch";
+import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 
 export const authRouter = Router();
 authRouter.post(

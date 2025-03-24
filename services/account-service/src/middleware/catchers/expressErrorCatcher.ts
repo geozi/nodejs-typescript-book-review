@@ -1,10 +1,10 @@
 /**
  * Express validation error catcher.
- * @module src/middleware/expressError.catch
+ * @module src/middleware/catchers/expressErrorCatcher
  */
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { appLogger } from "../../logs/logger.config";
+import { appLogger } from "../../../logs/logger.config";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 

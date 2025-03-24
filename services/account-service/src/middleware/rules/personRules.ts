@@ -1,6 +1,6 @@
 /**
  * Express validation rules for personal info addition and update.
- * @module src/middleware/person.rule
+ * @module src/middleware/rules/personRules
  */
 import { body, check, ValidationChain } from "express-validator";
 import { addressFailedValidation } from "messages/validation/addressValidationMessages";

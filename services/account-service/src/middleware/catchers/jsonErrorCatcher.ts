@@ -1,6 +1,6 @@
 /**
  * JSON payload error catcher.
- * @module src/middleware/jsonError.catch
+ * @module src/middleware/catchers/jsonErrorCatcher
  */
 import { Request, Response, NextFunction } from "express";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";

@@ -1,6 +1,6 @@
 /**
  * Express validation rules for user registration and update operations.
- * @module src/middleware/user.rule
+ * @module src/middleware/rules/userRules
  */
 import { check, ValidationChain } from "express-validator";
 import { userFailedValidation } from "messages/validation/userValidationMessages";

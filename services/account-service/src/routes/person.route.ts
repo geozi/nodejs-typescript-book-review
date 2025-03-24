@@ -8,11 +8,11 @@ import {
   retrievePersonInfo,
 } from "controllers/personController";
 import { Router } from "express";
-import { catchExpressValidationErrors } from "middleware/expressError.catch";
+import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import {
   personInfoAdditionRules,
   personInfoUpdateRules,
-} from "middleware/person.rule";
+} from "middleware/rules/personRules";
 
 export const personRouter = Router();
 personRouter.post(
