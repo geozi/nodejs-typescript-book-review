@@ -1,17 +1,17 @@
 import { BookFormat } from "resources/enum/BookFormat";
 import { Genre } from "resources/enum/Genre";
 
-export const validAuthorInput = {
+export const validAuthorInputs = {
   firstName: "Lilah",
   lastName: "Wong",
 };
 
-export const invalidAuthorInput = {
+export const invalidAuthorInputs = {
   NAME_INVALID: "12",
   NAME_TOO_SHORT: "a",
 };
 
-export const validEditionInput = {
+export const validEditionInputs = {
   isbn: "9780439023481",
   publication_date: "2008-10-14",
   publisher: "Scholastic Press",
@@ -20,7 +20,7 @@ export const validEditionInput = {
   book_language: "English",
 };
 
-export const invalidEditionInput = {
+export const invalidEditionInputs = {
   INVALID_ISBN: "123456",
   INVALID_DATE: "December",
   PUBLISHER_NAME_TOO_SHORT: "p",
@@ -31,7 +31,9 @@ export const invalidEditionInput = {
   LANGUAGE_TOO_SHORT: "u",
 };
 
-export const validBookInput = {
+export const validBookInputs = {
   title: "The Hunger Games",
   genre: Genre.FICTION,
 };
+
+export const invalidBookInputs = {};
