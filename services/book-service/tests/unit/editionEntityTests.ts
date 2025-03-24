@@ -52,6 +52,19 @@ describe("Edition model entity unit tests", () => {
           isIsbn: editionFailedValidation.ISBN_INVALID_MESSAGE,
         });
       });
+
+      it("publication_date is invalid", () => {
+        const invalidDate = new Date(invalidEditionInput.INVALID_DATE);
+        edition.publication_date = invalidDate;
+
+        const errors = validateSync(edition);
+
+        assert.strictEqual(errors.length, 1);
+        assert.strictEqual(errors[0].value, invalidDate);
+        assert.deepEqual(errors[0].constraints, {
+          isDate: editionFailedValidation.PUBLICATION_DATE_INVALID_MESSAGE,
+        });
+      });
     });
   });
 });

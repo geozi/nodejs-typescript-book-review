@@ -21,4 +21,5 @@ export const validEditionInput = {
 
 export const invalidEditionInput = {
   INVALID_ISBN: "123456",
+  INVALID_DATE: "December",
 };
