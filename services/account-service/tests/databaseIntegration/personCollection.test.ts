@@ -1,11 +1,11 @@
-import { Person } from "models/person.model";
+import { Person } from "models/Person";
 import mongoose, { ConnectOptions } from "mongoose";
 import sinon, { SinonStub } from "sinon";
 import { Request, Response } from "express";
 import { validPersonInput } from "../testInputs";
 import { validUserInput } from "../testInputs";
-import { User } from "models/user.model";
-import { callPersonAddition } from "controllers/person.controller";
+import { User } from "models/User";
+import { callPersonAddition } from "controllers/personController";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import assert from "assert";
 

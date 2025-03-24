@@ -2,10 +2,10 @@ import assert from "assert";
 import mongoose, { ConnectOptions } from "mongoose";
 import sinon, { SinonStub } from "sinon";
 import * as dotenv from "dotenv";
-import { User } from "models/user.model";
+import { User } from "models/User";
 import { Request, Response } from "express";
 import { validUserInput } from "../testInputs";
-import { callUserRegistration } from "controllers/user.controller";
+import { callUserRegistration } from "controllers/userController";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 dotenv.config();
 
