@@ -4,7 +4,7 @@
  */
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
-import { appLogger } from "../../logs/logger.config";
+import { appLogger } from "../../logs/loggerConfig";
 import { reqBodyToPerson, reqBodyToPersonUpdate } from "mappers/personMapper";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";

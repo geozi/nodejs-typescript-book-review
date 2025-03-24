@@ -4,7 +4,7 @@
  */
 import { IPerson } from "interfaces/documents/IPerson";
 import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
-import { appLogger } from "../../logs/logger.config";
+import { appLogger } from "../../logs/loggerConfig";
 import { Person } from "models/Person";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
@@ -21,8 +21,6 @@ import { personControllerResponseMessages } from "messages/response/personContro
 export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
   try {
     const savedPerson = await newPerson.save();
-
-    appLogger.info(`Person repository: ${addPerson.name} called successfully`);
 
     return savedPerson;
   } catch (error) {
@@ -77,10 +75,6 @@ export const updatePerson = async (
       );
     }
 
-    appLogger.info(
-      `Person repository: ${updatePerson.name} called successfully`
-    );
-
     return updatedPerson;
   } catch (error) {
     if (error instanceof NotFoundError) {
@@ -116,10 +110,6 @@ export const getPersonByUsername = async (
         personControllerResponseMessages.PERSON_INFO_NOT_FOUND_MESSAGE
       );
     }
-
-    appLogger.info(
-      `Person repository: ${getPersonByUsername.name} called successfully`
-    );
 
     return foundPerson;
   } catch (error) {

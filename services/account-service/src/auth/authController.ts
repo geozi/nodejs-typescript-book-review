@@ -11,7 +11,7 @@ import { RoleType } from "resources/enums/roleTypeEnums";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import { NotFoundError } from "errors/notFoundErrorClass";
-import { appLogger } from "../../logs/logger.config";
+import { appLogger } from "../../logs/loggerConfig";
 import { ServerError } from "errors/serverErrorClass";
 import { redisClient } from "../../redis.config";
 import { AbortError, ErrorReply } from "redis";
