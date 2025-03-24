@@ -11,7 +11,7 @@ import { Author } from "./Author";
 import { Genre } from "resources/enum/Genre";
 import { IsString, MinLength, MaxLength, IsEnum } from "class-validator";
 import { bookConstants } from "resources/constants/bookConstants";
-import { bookFailedValidation } from "messages/bookValidationMessages";
+import { bookFailedValidation } from "messages/validation/bookValidationMessages";
 
 @Entity()
 export class Book {
