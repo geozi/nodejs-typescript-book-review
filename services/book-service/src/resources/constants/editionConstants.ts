@@ -4,5 +4,5 @@ export const editionConstants = {
   PUBLISHER_MIN_LENGTH: 2,
   PUBLISHER_MAX_LENGTH: 70,
   MIN_PAGE_COUNT: 5,
-  LANGUAGE_MIN_LENGTH: 1,
+  LANGUAGE_MIN_LENGTH: 2,
 };
