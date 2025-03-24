@@ -1,6 +1,6 @@
 /**
  * Registration route.
- * @module src/routes/reg.route
+ * @module src/routes/regRoutes
  */
 import { callUserRegistration } from "controllers/userController";
 import { Router } from "express";

@@ -1,3 +1,8 @@
+/**
+ * Passport configuration file.
+ * @module src/routes/passportConfig
+ */
+
 import passport from "passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { redisClient } from "../../redis.config";

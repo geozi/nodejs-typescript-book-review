@@ -1,6 +1,6 @@
 /**
  * Person routes.
- * @module src/routes/person.route
+ * @module src/routes/personRoutes
  */
 import {
   callPersonAddition,

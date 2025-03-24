@@ -1,9 +1,9 @@
 /**
  * Authentication route.
- * @module src/routes/auth.route
+ * @module src/routes/authRoutes
  */
-import { loginUser } from "auth/auth.controller";
-import { userLoginRules } from "auth/auth.rules";
+import { loginUser } from "auth/authController";
+import { userLoginRules } from "auth/authRules";
 import { Router } from "express";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 
