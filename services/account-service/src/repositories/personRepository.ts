@@ -1,6 +1,6 @@
 /**
  * Person repository.
- * @module src/repositories/person.repository
+ * @module src/repositories/personRepository
  */
 import { IPerson } from "interfaces/documents/IPerson";
 import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";

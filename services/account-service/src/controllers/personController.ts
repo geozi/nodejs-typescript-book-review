@@ -13,7 +13,7 @@ import {
   addPerson,
   getPersonByUsername,
   updatePerson,
-} from "repositories/person.repository";
+} from "repositories/personRepository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { recastReqToIReq } from "mappers/commonMapper";

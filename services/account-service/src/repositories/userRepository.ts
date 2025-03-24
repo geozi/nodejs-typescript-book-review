@@ -1,6 +1,6 @@
 /**
  * User repository.
- * @module src/repositories/user.repository
+ * @module src/repositories/userRepository
  */
 import { IUser } from "interfaces/documents/IUser";
 import { IUserUpdate } from "interfaces/secondary/IUserUpdate";

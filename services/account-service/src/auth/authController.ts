@@ -3,7 +3,7 @@
  * @module src/auth/authController
  */
 import { Request, Response } from "express";
-import { getUserByUsername } from "repositories/user.repository";
+import { getUserByUsername } from "repositories/userRepository";
 import bcrypt from "bcryptjs";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { authResponseMessages } from "./authResponseMessages";

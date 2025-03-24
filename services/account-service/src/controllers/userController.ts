@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
 import { reqBodyToUser, reqBodyToUserUpdate } from "mappers/userMapper";
 import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
-import { addUser, updateUser } from "repositories/user.repository";
+import { addUser, updateUser } from "repositories/userRepository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
