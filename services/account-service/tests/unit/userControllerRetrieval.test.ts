@@ -1,11 +1,11 @@
-import { User } from "models/user.model";
+import { User } from "models/User";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validUserInput } from "../testInputs";
 import { Request, Response } from "express";
-import { retrieveUser } from "controllers/user.controller";
+import { retrieveUser } from "controllers/userController";
 import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
+import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
 
 describe("User controller unit tests", () => {
   let req: Partial<Request>;
