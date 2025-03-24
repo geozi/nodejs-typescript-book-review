@@ -7,7 +7,7 @@ import assert from "assert";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
 
-describe("User controller unit tests", () => {
+describe("User controller retrieval unit tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;

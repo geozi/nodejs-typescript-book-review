@@ -1,7 +1,7 @@
 import { IUser } from "interfaces/documents/IUser";
 import { User } from "models/User";
 import sinon, { SinonStub } from "sinon";
-import { invalidUserInputs, validUserInput } from "../../tests/testInputs";
+import { invalidUserInputs, validUserInput } from "../testInputs";
 import assert from "assert";
 import { Error } from "mongoose";
 import { userFailedValidation } from "messages/validation/userValidationMessages";

@@ -7,7 +7,7 @@ import {
   getUserByUsername,
   updateUser,
 } from "repositories/userRepository";
-import { validUserInput } from "../../tests/testInputs";
+import { validUserInput } from "../testInputs";
 import { Error, Types } from "mongoose";
 import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
 import { NotFoundError } from "errors/notFoundErrorClass";

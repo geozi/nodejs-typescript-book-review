@@ -6,7 +6,7 @@ import {
   updatePerson,
 } from "repositories/personRepository";
 import sinon, { SinonStub } from "sinon";
-import { validPersonInput } from "../../tests/testInputs";
+import { validPersonInput } from "../testInputs";
 import assert from "assert";
 import { Error, Types } from "mongoose";
 import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
