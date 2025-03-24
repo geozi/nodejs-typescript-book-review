@@ -1,6 +1,6 @@
 /**
  * Common HTTP response messages.
- * @module src/messages/response/commonResponse.message
+ * @module src/messages/response/commonResponseMessages
  */
 
 /**

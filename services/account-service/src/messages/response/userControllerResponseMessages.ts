@@ -1,6 +1,6 @@
 /**
  * User controller HTTP response messages.
- * @module src/messages/response/userControllerResponse.message
+ * @module src/messages/response/userControllerResponseMessages
  */
 
 /**

@@ -3,7 +3,7 @@
  * @module src/middleware/jsonError.catch
  */
 import { Request, Response, NextFunction } from "express";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 
 /**
  * Handles JSON payload errors.

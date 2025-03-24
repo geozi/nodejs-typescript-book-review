@@ -7,10 +7,10 @@ import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
 import { User } from "models/user.model";
 import { appLogger } from "../../logs/logger.config";
 import { Error } from "mongoose";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { ServerError } from "errors/serverErrorClass";
 import { NotFoundError } from "errors/notFoundErrorClass";
-import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
+import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
 
 /**
  * Returns a user with the specified username.

@@ -7,10 +7,10 @@ import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
 import { appLogger } from "../../logs/logger.config";
 import { Person } from "models/person.model";
 import { Error } from "mongoose";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { ServerError } from "errors/serverErrorClass";
 import { NotFoundError } from "errors/notFoundErrorClass";
-import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
+import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";
 
 /**
  * Adds the personal information of a user to the database.

@@ -6,8 +6,8 @@ import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
 import { reqBodyToPerson, reqBodyToPersonUpdate } from "mappers/personMapper";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
-import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";
 import { Error } from "mongoose";
 import {
   addPerson,

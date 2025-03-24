@@ -1,6 +1,6 @@
 /**
  * Person controller HTTP response messages.
- * @module src/messages/response/personControllerResponse.message
+ * @module src/messages/response/personControllerResponseMessages
  */
 
 /**

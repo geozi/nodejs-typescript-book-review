@@ -15,7 +15,7 @@ import { appLogger } from "../../logs/logger.config";
 import { ServerError } from "errors/serverErrorClass";
 import { redisClient } from "../../redis.config";
 import { AbortError, ErrorReply } from "redis";
-import { commonResponseMessages } from "messages/response/commonResponse.message";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 dotenv.config();
 
