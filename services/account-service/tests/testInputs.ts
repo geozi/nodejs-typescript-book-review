@@ -1,4 +1,4 @@
-import { RoleType } from "resources/enums/roleType.enum";
+import { RoleType } from "resources/enums/roleTypeEnums";
 
 export const validUserInput = {
   username: "newUser",
