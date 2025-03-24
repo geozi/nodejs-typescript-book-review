@@ -4,6 +4,7 @@ import { Book } from "entities/Book";
 import { IBookUpdate } from "interfaces/IBookUpdate";
 import { appLogger } from "../../logs/loggerConfigs";
 import { ServerError } from "errors/serverErrorClass";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 
 const bookRepository = AppDataSource.getRepository(Book);
 
@@ -23,7 +24,7 @@ export const getBookByTitle = async (title: string): Promise<Book | null> => {
       `Book repository: ${getBookByTitle.name} -> ServerError thrown`
     );
 
-    throw new ServerError("");
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
   }
 };
 
