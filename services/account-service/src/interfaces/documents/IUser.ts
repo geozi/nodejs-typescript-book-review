@@ -1,6 +1,6 @@
 /**
  * IUser interface.
- * @module src/interfaces/documents/iUser.interface
+ * @module src/interfaces/documents/IUser
  */
 import { Document } from "mongoose";
 import { RoleType } from "resources/enums/roleType.enum";

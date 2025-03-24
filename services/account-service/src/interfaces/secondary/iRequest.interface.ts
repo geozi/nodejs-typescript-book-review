@@ -3,7 +3,7 @@
  * @module src/interfaces/secondary/iRequest.interface
  */
 import { Request } from "express";
-import { IUser } from "interfaces/documents/iUser.interface";
+import { IUser } from "interfaces/documents/IUser";
 
 /**
  * Represents an extended version of a typical HTTP request.

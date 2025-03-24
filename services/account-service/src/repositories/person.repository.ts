@@ -2,7 +2,7 @@
  * Person repository.
  * @module src/repositories/person.repository
  */
-import { IPerson } from "interfaces/documents/iPerson.interface";
+import { IPerson } from "interfaces/documents/IPerson";
 import { IPersonUpdate } from "interfaces/secondary/iPersonUpdate.interface";
 import { appLogger } from "../../logs/logger.config";
 import { Person } from "models/person.model";

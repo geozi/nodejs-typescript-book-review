@@ -1,6 +1,6 @@
 /**
  * IPerson interface.
- * @module src/interfaces/documents/iPerson.interface
+ * @module src/interfaces/documents/IPerson
  */
 import { IAddress } from "interfaces/secondary/iAddress.interface";
 import { Document } from "mongoose";

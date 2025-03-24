@@ -2,7 +2,7 @@
  * User model schema.
  * @module src/models/user.model
  */
-import { IUser } from "interfaces/documents/iUser.interface";
+import { IUser } from "interfaces/documents/IUser";
 import { userFailedValidation } from "messages/validation/userValidation.message";
 import { model, Schema } from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";

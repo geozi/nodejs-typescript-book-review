@@ -2,7 +2,7 @@
  * Person mapper.
  * @module src/mappers/person.mapper
  */
-import { IPerson } from "interfaces/documents/iPerson.interface";
+import { IPerson } from "interfaces/documents/IPerson";
 import { IAddress } from "interfaces/secondary/iAddress.interface";
 import { IPersonUpdate } from "interfaces/secondary/iPersonUpdate.interface";
 import { IRequest } from "interfaces/secondary/iRequest.interface";

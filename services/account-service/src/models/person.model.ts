@@ -2,7 +2,7 @@
  * Person model schema.
  * @module src/models/person.model
  */
-import { IPerson } from "interfaces/documents/iPerson.interface";
+import { IPerson } from "interfaces/documents/IPerson";
 import { personFailedValidation } from "messages/validation/personValidation.message";
 import { userFailedValidation } from "messages/validation/userValidation.message";
 import { model, Schema } from "mongoose";
