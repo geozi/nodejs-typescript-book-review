@@ -65,6 +65,95 @@ describe("Edition model entity unit tests", () => {
           isDate: editionFailedValidation.PUBLICATION_DATE_INVALID_MESSAGE,
         });
       });
+
+      it("publisher name is too short", () => {
+        edition.publisher = invalidEditionInput.PUBLISHER_NAME_TOO_SHORT;
+
+        const errors = validateSync(edition);
+
+        assert.strictEqual(errors.length, 1);
+        assert.strictEqual(
+          errors[0].value,
+          invalidEditionInput.PUBLISHER_NAME_TOO_SHORT
+        );
+        assert.deepEqual(errors[0].constraints, {
+          minLength: editionFailedValidation.PUBLISHER_BELOW_MIN_LENGTH_MESSAGE,
+        });
+      });
+
+      it("publisher name is too long", () => {
+        edition.publisher = invalidEditionInput.PUBLISHER_NAME_TOO_LONG;
+
+        const errors = validateSync(edition);
+
+        assert.strictEqual(errors.length, 1);
+        assert.strictEqual(
+          errors[0].value,
+          invalidEditionInput.PUBLISHER_NAME_TOO_LONG
+        );
+        assert.deepEqual(errors[0].constraints, {
+          maxLength: editionFailedValidation.PUBLISHER_ABOVE_MAX_LENGTH_MESSAGE,
+        });
+      });
+
+      it("page_count is a negative number", () => {
+        edition.page_count = invalidEditionInput.PAGE_COUNT_NEGATIVE;
+
+        const errors = validateSync(edition);
+
+        assert.strictEqual(errors.length, 1);
+        assert.strictEqual(
+          errors[0].value,
+          invalidEditionInput.PAGE_COUNT_NEGATIVE
+        );
+        assert.deepEqual(errors[0].constraints, {
+          min: editionFailedValidation.PAGE_COUNT_MINIMUM_MESSAGE,
+          isPositive: editionFailedValidation.PAGE_COUNT_NEGATIVE_MESSAGE,
+        });
+      });
+
+      it("page_count is too small", () => {
+        edition.page_count = invalidEditionInput.PAGE_COUNT_MIN;
+
+        const errors = validateSync(edition);
+
+        assert.strictEqual(errors.length, 1);
+        assert.strictEqual(errors[0].value, invalidEditionInput.PAGE_COUNT_MIN);
+        assert.deepEqual(errors[0].constraints, {
+          min: editionFailedValidation.PAGE_COUNT_MINIMUM_MESSAGE,
+        });
+      });
+
+      it("book_language is invalid", () => {
+        edition.book_language = invalidEditionInput.INVALID_LANGUAGE;
+
+        const errors = validateSync(edition);
+
+        assert.strictEqual(errors.length, 1);
+        assert.strictEqual(
+          errors[0].value,
+          invalidEditionInput.INVALID_LANGUAGE
+        );
+        assert.deepEqual(errors[0].constraints, {
+          matches: editionFailedValidation.LANGUAGE_INVALID,
+        });
+      });
+
+      // it("book_language is too short", () => {
+      //   edition.book_language = invalidEditionInput.LANGUAGE_TOO_SHORT;
+
+      //   const errors = validateSync(edition);
+      //   console.log(errors);
+
+      //   assert.strictEqual(errors.length, 1);
+      //   assert.strictEqual(
+      //     errors[0].value,
+      //     invalidEditionInput.LANGUAGE_TOO_SHORT
+      //   );
+      //   assert.deepEqual(errors[0].constraints, {
+      //     minLength: editionFailedValidation.LANGUAGE_MIN_LENGTH_MESSAGE,
+      //   });
+      // });
     });
   });
 });
