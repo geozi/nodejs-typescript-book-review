@@ -8,8 +8,8 @@ import { appLogger } from "../../logs/logger.config";
 import { Person } from "models/person.model";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
-import { ServerError } from "errors/serverError.class";
-import { NotFoundError } from "errors/notFoundError.class";
+import { ServerError } from "errors/serverErrorClass";
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { personControllerResponseMessages } from "messages/response/personControllerResponse.message";
 
 /**

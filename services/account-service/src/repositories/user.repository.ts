@@ -8,8 +8,8 @@ import { User } from "models/user.model";
 import { appLogger } from "../../logs/logger.config";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
-import { ServerError } from "errors/serverError.class";
-import { NotFoundError } from "errors/notFoundError.class";
+import { ServerError } from "errors/serverErrorClass";
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { userControllerResponseMessages } from "messages/response/userControllerResponse.message";
 
 /**

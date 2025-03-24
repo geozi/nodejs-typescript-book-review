@@ -2,7 +2,7 @@
  * User controller.
  * @module src/controllers/userController
  */
-import { ServerError } from "errors/serverError.class";
+import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
 import { reqBodyToUser, reqBodyToUserUpdate } from "mappers/user.mapper";
@@ -11,7 +11,7 @@ import { addUser, updateUser } from "repositories/user.repository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Error } from "mongoose";
 import { commonResponseMessages } from "messages/response/commonResponse.message";
-import { NotFoundError } from "errors/notFoundError.class";
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { ErrorReply, AbortError } from "redis";
 import { recastReqToIReq } from "mappers/common.mapper";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";

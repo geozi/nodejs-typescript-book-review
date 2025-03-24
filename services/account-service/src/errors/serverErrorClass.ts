@@ -1,9 +1,9 @@
 /**
  * ServerError class.
- * @module src/errors/serverError.class
+ * @module src/errors/serverErrorClass
  */
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { AbstractError } from "./abstractError.class";
+import { AbstractError } from "./abstractErrorClass";
 
 /**
  * Custom wrapper for internal server error (500).

@@ -1,6 +1,6 @@
 /**
  * AbstractError class.
- * @module src/errors/abstractError.class
+ * @module src/errors/abstractErrorClass
  */
 
 /**

@@ -2,7 +2,7 @@
  * Person controller.
  * @module src/controllers/personController
  */
-import { ServerError } from "errors/serverError.class";
+import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "../../logs/logger.config";
 import { reqBodyToPerson, reqBodyToPersonUpdate } from "mappers/person.mapper";
@@ -15,7 +15,7 @@ import {
   updatePerson,
 } from "repositories/person.repository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { NotFoundError } from "errors/notFoundError.class";
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { recastReqToIReq } from "mappers/common.mapper";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 

@@ -1,9 +1,9 @@
 /**
  * NotFoundError class.
- * @module src/errors/notFoundError.class
+ * @module src/errors/notFoundErrorClass
  */
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { AbstractError } from "./abstractError.class";
+import { AbstractError } from "./abstractErrorClass";
 
 /**
  * Triggered when the requested document(s) is/are not found (404).
