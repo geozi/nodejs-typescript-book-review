@@ -15,7 +15,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "types": ["node", "mocha"]
+    "types": ["node", "mocha"],
+    "sourceMap": true
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "logs/loggerConfig.ts"],
   "exclude": ["node_modules"]
