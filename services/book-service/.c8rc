@@ -1,0 +1,5 @@
+{
+  "reporter": ["html", "text"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["tests/**/*.ts", "node_modules"]
+}
