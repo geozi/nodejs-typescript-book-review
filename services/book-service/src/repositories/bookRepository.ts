@@ -9,7 +9,7 @@ import { Genre } from "resources/enum/Genre";
 
 const bookRepository = AppDataSource.getRepository(Book);
 
-export const getBooksByGenre = async (genre: Genre) => {
+export const getBooksByGenre = async (genre: Genre): Promise<Book[] | null> => {
   try {
     const retrievedBooks = await bookRepository.findBy({ genre: genre });
     if (retrievedBooks.length === 0) {
