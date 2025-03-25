@@ -25,7 +25,7 @@ describe("Book repository unit tests", () => {
   let mockId: number;
 
   describe(`${getBooksByGenre.name}`, () => {
-    //let genre: Genre;
+    let genre: Genre;
     let mockBooks: Book[];
 
     beforeEach(() => {
@@ -35,17 +35,36 @@ describe("Book repository unit tests", () => {
       // Stubs
       findByStub = sinon.stub(AppDataSource.getRepository(Book), "findBy");
 
-      // Mocks
-      mockBooks = [new Book(), new Book()];
-      //genre = Genre.FICTION;
+      genre = Genre.FICTION;
     });
 
     it("Promise resolves to Book[]", async () => {
+      mockBooks = [new Book(), new Book()];
       findByStub.resolves(mockBooks);
 
-      //const retrievedBooks = await getBooksByGenre(genre);
+      const retrievedBooks = await getBooksByGenre(genre);
 
-      //assert.strictEqual(retrievedBooks.length, 2);
+      assert.notStrictEqual(retrievedBooks, null);
+      assert.strictEqual(retrievedBooks?.length, 2);
+    });
+
+    it("Promise resolves to null", async () => {
+      mockBooks = [];
+      findByStub.resolves(mockBooks);
+
+      const retrievedBooks = await getBooksByGenre(genre);
+
+      assert.strictEqual(retrievedBooks, null);
+    });
+
+    it("Promise rejects -> ServerError", async () => {
+      findByStub.rejects();
+
+      try {
+        await getBooksByGenre(genre);
+      } catch (error) {
+        assert(error instanceof ServerError);
+      }
     });
   });
 
