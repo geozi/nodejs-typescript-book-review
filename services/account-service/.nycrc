@@ -1,0 +1,6 @@
+{
+  "all": true,
+  "instrument": true,
+  "include": ["src/**/*.ts"],
+  "exclude": ["tests/**/*.ts", "node_modules"]
+}
