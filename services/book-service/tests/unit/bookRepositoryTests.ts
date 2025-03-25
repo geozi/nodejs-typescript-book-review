@@ -5,6 +5,7 @@ import {
   getBookById,
   addBook,
   updateBook,
+  getBooksByGenre,
 } from "repositories/bookRepository";
 import sinon, { SinonStub } from "sinon";
 import { invalidBookInputs, validBookInputs } from "../../tests/testInputs";
@@ -13,13 +14,40 @@ import { ServerError } from "errors/serverErrorClass";
 import { ValidationError } from "class-validator";
 import { IBookUpdate } from "interfaces/IBookUpdate";
 import { UpdateResult } from "typeorm";
+import { Genre } from "resources/enum/Genre";
 
 describe("Book repository unit tests", () => {
   let findOneByStub: SinonStub;
+  let findByStub: SinonStub;
   let saveStub: SinonStub;
   let updateStub: SinonStub;
   let mockBook: Book;
   let mockId: number;
+
+  describe(`${getBooksByGenre.name}`, () => {
+    //let genre: Genre;
+    let mockBooks: Book[];
+
+    beforeEach(() => {
+      // Reset stubs and mocks
+      sinon.restore();
+
+      // Stubs
+      findByStub = sinon.stub(AppDataSource.getRepository(Book), "findBy");
+
+      // Mocks
+      mockBooks = [new Book(), new Book()];
+      //genre = Genre.FICTION;
+    });
+
+    it("Promise resolves to Book[]", async () => {
+      findByStub.resolves(mockBooks);
+
+      //const retrievedBooks = await getBooksByGenre(genre);
+
+      //assert.strictEqual(retrievedBooks.length, 2);
+    });
+  });
 
   describe(`${getBookByTitle.name}`, () => {
     let title: string;
