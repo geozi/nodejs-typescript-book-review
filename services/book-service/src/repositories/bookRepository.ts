@@ -5,8 +5,29 @@ import { IBookUpdate } from "interfaces/IBookUpdate";
 import { appLogger } from "../../logs/loggerConfigs";
 import { ServerError } from "errors/serverErrorClass";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { Genre } from "resources/enum/Genre";
 
 const bookRepository = AppDataSource.getRepository(Book);
+
+export const getBooksByGenre = async (genre: Genre) => {
+  try {
+    const retrievedBooks = await bookRepository.findBy({ genre: genre });
+    if (retrievedBooks.length === 0) {
+      return new Promise((resolve) => {
+        resolve(null);
+      });
+    }
+
+    return retrievedBooks;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    appLogger.error(
+      `Book repository: ${getBooksByGenre.name} -> ServerError thrown`
+    );
+
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
+  }
+};
 
 export const getBookByTitle = async (title: string): Promise<Book | null> => {
   try {
