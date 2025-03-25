@@ -34,7 +34,7 @@ export const getBookById = async (id: number): Promise<Book | null> => {
   }
 };
 
-export const addBook = async (newBook: Book) => {
+export const addBook = async (newBook: Book): Promise<Book> => {
   try {
     const errors = await validate(newBook);
     if (errors.length > 0) {
@@ -57,9 +57,20 @@ export const addBook = async (newBook: Book) => {
   }
 };
 
-export const updateBook = async (id: number, updateObj: IBookUpdate) => {
+export const updateBook = async (
+  id: number,
+  updateObj: IBookUpdate
+): Promise<Book | null> => {
   try {
-    await bookRepository.update({ id: id }, updateObj);
+    const result = await bookRepository.update({ id: id }, updateObj);
+    if (result.affected === 0) {
+      return new Promise((resolve) => {
+        resolve(null);
+      });
+    }
+
+    return await bookRepository.findOneBy({ id: id });
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     appLogger.error(
