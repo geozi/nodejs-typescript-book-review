@@ -44,7 +44,7 @@ export const addEdition = async (newEdition: Edition): Promise<Edition> => {
       throw new ValidationError();
     }
 
-    return editionRepository.save(newEdition);
+    return await editionRepository.save(newEdition);
   } catch (error) {
     if (error instanceof ValidationError) {
       appLogger.error(
