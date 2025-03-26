@@ -9,7 +9,9 @@ import { IEditionUpdate } from "interfaces/IEditionUpdate";
 
 const editionRepository = AppDataSource.getRepository(Edition);
 
-export const getEditionByISBN = async (isbn: string) => {
+export const getEditionByISBN = async (
+  isbn: string
+): Promise<Edition | null> => {
   try {
     return await editionRepository.findOneBy({ isbn: isbn });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -22,7 +24,9 @@ export const getEditionByISBN = async (isbn: string) => {
   }
 };
 
-export const getEditionsByBook = async (book: Book) => {
+export const getEditionsByBook = async (
+  book: Book
+): Promise<Edition[] | null> => {
   try {
     const retrievedEditions = await editionRepository.findBy({ book: book });
     if (retrievedEditions.length === 0) {
@@ -42,11 +46,11 @@ export const getEditionsByBook = async (book: Book) => {
   }
 };
 
-export const addEdition = async (newEdition: Edition) => {
+export const addEdition = async (newEdition: Edition): Promise<Edition> => {
   try {
     const errors = await validate(newEdition);
     if (errors.length > 0) {
-      return new ValidationError();
+      throw new ValidationError();
     }
 
     return editionRepository.save(newEdition);
@@ -67,7 +71,10 @@ export const addEdition = async (newEdition: Edition) => {
   }
 };
 
-export const updateEdition = async (id: number, updateObj: IEditionUpdate) => {
+export const updateEdition = async (
+  id: number,
+  updateObj: IEditionUpdate
+): Promise<Edition | null> => {
   try {
     const result = await editionRepository.update({ id: id }, updateObj);
     if (result.affected === 0) {
