@@ -15,6 +15,7 @@ import { ValidationError } from "class-validator";
 import { IBookUpdate } from "interfaces/IBookUpdate";
 import { UpdateResult } from "typeorm";
 import { Genre } from "resources/enum/Genre";
+import { Author } from "entities/Author";
 
 describe("Book repository unit tests", () => {
   let findOneByStub: SinonStub;
@@ -23,6 +24,7 @@ describe("Book repository unit tests", () => {
   let updateStub: SinonStub;
   let mockBook: Book;
   let mockId: number;
+  let mockAuthor: Author;
 
   describe(`${getBooksByGenre.name}`, () => {
     let genre: Genre;
@@ -168,9 +170,12 @@ describe("Book repository unit tests", () => {
       saveStub = sinon.stub(AppDataSource.getRepository(Book), "save");
 
       // Mocks
+      mockAuthor = new Author();
       mockBook = new Book();
       mockBook.title = validBookInputs.title;
       mockBook.genre = validBookInputs.genre;
+      mockBook.authors = [];
+      mockBook.authors.push(mockAuthor);
     });
 
     it("Promise resolves to Book object", async () => {
@@ -179,6 +184,7 @@ describe("Book repository unit tests", () => {
       const savedBook = await addBook(mockBook);
 
       assert(savedBook instanceof Book);
+      assert.strictEqual(savedBook.authors[0].id, mockAuthor.id);
     });
 
     it("Promise rejects -> ValidationError", async () => {
