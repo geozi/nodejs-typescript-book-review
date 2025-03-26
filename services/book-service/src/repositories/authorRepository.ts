@@ -6,7 +6,7 @@ import { commonResponseMessages } from "messages/response/commonResponseMessages
 import { validate, ValidationError } from "class-validator";
 import { IAuthorUpdate } from "interfaces/IAuthorUpdate";
 
-const authorRepository = await AppDataSource.getRepository(Author);
+const authorRepository = AppDataSource.getRepository(Author);
 
 export const getAuthorById = async (id: number): Promise<Author | null> => {
   try {
