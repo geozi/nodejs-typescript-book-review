@@ -2,7 +2,8 @@ import { IsString, Matches, MinLength } from "class-validator";
 import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 import { authorConstants } from "resources/constants/authorConstants";
 import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Book } from "./Book";
 
 @Entity()
 export class Author {
@@ -29,4 +30,8 @@ export class Author {
     message: authorFailedValidation.LAST_NAME_INVALID,
   })
   last_name!: string;
+
+  // Relations
+  @ManyToMany(() => Book, (book) => book.authors)
+  books!: Book[];
 }
