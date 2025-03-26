@@ -50,13 +50,14 @@ describe("Book repository unit tests", () => {
       assert.strictEqual(retrievedBooks?.length, 2);
     });
 
-    it("Promise resolves to null", async () => {
+    it("Promise resolves to empty Book[]", async () => {
       mockBooks = [];
       findByStub.resolves(mockBooks);
 
       const retrievedBooks = await getBooksByGenre(genre);
 
-      assert.strictEqual(retrievedBooks, null);
+      assert.notStrictEqual(retrievedBooks, null);
+      assert.strictEqual(retrievedBooks.length, 0);
     });
 
     it("Promise rejects -> ServerError", async () => {
