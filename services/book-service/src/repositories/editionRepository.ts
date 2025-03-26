@@ -24,18 +24,9 @@ export const getEditionByISBN = async (
   }
 };
 
-export const getEditionsByBook = async (
-  book: Book
-): Promise<Edition[] | null> => {
+export const getEditionsByBook = async (book: Book): Promise<Edition[]> => {
   try {
-    const retrievedEditions = await editionRepository.findBy({ book: book });
-    if (retrievedEditions.length === 0) {
-      return new Promise((resolve) => {
-        resolve(null);
-      });
-    }
-
-    return retrievedEditions;
+    return await editionRepository.findBy({ book: book });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     appLogger.error(
