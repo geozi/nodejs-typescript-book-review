@@ -7,18 +7,25 @@ import {
   addEdition,
   getEditionByISBN,
   getEditionsByBook,
+  updateEdition,
 } from "repositories/editionRepository";
 import assert from "assert";
 import { ServerError } from "errors/serverErrorClass";
 import { ValidationError } from "class-validator";
+import { IEditionUpdate } from "interfaces/IEditionUpdate";
+import { UpdateResult } from "typeorm";
 
-describe.only("Edition repository unit tests", () => {
+describe("Edition repository unit tests", () => {
   let findOneByStub: SinonStub;
   let findByStub: SinonStub;
   let saveStub: SinonStub;
+  let updateStub: SinonStub;
   let mockBook: Book;
   let mockEdition: Edition;
   let mockEditions: Edition[];
+  let mockDataObject: IEditionUpdate;
+  let mockUpdateResult: UpdateResult;
+  let mockId: number;
 
   describe(`${getEditionByISBN.name}`, () => {
     beforeEach(() => {
@@ -137,7 +144,7 @@ describe.only("Edition repository unit tests", () => {
       mockEdition.page_count = validEditionInputs.page_count;
       mockEdition.book_format = validEditionInputs.book_format;
       mockEdition.book_language = validEditionInputs.book_language;
-      //mockEdition.book = mockBook;
+      mockEdition.book = mockBook;
     });
 
     it("Promise resolves to Edition object", async () => {
@@ -159,14 +166,85 @@ describe.only("Edition repository unit tests", () => {
       }
     });
 
-    it.only("Promise rejects -> ServerError", async () => {
+    it("Promise rejects -> ServerError", async () => {
       saveStub.rejects();
 
       try {
         await addEdition(mockEdition);
       } catch (error) {
-        console.log(error instanceof ServerError);
-        //assert(error instanceof ServerError);
+        assert(error instanceof ServerError);
+      }
+    });
+  });
+
+  describe(`${updateEdition.name}`, () => {
+    beforeEach(() => {
+      // Reset stubs and mocks
+      sinon.restore();
+
+      // Stubs
+      updateStub = sinon.stub(AppDataSource.getRepository(Edition), "update");
+      findOneByStub = sinon.stub(
+        AppDataSource.getRepository(Edition),
+        "findOneBy"
+      );
+
+      // Mocks
+      mockUpdateResult = new UpdateResult();
+      mockDataObject = {
+        publication_date: new Date(validEditionInputs.publication_date),
+      };
+      mockId = 1;
+      mockEdition = new Edition();
+      mockEdition.id = mockId;
+      mockEdition.publication_date = new Date(
+        validEditionInputs.publication_date
+      );
+    });
+
+    it("Promise resolves to Edition object", async () => {
+      mockUpdateResult.affected = 1;
+      updateStub.resolves(mockUpdateResult);
+      findOneByStub.resolves(mockEdition);
+
+      const updatedEdition = await updateEdition(mockId, mockDataObject);
+
+      assert(updatedEdition instanceof Edition);
+      assert.strictEqual(updatedEdition.id, mockId);
+      assert.deepEqual(
+        updatedEdition.publication_date,
+        mockDataObject.publication_date
+      );
+    });
+
+    it("Promise resolves to null", async () => {
+      mockUpdateResult.affected = 0;
+      updateStub.resolves(mockUpdateResult);
+
+      const updatedEdition = await updateEdition(mockId, mockDataObject);
+
+      assert.strictEqual(updatedEdition, null);
+    });
+
+    it("Promise rejects in update -> ServerError", async () => {
+      updateStub.rejects();
+
+      try {
+        await updateEdition(mockId, mockDataObject);
+      } catch (error) {
+        assert(error instanceof ServerError);
+      }
+    });
+
+    it("Promise rejects in findOneBy -> ServerError", async () => {
+      mockUpdateResult.affected = 1;
+      updateStub.resolves(mockUpdateResult);
+      findOneByStub.rejects();
+
+      try {
+        await updateEdition(mockId, mockDataObject);
+      } catch (error) {
+        assert(error instanceof ServerError);
       }
     });
   });

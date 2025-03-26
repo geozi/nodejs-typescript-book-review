@@ -25,11 +25,13 @@ describe("Book repository unit tests", () => {
   let mockBook: Book;
   let mockId: number;
   let mockAuthor: Author;
+  let mockBooks: Book[];
+  let mockGenre: Genre;
+  let mockTitle: string;
+  let mockDataObject: IBookUpdate;
+  let mockUpdateResult: UpdateResult;
 
   describe(`${getBooksByGenre.name}`, () => {
-    let genre: Genre;
-    let mockBooks: Book[];
-
     beforeEach(() => {
       // Reset stubs and mocks
       sinon.restore();
@@ -37,14 +39,14 @@ describe("Book repository unit tests", () => {
       // Stubs
       findByStub = sinon.stub(AppDataSource.getRepository(Book), "findBy");
 
-      genre = Genre.FICTION;
+      mockGenre = Genre.FICTION;
     });
 
     it("Promise resolves to Book[]", async () => {
       mockBooks = [new Book(), new Book()];
       findByStub.resolves(mockBooks);
 
-      const retrievedBooks = await getBooksByGenre(genre);
+      const retrievedBooks = await getBooksByGenre(mockGenre);
 
       assert.notStrictEqual(retrievedBooks, null);
       assert.strictEqual(retrievedBooks?.length, 2);
@@ -54,7 +56,7 @@ describe("Book repository unit tests", () => {
       mockBooks = [];
       findByStub.resolves(mockBooks);
 
-      const retrievedBooks = await getBooksByGenre(genre);
+      const retrievedBooks = await getBooksByGenre(mockGenre);
 
       assert.notStrictEqual(retrievedBooks, null);
       assert.strictEqual(retrievedBooks.length, 0);
@@ -64,7 +66,7 @@ describe("Book repository unit tests", () => {
       findByStub.rejects();
 
       try {
-        await getBooksByGenre(genre);
+        await getBooksByGenre(mockGenre);
       } catch (error) {
         assert(error instanceof ServerError);
       }
@@ -72,8 +74,6 @@ describe("Book repository unit tests", () => {
   });
 
   describe(`${getBookByTitle.name}`, () => {
-    let title: string;
-
     beforeEach(() => {
       // Reset stubs and mocks
       sinon.restore();
@@ -87,13 +87,13 @@ describe("Book repository unit tests", () => {
       // Mocks
       mockBook = new Book();
       mockBook.title = validBookInputs.title;
-      title = validBookInputs.title;
+      mockTitle = validBookInputs.title;
     });
 
     it(`Promise resolves to Book object`, async () => {
       findOneByStub.resolves(mockBook);
 
-      const book = await getBookByTitle(title);
+      const book = await getBookByTitle(mockTitle);
 
       assert.notStrictEqual(book, null);
       assert(book instanceof Book);
@@ -102,7 +102,7 @@ describe("Book repository unit tests", () => {
     it("Promise resolves to null", async () => {
       findOneByStub.resolves(null);
 
-      const book = await getBookByTitle(title);
+      const book = await getBookByTitle(mockTitle);
 
       assert.strictEqual(book, null);
     });
@@ -110,7 +110,7 @@ describe("Book repository unit tests", () => {
     it("Promise rejects -> ServerError", async () => {
       findOneByStub.rejects();
       try {
-        await getBookByTitle(title);
+        await getBookByTitle(mockTitle);
       } catch (error) {
         assert(error instanceof ServerError);
       }
@@ -210,9 +210,6 @@ describe("Book repository unit tests", () => {
   });
 
   describe(`${updateBook.name}`, () => {
-    let mockDataObject: IBookUpdate;
-    let mockUpdateResult: UpdateResult;
-
     beforeEach(() => {
       // Reset stubs and mocks
       sinon.restore();
@@ -253,8 +250,20 @@ describe("Book repository unit tests", () => {
       assert.strictEqual(updatedBook, null);
     });
 
-    it("Promise rejects -> ServerError", async () => {
+    it("Promise rejects in update -> ServerError", async () => {
       updateStub.rejects();
+
+      try {
+        await updateBook(mockId, mockDataObject);
+      } catch (error) {
+        assert(error instanceof ServerError);
+      }
+    });
+
+    it("Promise rejects in findOneBy -> ServerError", async () => {
+      mockUpdateResult.affected = 1;
+      updateStub.resolves(mockUpdateResult);
+      findOneByStub.rejects();
 
       try {
         await updateBook(mockId, mockDataObject);

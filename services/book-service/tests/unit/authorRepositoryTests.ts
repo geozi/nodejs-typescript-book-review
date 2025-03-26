@@ -19,6 +19,8 @@ describe("Author repository unit tests", () => {
   let findOneByStub: SinonStub;
   let updateStub: SinonStub;
   let saveStub: SinonStub;
+  let mockDataObject: IAuthorUpdate;
+  let mockUpdateResult: UpdateResult;
 
   describe(`${getAuthorById.name}`, () => {
     beforeEach(() => {
@@ -111,9 +113,6 @@ describe("Author repository unit tests", () => {
   });
 
   describe(`${updateAuthor.name}`, () => {
-    let mockDataObject: IAuthorUpdate;
-    let mockUpdateResult: UpdateResult;
-
     beforeEach(() => {
       // Reset stubs and mocks
       sinon.restore();
@@ -155,9 +154,21 @@ describe("Author repository unit tests", () => {
       assert.strictEqual(updatedAuthor, null);
     });
 
-    it("Promise rejects -> ServerError", async () => {
+    it("Promise rejects in update -> ServerError", async () => {
       mockUpdateResult.affected = 1;
       updateStub.rejects();
+
+      try {
+        await updateAuthor(mockId, mockDataObject);
+      } catch (error) {
+        assert(error instanceof ServerError);
+      }
+    });
+
+    it("Promise rejects in findOneBy", async () => {
+      mockUpdateResult.affected = 1;
+      updateStub.resolves(mockUpdateResult);
+      findOneByStub.rejects();
 
       try {
         await updateAuthor(mockId, mockDataObject);
