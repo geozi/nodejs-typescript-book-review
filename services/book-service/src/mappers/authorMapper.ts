@@ -6,8 +6,8 @@ export const reqBodyToAuthor = (req: Request): Author => {
   const { firstName, lastName } = req.body;
 
   const newAuthor = new Author();
-  newAuthor.first_name = firstName;
-  newAuthor.last_name = lastName;
+  newAuthor.firstName = firstName;
+  newAuthor.lastName = lastName;
 
   return newAuthor;
 };
@@ -19,8 +19,8 @@ export const reqBodyToAuthorUpdate = (
 
   const idAsNumber = new Number(id).valueOf();
   const author: IAuthorUpdate = {
-    first_name: firstName,
-    last_name: lastName,
+    firstName: firstName,
+    lastName: lastName,
   };
 
   return [idAsNumber, author];
