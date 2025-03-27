@@ -19,7 +19,7 @@ export class Author {
   @Matches(ALPHABETIC_REGEX, {
     message: authorFailedValidation.FIRST_NAME_INVALID_MESSAGE,
   })
-  first_name!: string;
+  firstName!: string;
 
   @Column({ type: "varchar" })
   @IsString({ message: authorFailedValidation.LAST_NAME_NOT_STRING_MESSAGE })
@@ -29,7 +29,7 @@ export class Author {
   @Matches(ALPHABETIC_REGEX, {
     message: authorFailedValidation.LAST_NAME_INVALID_MESSAGE,
   })
-  last_name!: string;
+  lastName!: string;
 
   // Relations
   @ManyToMany(() => Book, (book) => book.authors)
