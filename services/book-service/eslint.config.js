@@ -9,5 +9,4 @@ export default tseslint.config({
     tseslint.configs.strict,
     tseslint.configs.stylistic,
   ],
-  ignores: ["node_modules/", "coverage/", "logs/app.logs", "README.md"],
 });
