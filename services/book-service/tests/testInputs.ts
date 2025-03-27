@@ -24,6 +24,7 @@ export const invalidEditionInputs = {
   PUBLISHER_NAME_TOO_LONG: `The International Society for the Promotion of Extremely Long and Impractical Titles Publishing House`,
   PAGE_COUNT_NEGATIVE: -1,
   PAGE_COUNT_MIN: 1,
+  INVALID_BOOK_FORMAT: "Electronic",
   INVALID_LANGUAGE: "Engl1sh",
   LANGUAGE_TOO_SHORT: "u",
 };
