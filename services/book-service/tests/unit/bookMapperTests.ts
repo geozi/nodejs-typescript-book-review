@@ -1,10 +1,11 @@
 import { Request } from "express";
-import { reqBodyToBook } from "mappers/bookMapper";
+import { reqBodyToBook, reqBodyToBookUpdate } from "mappers/bookMapper";
 import { invalidBookInputs, validBookInputs } from "../../tests/testInputs";
 import { validateSync } from "class-validator";
 import assert from "assert";
 import { Book } from "entities/Book";
 import { bookFailedValidation } from "messages/validation/bookValidationMessages";
+import { Genre } from "resources/enum/Genre";
 
 describe("Book mapper unit tests", () => {
   let req: Partial<Request>;
@@ -130,6 +131,53 @@ describe("Book mapper unit tests", () => {
         assert.strictEqual(errors.length, 1);
         assert.deepStrictEqual(errors[0].constraints, {
           isEnum: bookFailedValidation.GENRE_INVALID_MESSAGE,
+        });
+      });
+    });
+  });
+
+  describe(`${reqBodyToBookUpdate.name}`, () => {
+    describe("Positive scenarios", () => {
+      it("request has valid title", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              id: 1,
+              title: validBookInputs.title,
+              genre: undefined,
+            })
+          ),
+        };
+
+        const updateArray = reqBodyToBookUpdate(req as Request);
+        const id = updateArray[0];
+        const bookToUpdate = updateArray[1];
+
+        assert.strictEqual(Number.isInteger(id), true);
+        assert.strictEqual(id, 1);
+        assert.deepStrictEqual(bookToUpdate, {
+          title: validBookInputs.title,
+        });
+      });
+
+      it("request has valid genre", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              id: 1,
+              genre: validBookInputs.genre,
+            })
+          ),
+        };
+
+        const updateArray = reqBodyToBookUpdate(req as Request);
+        const id = updateArray[0];
+        const bookToUpdate = updateArray[1];
+
+        assert.strictEqual(Number.isInteger(id), true);
+        assert.strictEqual(id, 1);
+        assert.deepStrictEqual(bookToUpdate, {
+          genre: Genre.FICTION,
         });
       });
     });
