@@ -36,4 +36,5 @@ export const validBookInputs = {
 export const invalidBookInputs = {
   TITLE_TOO_SHORT: "T",
   TITLE_TOO_LONG: `The Astonishing Chronicles of an Unlikely Hero Who Navigates a World of Endless Wonders and Unexpected Perils`,
+  GENRE_INVALID: "Fun",
 };

@@ -1,9 +1,10 @@
 import { Request } from "express";
 import { reqBodyToBook } from "mappers/bookMapper";
-import { validBookInputs } from "../../tests/testInputs";
+import { invalidBookInputs, validBookInputs } from "../../tests/testInputs";
 import { validateSync } from "class-validator";
 import assert from "assert";
 import { Book } from "entities/Book";
+import { bookFailedValidation } from "messages/validation/bookValidationMessages";
 
 describe("Book mapper unit tests", () => {
   let req: Partial<Request>;
@@ -26,6 +27,110 @@ describe("Book mapper unit tests", () => {
         assert.strictEqual(errors.length, 0);
         assert.strictEqual(newBook.title, validBookInputs.title);
         assert.strictEqual(newBook.genre.toString(), validBookInputs.genre);
+      });
+    });
+
+    describe("Negative scenarios", () => {
+      it("title is too short", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              title: invalidBookInputs.TITLE_TOO_SHORT,
+              genre: validBookInputs.genre,
+            })
+          ),
+        };
+
+        const newBook = reqBodyToBook(req as Request);
+        const errors = validateSync(newBook);
+
+        assert(newBook instanceof Book);
+        assert.strictEqual(errors.length, 1);
+        assert.deepStrictEqual(errors[0].constraints, {
+          minLength: bookFailedValidation.TITLE_BELOW_MIN_LENGTH_MESSAGE,
+        });
+      });
+
+      it("title is too long", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              title: invalidBookInputs.TITLE_TOO_LONG,
+              genre: validBookInputs.genre,
+            })
+          ),
+        };
+
+        const newBook = reqBodyToBook(req as Request);
+        const errors = validateSync(newBook);
+
+        assert(newBook instanceof Book);
+        assert.strictEqual(errors.length, 1);
+        assert.deepStrictEqual(errors[0].constraints, {
+          maxLength: bookFailedValidation.TITLE_ABOVE_MAX_LENGTH_MESSAGE,
+        });
+      });
+
+      it("genre is invalid", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              title: validBookInputs.title,
+              genre: invalidBookInputs.GENRE_INVALID,
+            })
+          ),
+        };
+
+        const newBook = reqBodyToBook(req as Request);
+        const errors = validateSync(newBook);
+
+        assert(newBook instanceof Book);
+        assert.strictEqual(errors.length, 1);
+        assert.deepStrictEqual(errors[0].constraints, {
+          isEnum: bookFailedValidation.GENRE_INVALID_MESSAGE,
+        });
+      });
+
+      it("title is undefined", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              title: undefined,
+              genre: validBookInputs.genre,
+            })
+          ),
+        };
+
+        const newBook = reqBodyToBook(req as Request);
+        const errors = validateSync(newBook);
+
+        assert(newBook instanceof Book);
+        assert.strictEqual(errors.length, 1);
+        assert.deepStrictEqual(errors[0].constraints, {
+          maxLength: bookFailedValidation.TITLE_ABOVE_MAX_LENGTH_MESSAGE,
+          minLength: bookFailedValidation.TITLE_BELOW_MIN_LENGTH_MESSAGE,
+          isString: "title must be a string",
+        });
+      });
+
+      it("genre is undefined", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              title: validBookInputs.title,
+              genre: undefined,
+            })
+          ),
+        };
+
+        const newBook = reqBodyToBook(req as Request);
+        const errors = validateSync(newBook);
+
+        assert(newBook instanceof Book);
+        assert.strictEqual(errors.length, 1);
+        assert.deepStrictEqual(errors[0].constraints, {
+          isEnum: bookFailedValidation.GENRE_INVALID_MESSAGE,
+        });
       });
     });
   });
