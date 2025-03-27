@@ -6,7 +6,7 @@ import { invalidAuthorInputs, validAuthorInputs } from "../../tests/testInputs";
 import { validateSync } from "class-validator";
 import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 
-describe.only("Author mapper unit tests", () => {
+describe("Author mapper unit tests", () => {
   let req: Partial<Request>;
 
   describe(`${reqBodyToAuthor.name}`, () => {

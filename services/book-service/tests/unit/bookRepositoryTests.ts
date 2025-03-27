@@ -174,7 +174,7 @@ describe("Book repository unit tests", () => {
       mockAuthor = new Author();
       mockBook = new Book();
       mockBook.title = validBookInputs.title;
-      mockBook.genre = validBookInputs.genre;
+      mockBook.genre = Genre.FICTION;
       mockBook.authors = [];
       mockBook.authors.push(mockAuthor);
     });

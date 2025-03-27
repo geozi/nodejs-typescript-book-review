@@ -3,6 +3,7 @@ import { invalidBookInputs, validBookInputs } from "../testInputs";
 import { validateSync } from "class-validator";
 import assert from "assert";
 import { bookFailedValidation } from "messages/validation/bookValidationMessages";
+import { Genre } from "resources/enum/Genre";
 
 describe("Book model entity unit tests", () => {
   let book: Book;
@@ -11,7 +12,7 @@ describe("Book model entity unit tests", () => {
     beforeEach(() => {
       book = new Book();
       book.title = validBookInputs.title;
-      book.genre = validBookInputs.genre;
+      book.genre = Genre.FICTION;
     });
 
     it("book has valid inputs", () => {
@@ -27,7 +28,7 @@ describe("Book model entity unit tests", () => {
     beforeEach(() => {
       book = new Book();
       book.title = validBookInputs.title;
-      book.genre = validBookInputs.genre;
+      book.genre = Genre.FICTION;
     });
 
     it("title is too short", () => {
