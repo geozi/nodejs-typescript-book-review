@@ -36,7 +36,7 @@ describe("Author model entity unit tests", () => {
 
         assert.strictEqual(errors[0].value, invalidAuthorInputs.NAME_INVALID);
         assert.deepStrictEqual(errors[0].constraints, {
-          matches: authorFailedValidation.FIRST_NAME_INVALID,
+          matches: authorFailedValidation.FIRST_NAME_INVALID_MESSAGE,
         });
       });
 
@@ -58,7 +58,7 @@ describe("Author model entity unit tests", () => {
 
         assert.strictEqual(errors[0].value, invalidAuthorInputs.NAME_INVALID);
         assert.deepStrictEqual(errors[0].constraints, {
-          matches: authorFailedValidation.LAST_NAME_INVALID,
+          matches: authorFailedValidation.LAST_NAME_INVALID_MESSAGE,
         });
       });
 

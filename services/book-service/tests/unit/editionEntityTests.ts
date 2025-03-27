@@ -4,6 +4,7 @@ import { invalidEditionInputs, validEditionInputs } from "../testInputs";
 import { validateSync } from "class-validator";
 import assert from "assert";
 import { editionFailedValidation } from "messages/validation/editionValidationMessages";
+import { BookFormat } from "resources/enum/BookFormat";
 
 describe("Edition model entity unit tests", () => {
   let edition: Edition;
@@ -16,7 +17,7 @@ describe("Edition model entity unit tests", () => {
       edition.publication_date = new Date(validEditionInputs.publication_date);
       edition.publisher = validEditionInputs.publisher;
       edition.page_count = validEditionInputs.page_count;
-      edition.book_format = validEditionInputs.book_format;
+      edition.book_format = BookFormat.HARDCOVER;
       edition.book_language = validEditionInputs.book_language;
       edition.book = mockBook;
     });
@@ -39,7 +40,7 @@ describe("Edition model entity unit tests", () => {
         );
         edition.publisher = validEditionInputs.publisher;
         edition.page_count = validEditionInputs.page_count;
-        edition.book_format = validEditionInputs.book_format;
+        edition.book_format = BookFormat.HARDCOVER;
         edition.book_language = validEditionInputs.book_language;
         edition.book = mockBook;
       });
@@ -140,7 +141,7 @@ describe("Edition model entity unit tests", () => {
           invalidEditionInputs.INVALID_LANGUAGE
         );
         assert.deepEqual(errors[0].constraints, {
-          matches: editionFailedValidation.LANGUAGE_INVALID,
+          matches: editionFailedValidation.LANGUAGE_INVALID_MESSAGE,
         });
       });
 

@@ -109,7 +109,7 @@ describe("Book mapper unit tests", () => {
         assert.deepStrictEqual(errors[0].constraints, {
           maxLength: bookFailedValidation.TITLE_ABOVE_MAX_LENGTH_MESSAGE,
           minLength: bookFailedValidation.TITLE_BELOW_MIN_LENGTH_MESSAGE,
-          isString: "title must be a string",
+          isString: bookFailedValidation.TITLE_NOT_STRING_MESSAGE,
         });
       });
 

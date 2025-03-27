@@ -68,7 +68,7 @@ describe("Author mapper unit tests", () => {
         assert(newAuthor instanceof Author);
         assert.strictEqual(errors.length, 1);
         assert.deepStrictEqual(errors[0].constraints, {
-          matches: authorFailedValidation.FIRST_NAME_INVALID,
+          matches: authorFailedValidation.FIRST_NAME_INVALID_MESSAGE,
         });
       });
 
@@ -108,7 +108,7 @@ describe("Author mapper unit tests", () => {
         assert(newAuthor instanceof Author);
         assert.strictEqual(errors.length, 1);
         assert.deepStrictEqual(errors[0].constraints, {
-          matches: authorFailedValidation.LAST_NAME_INVALID,
+          matches: authorFailedValidation.LAST_NAME_INVALID_MESSAGE,
         });
       });
 
@@ -128,9 +128,9 @@ describe("Author mapper unit tests", () => {
         assert(newAuthor instanceof Author);
         assert.strictEqual(errors.length, 1);
         assert.deepStrictEqual(errors[0].constraints, {
-          matches: authorFailedValidation.FIRST_NAME_INVALID,
+          matches: authorFailedValidation.FIRST_NAME_INVALID_MESSAGE,
           minLength: authorFailedValidation.FIRST_NAME_BELOW_MIN_LENGTH_MESSAGE,
-          isString: "first_name must be a string",
+          isString: authorFailedValidation.FIRST_NAME_NOT_STRING_MESSAGE,
         });
       });
 
@@ -150,9 +150,9 @@ describe("Author mapper unit tests", () => {
         assert(newAuthor instanceof Author);
         assert.strictEqual(errors.length, 1);
         assert.deepStrictEqual(errors[0].constraints, {
-          matches: authorFailedValidation.LAST_NAME_INVALID,
+          matches: authorFailedValidation.LAST_NAME_INVALID_MESSAGE,
           minLength: authorFailedValidation.LAST_NAME_BELOW_MIN_LENGTH_MESSAGE,
-          isString: "last_name must be a string",
+          isString: authorFailedValidation.LAST_NAME_NOT_STRING_MESSAGE,
         });
       });
     });

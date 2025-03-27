@@ -14,6 +14,7 @@ import { ServerError } from "errors/serverErrorClass";
 import { ValidationError } from "class-validator";
 import { IEditionUpdate } from "interfaces/IEditionUpdate";
 import { UpdateResult } from "typeorm";
+import { BookFormat } from "resources/enum/BookFormat";
 
 describe("Edition repository unit tests", () => {
   let findOneByStub: SinonStub;
@@ -47,7 +48,7 @@ describe("Edition repository unit tests", () => {
       );
       mockEdition.publisher = validEditionInputs.publisher;
       mockEdition.page_count = validEditionInputs.page_count;
-      mockEdition.book_format = validEditionInputs.book_format;
+      mockEdition.book_format = BookFormat.HARDCOVER;
       mockEdition.book_language = validEditionInputs.book_language;
       mockEdition.book = mockBook;
     });
@@ -142,7 +143,7 @@ describe("Edition repository unit tests", () => {
       );
       mockEdition.publisher = validEditionInputs.publisher;
       mockEdition.page_count = validEditionInputs.page_count;
-      mockEdition.book_format = validEditionInputs.book_format;
+      mockEdition.book_format = BookFormat.HARDCOVER;
       mockEdition.book_language = validEditionInputs.book_language;
       mockEdition.book = mockBook;
     });
