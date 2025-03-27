@@ -20,7 +20,7 @@ export class Book {
   id!: number;
 
   @Column({ type: "varchar", unique: true })
-  @IsString()
+  @IsString({ message: bookFailedValidation.TITLE_NOT_STRING_MESSAGE })
   @MinLength(bookConstants.TITLE_MIN_LENGTH, {
     message: bookFailedValidation.TITLE_BELOW_MIN_LENGTH_MESSAGE,
   })
