@@ -33,7 +33,7 @@ export class Edition {
   publication_date!: Date;
 
   @Column({ type: "varchar" })
-  @IsString()
+  @IsString({ message: editionFailedValidation.PUBLISHER_NOT_STRING_MESSAGE })
   @MinLength(editionConstants.PUBLISHER_MIN_LENGTH, {
     message: editionFailedValidation.PUBLISHER_BELOW_MIN_LENGTH_MESSAGE,
   })
@@ -60,12 +60,12 @@ export class Edition {
   book_format!: BookFormat;
 
   @Column({ type: "varchar" })
-  @IsString()
+  @IsString({ message: editionFailedValidation.LANGUAGE_NOT_STRING_MESSAGE })
   @MinLength(editionConstants.LANGUAGE_MIN_LENGTH, {
     message: editionFailedValidation.LANGUAGE_MIN_LENGTH_MESSAGE,
   })
   @Matches(ALPHABETIC_REGEX, {
-    message: editionFailedValidation.LANGUAGE_INVALID,
+    message: editionFailedValidation.LANGUAGE_INVALID_MESSAGE,
   })
   book_language!: string;
 
