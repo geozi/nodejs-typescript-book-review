@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx tsx src/app.ts",
     "build": "tsc",
-    "lint": "eslint .",
+    "lint": "eslint src/ logs/**/*.ts",
     "test": "mocha",
     "test:coverage": "c8 mocha",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'tsx' src/app.ts",

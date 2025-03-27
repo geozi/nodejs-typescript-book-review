@@ -11,7 +11,7 @@
     "test:coverage": "c8 mocha",
     "start": "npx tsx src/app.ts",
     "typeorm": "typeorm-ts-node-commonjs",
-    "lint": "eslint .",
+    "lint": "eslint src/ logs/**/*.ts",
     "checkDeps": "npx npm-check-updates",
     "upgradeDeps": "npx npm-check-updates -u && npm install"
   },
