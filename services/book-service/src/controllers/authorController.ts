@@ -34,6 +34,9 @@ export const callAuthorAddition = async (req: Request, res: Response) => {
       appLogger.error(
         `Author controller: ${callAuthorAddition.name} -> ${error.name} detected and caught`
       );
+
+      res.status(error.httpCode).json({ message: error.message });
+      return;
     }
   }
 };
