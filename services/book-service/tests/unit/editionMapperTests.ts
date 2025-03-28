@@ -350,6 +350,27 @@ describe("Edition mapper unit tests", () => {
           publicationDate: new Date(validEditionInputs.publication_date),
         });
       });
+
+      it("request has valid publisher field", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              id: 1,
+              publisher: validEditionInputs.publisher,
+            })
+          ),
+        };
+
+        const updateArray = reqBodyToEditionUpdate(req as Request);
+        const id = updateArray[0];
+        const editionToUpdate = updateArray[1];
+
+        assert.strictEqual(Number.isInteger(id), true);
+        assert.strictEqual(id, 1);
+        assert.deepStrictEqual(editionToUpdate, {
+          publisher: validEditionInputs.publisher,
+        });
+      });
     });
   });
 });
