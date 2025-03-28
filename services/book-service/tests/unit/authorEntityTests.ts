@@ -6,31 +6,33 @@ import { authorFailedValidation } from "messages/validation/authorValidationMess
 
 describe("Author model entity unit tests", () => {
   let author: Author;
+
   describe("Positive scenarios", () => {
     beforeEach(() => {
       author = new Author();
-      author.first_name = validAuthorInputs.firstName;
-      author.last_name = validAuthorInputs.lastName;
+      author.firstName = validAuthorInputs.firstName;
+      author.lastName = validAuthorInputs.lastName;
     });
 
     it("author has valid inputs", () => {
       const errors = validateSync(author);
 
       assert.strictEqual(errors.length, 0);
-      assert.strictEqual(author.first_name, validAuthorInputs.firstName);
-      assert.strictEqual(author.last_name, validAuthorInputs.lastName);
+      assert.strictEqual(author.firstName, validAuthorInputs.firstName);
+      assert.strictEqual(author.lastName, validAuthorInputs.lastName);
     });
   });
+
   describe("Negative scenarios", () => {
     describe("validation-oriented", () => {
       beforeEach(() => {
         author = new Author();
-        author.first_name = validAuthorInputs.firstName;
-        author.last_name = validAuthorInputs.lastName;
+        author.firstName = validAuthorInputs.firstName;
+        author.lastName = validAuthorInputs.lastName;
       });
 
-      it("first_name is invalid", () => {
-        author.first_name = invalidAuthorInputs.NAME_INVALID;
+      it("firstName is invalid", () => {
+        author.firstName = invalidAuthorInputs.NAME_INVALID;
 
         const errors = validateSync(author);
 
@@ -40,8 +42,8 @@ describe("Author model entity unit tests", () => {
         });
       });
 
-      it("first_name is too short", () => {
-        author.first_name = invalidAuthorInputs.NAME_TOO_SHORT;
+      it("firstName is too short", () => {
+        author.firstName = invalidAuthorInputs.NAME_TOO_SHORT;
 
         const errors = validateSync(author);
 
@@ -51,8 +53,8 @@ describe("Author model entity unit tests", () => {
         });
       });
 
-      it("last_name is invalid", () => {
-        author.last_name = invalidAuthorInputs.NAME_INVALID;
+      it("lastName is invalid", () => {
+        author.lastName = invalidAuthorInputs.NAME_INVALID;
 
         const errors = validateSync(author);
 
@@ -62,8 +64,8 @@ describe("Author model entity unit tests", () => {
         });
       });
 
-      it("last_name is too short", () => {
-        author.last_name = invalidAuthorInputs.NAME_TOO_SHORT;
+      it("lastName is too short", () => {
+        author.lastName = invalidAuthorInputs.NAME_TOO_SHORT;
 
         const errors = validateSync(author);
 

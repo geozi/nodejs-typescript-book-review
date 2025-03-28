@@ -77,8 +77,8 @@ describe("Author repository unit tests", () => {
 
       // Mocks
       mockAuthor = new Author();
-      mockAuthor.first_name = validAuthorInputs.firstName;
-      mockAuthor.last_name = validAuthorInputs.lastName;
+      mockAuthor.firstName = validAuthorInputs.firstName;
+      mockAuthor.lastName = validAuthorInputs.lastName;
     });
 
     it("Promise resolves to Author object", async () => {
@@ -87,12 +87,12 @@ describe("Author repository unit tests", () => {
       const savedAuthor = await addAuthor(mockAuthor);
 
       assert(savedAuthor instanceof Author);
-      assert.strictEqual(savedAuthor.first_name, mockAuthor.first_name);
-      assert.strictEqual(savedAuthor.last_name, mockAuthor.last_name);
+      assert.strictEqual(savedAuthor.firstName, mockAuthor.firstName);
+      assert.strictEqual(savedAuthor.lastName, mockAuthor.lastName);
     });
 
     it("Promise rejects -> ValidationError", async () => {
-      mockAuthor.first_name = invalidAuthorInputs.NAME_TOO_SHORT;
+      mockAuthor.firstName = invalidAuthorInputs.NAME_TOO_SHORT;
 
       try {
         await addAuthor(mockAuthor);
@@ -126,11 +126,11 @@ describe("Author repository unit tests", () => {
 
       // Mocks
       mockUpdateResult = new UpdateResult();
-      mockDataObject = { first_name: validAuthorInputs.firstName };
+      mockDataObject = { firstName: validAuthorInputs.firstName };
       mockId = 1;
       mockAuthor = new Author();
       mockAuthor.id = mockId;
-      mockAuthor.first_name = validAuthorInputs.firstName;
+      mockAuthor.firstName = validAuthorInputs.firstName;
     });
 
     it("Promise resolves to Author object", async () => {
@@ -142,7 +142,7 @@ describe("Author repository unit tests", () => {
 
       assert(updatedAuthor instanceof Author);
       assert.strictEqual(updatedAuthor.id, mockId);
-      assert.strictEqual(updatedAuthor.first_name, mockDataObject.first_name);
+      assert.strictEqual(updatedAuthor.firstName, mockDataObject.firstName);
     });
 
     it("Promise resolves to null", async () => {

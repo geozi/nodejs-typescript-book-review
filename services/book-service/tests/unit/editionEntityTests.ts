@@ -14,11 +14,11 @@ describe("Edition model entity unit tests", () => {
       mockBook = new Book();
       edition = new Edition();
       edition.isbn = validEditionInputs.isbn;
-      edition.publication_date = new Date(validEditionInputs.publication_date);
+      edition.publicationDate = new Date(validEditionInputs.publication_date);
       edition.publisher = validEditionInputs.publisher;
-      edition.page_count = validEditionInputs.page_count;
-      edition.book_format = BookFormat.HARDCOVER;
-      edition.book_language = validEditionInputs.book_language;
+      edition.pageCount = validEditionInputs.page_count;
+      edition.bookFormat = BookFormat.HARDCOVER;
+      edition.bookLanguage = validEditionInputs.book_language;
       edition.book = mockBook;
     });
 
@@ -35,13 +35,11 @@ describe("Edition model entity unit tests", () => {
         mockBook = new Book();
         edition = new Edition();
         edition.isbn = validEditionInputs.isbn;
-        edition.publication_date = new Date(
-          validEditionInputs.publication_date
-        );
+        edition.publicationDate = new Date(validEditionInputs.publication_date);
         edition.publisher = validEditionInputs.publisher;
-        edition.page_count = validEditionInputs.page_count;
-        edition.book_format = BookFormat.HARDCOVER;
-        edition.book_language = validEditionInputs.book_language;
+        edition.pageCount = validEditionInputs.page_count;
+        edition.bookFormat = BookFormat.HARDCOVER;
+        edition.bookLanguage = validEditionInputs.book_language;
         edition.book = mockBook;
       });
 
@@ -58,7 +56,7 @@ describe("Edition model entity unit tests", () => {
 
       it("publication_date is invalid", () => {
         const invalidDate = new Date(invalidEditionInputs.INVALID_DATE);
-        edition.publication_date = invalidDate;
+        edition.publicationDate = invalidDate;
 
         const errors = validateSync(edition);
 
@@ -100,7 +98,7 @@ describe("Edition model entity unit tests", () => {
       });
 
       it("page_count is a negative number", () => {
-        edition.page_count = invalidEditionInputs.PAGE_COUNT_NEGATIVE;
+        edition.pageCount = invalidEditionInputs.PAGE_COUNT_NEGATIVE;
 
         const errors = validateSync(edition);
 
@@ -116,7 +114,7 @@ describe("Edition model entity unit tests", () => {
       });
 
       it("page_count is too small", () => {
-        edition.page_count = invalidEditionInputs.PAGE_COUNT_MIN;
+        edition.pageCount = invalidEditionInputs.PAGE_COUNT_MIN;
 
         const errors = validateSync(edition);
 
@@ -131,7 +129,7 @@ describe("Edition model entity unit tests", () => {
       });
 
       it("book_language is invalid", () => {
-        edition.book_language = invalidEditionInputs.INVALID_LANGUAGE;
+        edition.bookLanguage = invalidEditionInputs.INVALID_LANGUAGE;
 
         const errors = validateSync(edition);
 
@@ -146,7 +144,7 @@ describe("Edition model entity unit tests", () => {
       });
 
       it("book_language is too short", () => {
-        edition.book_language = invalidEditionInputs.LANGUAGE_TOO_SHORT;
+        edition.bookLanguage = invalidEditionInputs.LANGUAGE_TOO_SHORT;
 
         const errors = validateSync(edition);
 

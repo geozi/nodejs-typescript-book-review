@@ -43,13 +43,13 @@ describe("Edition repository unit tests", () => {
       mockBook = new Book();
       mockEdition = new Edition();
       mockEdition.isbn = validEditionInputs.isbn;
-      mockEdition.publication_date = new Date(
+      mockEdition.publicationDate = new Date(
         validEditionInputs.publication_date
       );
       mockEdition.publisher = validEditionInputs.publisher;
-      mockEdition.page_count = validEditionInputs.page_count;
-      mockEdition.book_format = BookFormat.HARDCOVER;
-      mockEdition.book_language = validEditionInputs.book_language;
+      mockEdition.pageCount = validEditionInputs.page_count;
+      mockEdition.bookFormat = BookFormat.HARDCOVER;
+      mockEdition.bookLanguage = validEditionInputs.book_language;
       mockEdition.book = mockBook;
     });
 
@@ -138,13 +138,13 @@ describe("Edition repository unit tests", () => {
       mockBook = new Book();
       mockEdition = new Edition();
       mockEdition.isbn = validEditionInputs.isbn;
-      mockEdition.publication_date = new Date(
+      mockEdition.publicationDate = new Date(
         validEditionInputs.publication_date
       );
       mockEdition.publisher = validEditionInputs.publisher;
-      mockEdition.page_count = validEditionInputs.page_count;
-      mockEdition.book_format = BookFormat.HARDCOVER;
-      mockEdition.book_language = validEditionInputs.book_language;
+      mockEdition.pageCount = validEditionInputs.page_count;
+      mockEdition.bookFormat = BookFormat.HARDCOVER;
+      mockEdition.bookLanguage = validEditionInputs.book_language;
       mockEdition.book = mockBook;
     });
 
@@ -193,12 +193,12 @@ describe("Edition repository unit tests", () => {
       // Mocks
       mockUpdateResult = new UpdateResult();
       mockDataObject = {
-        publication_date: new Date(validEditionInputs.publication_date),
+        publicationDate: new Date(validEditionInputs.publication_date),
       };
       mockId = 1;
       mockEdition = new Edition();
       mockEdition.id = mockId;
-      mockEdition.publication_date = new Date(
+      mockEdition.publicationDate = new Date(
         validEditionInputs.publication_date
       );
     });
@@ -213,8 +213,8 @@ describe("Edition repository unit tests", () => {
       assert(updatedEdition instanceof Edition);
       assert.strictEqual(updatedEdition.id, mockId);
       assert.deepEqual(
-        updatedEdition.publication_date,
-        mockDataObject.publication_date
+        updatedEdition.publicationDate,
+        mockDataObject.publicationDate
       );
     });
 

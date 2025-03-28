@@ -45,20 +45,17 @@ describe.only("Edition mapper unit tests", () => {
         assert.strictEqual(errors.length, 0);
         assert.strictEqual(newEdition.isbn, validEditionInputs.isbn);
         assert.strictEqual(
-          newEdition.publication_date.toISOString(),
+          newEdition.publicationDate.toISOString(),
           new Date(validEditionInputs.publication_date).toISOString()
         );
         assert.strictEqual(newEdition.publisher, validEditionInputs.publisher);
+        assert.strictEqual(newEdition.pageCount, validEditionInputs.page_count);
         assert.strictEqual(
-          newEdition.page_count,
-          validEditionInputs.page_count
-        );
-        assert.strictEqual(
-          newEdition.book_format.toString(),
+          newEdition.bookFormat.toString(),
           validEditionInputs.book_format
         );
         assert.strictEqual(
-          newEdition.book_language,
+          newEdition.bookLanguage,
           validEditionInputs.book_language
         );
         assert.strictEqual(newEdition.book.title, validBookInputs.title);
@@ -331,28 +328,28 @@ describe.only("Edition mapper unit tests", () => {
     });
   });
 
-  //   describe(`${reqBodyToEditionUpdate.name}`, () => {
-  //     describe("Positive scenarios", () => {
-  //       it("request has valid publication date", () => {
-  //         req = {
-  //           body: JSON.parse(
-  //             JSON.stringify({
-  //               id: 1,
-  //               publicationDate: validEditionInputs.publication_date,
-  //             })
-  //           ),
-  //         };
+  describe(`${reqBodyToEditionUpdate.name}`, () => {
+    describe("Positive scenarios", () => {
+      it("request has valid publication date", () => {
+        req = {
+          body: JSON.parse(
+            JSON.stringify({
+              id: 1,
+              publicationDate: validEditionInputs.publication_date,
+            })
+          ),
+        };
 
-  //         const updateArray = reqBodyToEditionUpdate(req as Request);
-  //         const id = updateArray[0];
-  //         const editionToUpdate = updateArray[1];
+        const updateArray = reqBodyToEditionUpdate(req as Request);
+        const id = updateArray[0];
+        const editionToUpdate = updateArray[1];
 
-  //         assert.strictEqual(Number.isInteger(id), true);
-  //         assert.strictEqual(id, 1);
-  //         assert.deepStrictEqual(editionToUpdate, {
-  //           publication_date: new Date(validEditionInputs.publication_date),
-  //         });
-  //       });
-  //     });
-  //   });
+        assert.strictEqual(Number.isInteger(id), true);
+        assert.strictEqual(id, 1);
+        assert.deepStrictEqual(editionToUpdate, {
+          publication_date: new Date(validEditionInputs.publication_date),
+        });
+      });
+    });
+  });
 });

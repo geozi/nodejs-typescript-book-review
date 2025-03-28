@@ -26,8 +26,8 @@ describe("Author mapper unit tests", () => {
 
         assert(newAuthor instanceof Author);
         assert.strictEqual(errors.length, 0);
-        assert.strictEqual(newAuthor.first_name, validAuthorInputs.firstName);
-        assert.strictEqual(newAuthor.last_name, validAuthorInputs.lastName);
+        assert.strictEqual(newAuthor.firstName, validAuthorInputs.firstName);
+        assert.strictEqual(newAuthor.lastName, validAuthorInputs.lastName);
       });
     });
 
