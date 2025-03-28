@@ -170,7 +170,7 @@ describe("Author mapper unit tests", () => {
           ),
         };
 
-        const updateArray = reqBodyToAuthorUpdate(req as Request);
+        const updateObj = reqBodyToAuthorUpdate(req as Request);
         const id = updateArray[0];
         const authorToUpdate = updateArray[1];
 

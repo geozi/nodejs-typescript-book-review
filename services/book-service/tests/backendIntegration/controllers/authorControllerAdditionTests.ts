@@ -11,7 +11,7 @@ import { authorControllerResponseMessages } from "messages/response/authorContro
 import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 
-describe("Author controller integration tests", () => {
+describe("Author controller addition integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
