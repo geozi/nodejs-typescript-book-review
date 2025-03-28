@@ -171,8 +171,8 @@ describe("Author mapper unit tests", () => {
         };
 
         const updateObj = reqBodyToAuthorUpdate(req as Request);
-        const id = updateArray[0];
-        const authorToUpdate = updateArray[1];
+        const id = updateObj.id;
+        const authorToUpdate = updateObj.author;
 
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);
@@ -191,9 +191,9 @@ describe("Author mapper unit tests", () => {
           ),
         };
 
-        const updateArray = reqBodyToAuthorUpdate(req as Request);
-        const id = updateArray[0];
-        const authorToUpdate = updateArray[1];
+        const updateObj = reqBodyToAuthorUpdate(req as Request);
+        const id = updateObj.id;
+        const authorToUpdate = updateObj.author;
 
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);
