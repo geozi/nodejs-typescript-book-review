@@ -58,7 +58,7 @@ export const reqBodyToEdition = (req: Request): Edition => {
 
 export const reqBodyToEditionUpdate = (
   req: Request
-): (number | IEditionUpdate)[] => {
+): { id: number; edition: IEditionUpdate } => {
   const {
     id,
     isbn,
@@ -127,5 +127,10 @@ export const reqBodyToEditionUpdate = (
     edition.book = relatedBook;
   }
 
-  return [idAsNumber, edition];
+  const data = {
+    id: idAsNumber,
+    edition: edition,
+  };
+
+  return data;
 };

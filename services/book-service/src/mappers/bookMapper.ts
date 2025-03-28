@@ -27,7 +27,12 @@ export const reqBodyToBook = (req: Request): Book => {
   return newBook;
 };
 
-export const reqBodyToBookUpdate = (req: Request): (number | IBookUpdate)[] => {
+export const reqBodyToBookUpdate = (
+  req: Request
+): {
+  id: number;
+  book: IBookUpdate;
+} => {
   const { id, title, genre } = req.body;
 
   const idAsNumber = new Number(id).valueOf();
@@ -54,5 +59,10 @@ export const reqBodyToBookUpdate = (req: Request): (number | IBookUpdate)[] => {
     }
   }
 
-  return [idAsNumber, book];
+  const data = {
+    id: idAsNumber,
+    book: book,
+  };
+
+  return data;
 };
