@@ -2,11 +2,17 @@ import { ValidationError } from "class-validator";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "../../logs/loggerConfigs";
-import { reqBodyToAuthor } from "mappers/authorMapper";
+import { reqBodyToAuthor, reqBodyToAuthorUpdate } from "mappers/authorMapper";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
-import { addAuthor } from "repositories/authorRepository";
+import {
+  addAuthor,
+  getAuthorById,
+  updateAuthor,
+} from "repositories/authorRepository";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { NotFoundError } from "errors/notFoundErrorClass";
+import { reqBodyToId } from "mappers/commonMapper";
 
 export const callAuthorAddition = async (req: Request, res: Response) => {
   try {
@@ -33,6 +39,68 @@ export const callAuthorAddition = async (req: Request, res: Response) => {
     if (error instanceof ServerError) {
       appLogger.error(
         `Author controller: ${callAuthorAddition.name} -> ${error.name} detected and caught`
+      );
+
+      res.status(error.httpCode).json({ message: error.message });
+      return;
+    }
+  }
+};
+
+export const callAuthorUpdate = async (req: Request, res: Response) => {
+  try {
+    const dataUpdateObject = reqBodyToAuthorUpdate(req);
+    const id = dataUpdateObject.id;
+    const authorToUpdate = dataUpdateObject.author;
+    const updatedAuthor = await updateAuthor(id, authorToUpdate);
+
+    if (updatedAuthor === null) {
+      throw new NotFoundError(
+        authorControllerResponseMessages.AUTHOR_NOT_FOUND
+      );
+    }
+
+    res
+      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .status(httpCodes.OK)
+      .json({
+        message: authorControllerResponseMessages.AUTHOR_UPDATED,
+        data: updatedAuthor,
+      });
+  } catch (error) {
+    if (error instanceof ServerError || error instanceof NotFoundError) {
+      appLogger.error(
+        `Author controller: ${callAuthorUpdate.name} -> ${error.name} detected and caught`
+      );
+
+      res.status(error.httpCode).json({ message: error.message });
+      return;
+    }
+  }
+};
+
+export const callAuthorRetrievalById = async (req: Request, res: Response) => {
+  try {
+    const id = reqBodyToId(req);
+    const retrievedAuthor = await getAuthorById(id);
+
+    if (retrievedAuthor === null) {
+      throw new NotFoundError(
+        authorControllerResponseMessages.AUTHOR_NOT_FOUND
+      );
+    }
+
+    res
+      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .status(httpCodes.OK)
+      .json({
+        message: authorControllerResponseMessages.AUTHOR_RETRIEVED,
+        data: retrievedAuthor,
+      });
+  } catch (error) {
+    if (error instanceof ServerError || error instanceof NotFoundError) {
+      appLogger.error(
+        `Author controller: ${callAuthorRetrievalById.name} -> ${error.name} detected and caught`
       );
 
       res.status(error.httpCode).json({ message: error.message });

@@ -14,7 +14,7 @@ export const reqBodyToAuthor = (req: Request): Author => {
 
 export const reqBodyToAuthorUpdate = (
   req: Request
-): (number | IAuthorUpdate)[] => {
+): { id: number; author: IAuthorUpdate } => {
   const { id, firstName, lastName } = req.body;
 
   const idAsNumber = new Number(id).valueOf();
@@ -28,5 +28,10 @@ export const reqBodyToAuthorUpdate = (
     author.lastName = lastName;
   }
 
-  return [idAsNumber, author];
+  const data = {
+    id: idAsNumber,
+    author: author,
+  };
+
+  return data;
 };
