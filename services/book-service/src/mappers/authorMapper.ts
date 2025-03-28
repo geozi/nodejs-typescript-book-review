@@ -18,10 +18,15 @@ export const reqBodyToAuthorUpdate = (
   const { id, firstName, lastName } = req.body;
 
   const idAsNumber = new Number(id).valueOf();
-  const author: IAuthorUpdate = {
-    firstName: firstName,
-    lastName: lastName,
-  };
+  const author: IAuthorUpdate = {};
+
+  if (firstName) {
+    author.firstName = firstName;
+  }
+
+  if (lastName) {
+    author.lastName = lastName;
+  }
 
   return [idAsNumber, author];
 };

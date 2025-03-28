@@ -71,14 +71,18 @@ export const reqBodyToEditionUpdate = (
   } = req.body;
 
   const idAsNumber = new Number(id).valueOf();
-  const edition: IEditionUpdate = {
-    isbn: isbn,
-    publisher: publisher,
-    bookLanguage: bookLanguage,
-  };
+  const edition: IEditionUpdate = {};
+
+  if (isbn) {
+    edition.isbn = isbn;
+  }
 
   if (publicationDate) {
     edition.publicationDate = new Date(publicationDate);
+  }
+
+  if (publisher) {
+    edition.publisher = publisher;
   }
 
   if (pageCount) {
@@ -94,6 +98,10 @@ export const reqBodyToEditionUpdate = (
         edition.bookFormat = BookFormat.HARDCOVER;
         break;
     }
+  }
+
+  if (bookLanguage) {
+    edition.bookLanguage = bookLanguage;
   }
 
   if (book) {
