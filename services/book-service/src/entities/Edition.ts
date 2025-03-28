@@ -30,7 +30,7 @@ export class Edition {
 
   @Column({ type: "date" })
   @IsDate({ message: editionFailedValidation.PUBLICATION_DATE_INVALID_MESSAGE })
-  publication_date!: Date;
+  publicationDate!: Date;
 
   @Column({ type: "varchar" })
   @IsString({ message: editionFailedValidation.PUBLISHER_NOT_STRING_MESSAGE })
@@ -48,7 +48,7 @@ export class Edition {
   @Min(editionConstants.MIN_PAGE_COUNT, {
     message: editionFailedValidation.PAGE_COUNT_MINIMUM_MESSAGE,
   })
-  page_count!: number;
+  pageCount!: number;
 
   @Column({
     type: "enum",
@@ -57,7 +57,7 @@ export class Edition {
   @IsEnum(BookFormat, {
     message: editionFailedValidation.BOOK_FORMAT_INVALID_MESSAGE,
   })
-  book_format!: BookFormat;
+  bookFormat!: BookFormat;
 
   @Column({ type: "varchar" })
   @IsString({ message: editionFailedValidation.LANGUAGE_NOT_STRING_MESSAGE })
@@ -67,7 +67,7 @@ export class Edition {
   @Matches(ALPHABETIC_REGEX, {
     message: editionFailedValidation.LANGUAGE_INVALID_MESSAGE,
   })
-  book_language!: string;
+  bookLanguage!: string;
 
   // Relations
 

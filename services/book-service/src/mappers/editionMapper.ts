@@ -18,17 +18,17 @@ export const reqBodyToEdition = (req: Request): Edition => {
 
   const newEdition = new Edition();
   newEdition.isbn = isbn;
-  newEdition.publication_date = new Date(publicationDate);
+  newEdition.publicationDate = new Date(publicationDate);
   newEdition.publisher = publisher;
-  newEdition.page_count = new Number(pageCount).valueOf();
-  newEdition.book_language = bookLanguage;
+  newEdition.pageCount = new Number(pageCount).valueOf();
+  newEdition.bookLanguage = bookLanguage;
 
   switch (bookFormat) {
     case BookFormat.EBOOK.toString():
-      newEdition.book_format = BookFormat.EBOOK;
+      newEdition.bookFormat = BookFormat.EBOOK;
       break;
     case BookFormat.HARDCOVER.toString():
-      newEdition.book_format = BookFormat.HARDCOVER;
+      newEdition.bookFormat = BookFormat.HARDCOVER;
       break;
   }
 
@@ -71,29 +71,37 @@ export const reqBodyToEditionUpdate = (
   } = req.body;
 
   const idAsNumber = new Number(id).valueOf();
-  const edition: IEditionUpdate = {
-    isbn: isbn,
-    publisher: publisher,
-    book_language: bookLanguage,
-  };
+  const edition: IEditionUpdate = {};
+
+  if (isbn) {
+    edition.isbn = isbn;
+  }
 
   if (publicationDate) {
-    edition.publication_date = new Date(publicationDate);
+    edition.publicationDate = new Date(publicationDate);
+  }
+
+  if (publisher) {
+    edition.publisher = publisher;
   }
 
   if (pageCount) {
-    edition.page_count = new Number(pageCount).valueOf();
+    edition.pageCount = new Number(pageCount).valueOf();
   }
 
   if (bookFormat) {
     switch (bookFormat) {
       case BookFormat.EBOOK.toString():
-        edition.book_format = BookFormat.EBOOK;
+        edition.bookFormat = BookFormat.EBOOK;
         break;
       case BookFormat.HARDCOVER.toString():
-        edition.book_format = BookFormat.HARDCOVER;
+        edition.bookFormat = BookFormat.HARDCOVER;
         break;
     }
+  }
+
+  if (bookLanguage) {
+    edition.bookLanguage = bookLanguage;
   }
 
   if (book) {
