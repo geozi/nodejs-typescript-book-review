@@ -149,9 +149,9 @@ describe("Book mapper unit tests", () => {
           ),
         };
 
-        const updateArray = reqBodyToBookUpdate(req as Request);
-        const id = updateArray[0];
-        const bookToUpdate = updateArray[1];
+        const updateObj = reqBodyToBookUpdate(req as Request);
+        const id = updateObj.id;
+        const bookToUpdate = updateObj.book;
 
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);
@@ -170,9 +170,9 @@ describe("Book mapper unit tests", () => {
           ),
         };
 
-        const updateArray = reqBodyToBookUpdate(req as Request);
-        const id = updateArray[0];
-        const bookToUpdate = updateArray[1];
+        const updateObj = reqBodyToBookUpdate(req as Request);
+        const id = updateObj.id;
+        const bookToUpdate = updateObj.book;
 
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);

@@ -340,9 +340,9 @@ describe("Edition mapper unit tests", () => {
           ),
         };
 
-        const updateArray = reqBodyToEditionUpdate(req as Request);
-        const id = updateArray[0];
-        const editionToUpdate = updateArray[1];
+        const updateObj = reqBodyToEditionUpdate(req as Request);
+        const id = updateObj.id;
+        const editionToUpdate = updateObj.edition;
 
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);
@@ -361,9 +361,9 @@ describe("Edition mapper unit tests", () => {
           ),
         };
 
-        const updateArray = reqBodyToEditionUpdate(req as Request);
-        const id = updateArray[0];
-        const editionToUpdate = updateArray[1];
+        const updateObj = reqBodyToEditionUpdate(req as Request);
+        const id = updateObj.id;
+        const editionToUpdate = updateObj.edition;
 
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);
