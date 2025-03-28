@@ -1,25 +1,22 @@
-import { AppDataSource } from "config/dataSource";
 import { Author } from "entities/Author";
 import { Request, Response } from "express";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validAuthorInputs } from "../../testInputs";
-import { UpdateResult } from "typeorm";
-import { callAuthorUpdate } from "controllers/authorController";
 import assert from "assert";
-import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { AppDataSource } from "config/dataSource";
+import { callAuthorRetrievalById } from "controllers/authorController";
 import { httpCodes } from "resources/codes/responseStatusCodes";
+import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 
-describe("Author controller update tests", () => {
+describe("Author controller retrieval integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
-  let updateFuncStub: SinonStub;
   let findOneByStub: SinonStub;
-  let mockUpdateResult: UpdateResult;
+  let mockId: number;
   let mockAuthor: Author;
 
   describe("Positive scenarios", () => {
@@ -28,10 +25,6 @@ describe("Author controller update tests", () => {
       sinon.restore();
 
       // Stubs
-      updateFuncStub = sinon.stub(
-        AppDataSource.getRepository(Author),
-        "update"
-      );
       findOneByStub = sinon.stub(
         AppDataSource.getRepository(Author),
         "findOneBy"
@@ -44,27 +37,23 @@ describe("Author controller update tests", () => {
       };
 
       // Mocks
-      mockUpdateResult = new UpdateResult();
-      mockUpdateResult.affected = 1;
+      mockId = 1;
       mockAuthor = new Author();
-      mockAuthor.id = 1;
-      mockAuthor.firstName = validAuthorInputs.firstName;
+      mockAuthor.id = mockId;
     });
 
     it("ok (200)", async () => {
-      updateFuncStub.resolves(mockUpdateResult);
       findOneByStub.resolves(mockAuthor);
 
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: 1,
-            firstName: validAuthorInputs.firstName,
+            id: mockId,
           })
         ),
       };
 
-      await callAuthorUpdate(req as Request, res as Response);
+      await callAuthorRetrievalById(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -80,7 +69,7 @@ describe("Author controller update tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: authorControllerResponseMessages.AUTHOR_UPDATED,
+          message: authorControllerResponseMessages.AUTHOR_RETRIEVED,
           data: mockAuthor,
         }),
         true
@@ -94,10 +83,6 @@ describe("Author controller update tests", () => {
       sinon.restore();
 
       // Stubs
-      updateFuncStub = sinon.stub(
-        AppDataSource.getRepository(Author),
-        "update"
-      );
       findOneByStub = sinon.stub(
         AppDataSource.getRepository(Author),
         "findOneBy"
@@ -109,52 +94,23 @@ describe("Author controller update tests", () => {
       };
 
       // Mocks
-      mockUpdateResult = new UpdateResult();
+      mockId = 1;
+      mockAuthor = new Author();
+      mockAuthor.id = mockId;
     });
 
-    it("server error (500) -> update rejects", async () => {
-      updateFuncStub.rejects();
-
-      req = {
-        body: JSON.parse(
-          JSON.stringify({
-            id: 1,
-            firstName: validAuthorInputs.firstName,
-          })
-        ),
-      };
-
-      await callAuthorUpdate(req as Request, res as Response);
-
-      statusStub = res.status as SinonStub;
-      jsonSpy = res.json as SinonSpy;
-
-      assert.strictEqual(
-        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
-        true
-      );
-      assert.strictEqual(
-        jsonSpy.calledWith({
-          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
-        }),
-        true
-      );
-    });
-
-    it("server error(500) -> findOneBy rejects", async () => {
-      updateFuncStub.resolves(mockUpdateResult);
+    it("server error (500)", async () => {
       findOneByStub.rejects();
 
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: 1,
-            firstName: validAuthorInputs.firstName,
+            id: mockId,
           })
         ),
       };
 
-      await callAuthorUpdate(req as Request, res as Response);
+      await callAuthorRetrievalById(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -172,19 +128,17 @@ describe("Author controller update tests", () => {
     });
 
     it("not found (404)", async () => {
-      mockUpdateResult.affected = 0;
-      updateFuncStub.resolves(mockUpdateResult);
+      findOneByStub.resolves(null);
 
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: 1,
-            firstName: validAuthorInputs.firstName,
+            id: mockId,
           })
         ),
       };
 
-      await callAuthorUpdate(req as Request, res as Response);
+      await callAuthorRetrievalById(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;

@@ -18,12 +18,12 @@ describe("Author controller addition integration tests", () => {
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
   let mockAuthor: Author;
-  let functionStub: SinonStub;
+  let saveStub: SinonStub;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
       sinon.restore();
-      functionStub = sinon.stub(AppDataSource.getRepository(Author), "save");
+      saveStub = sinon.stub(AppDataSource.getRepository(Author), "save");
 
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -46,7 +46,7 @@ describe("Author controller addition integration tests", () => {
     });
 
     it("created (201)", async () => {
-      functionStub.resolves(mockAuthor);
+      saveStub.resolves(mockAuthor);
 
       await callAuthorAddition(req as Request, res as Response);
 
@@ -76,10 +76,9 @@ describe("Author controller addition integration tests", () => {
     beforeEach(() => {
       sinon.restore();
 
-      functionStub = sinon.stub(AppDataSource.getRepository(Author), "save");
+      saveStub = sinon.stub(AppDataSource.getRepository(Author), "save");
 
       res = {
-        setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };
@@ -110,7 +109,7 @@ describe("Author controller addition integration tests", () => {
     });
 
     it("server error (500)", async () => {
-      functionStub.rejects();
+      saveStub.rejects();
 
       req = {
         body: JSON.parse(
