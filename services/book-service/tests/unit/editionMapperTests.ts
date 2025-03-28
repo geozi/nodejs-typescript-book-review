@@ -347,7 +347,7 @@ describe.only("Edition mapper unit tests", () => {
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);
         assert.deepStrictEqual(editionToUpdate, {
-          publication_date: new Date(validEditionInputs.publication_date),
+          publicationDate: new Date(validEditionInputs.publication_date),
         });
       });
     });
