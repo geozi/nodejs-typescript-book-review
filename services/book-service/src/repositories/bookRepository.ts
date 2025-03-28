@@ -52,7 +52,12 @@ export const addBook = async (newBook: Book): Promise<Book> => {
   try {
     const errors = await validate(newBook);
     if (errors.length > 0) {
-      throw new ValidationError();
+      const constraintArray: (Record<string, string> | undefined)[] = [];
+      errors.forEach((err) => constraintArray.push(err.constraints));
+      const constraintObject = Object.assign({}, ...constraintArray);
+      const validationError = new ValidationError();
+      validationError.constraints = constraintObject;
+      throw validationError;
     }
 
     return await bookRepository.save(newBook);

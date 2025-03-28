@@ -41,7 +41,12 @@ export const addEdition = async (newEdition: Edition): Promise<Edition> => {
   try {
     const errors = await validate(newEdition);
     if (errors.length > 0) {
-      throw new ValidationError();
+      const constraintArray: (Record<string, string> | undefined)[] = [];
+      errors.forEach((err) => constraintArray.push(err.constraints));
+      const constraintObject = Object.assign({}, ...constraintArray);
+      const validationError = new ValidationError();
+      validationError.constraints = constraintObject;
+      throw validationError;
     }
 
     return await editionRepository.save(newEdition);
