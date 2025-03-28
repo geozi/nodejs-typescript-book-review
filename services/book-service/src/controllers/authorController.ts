@@ -14,7 +14,10 @@ import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { reqBodyToId } from "mappers/commonMapper";
 
-export const callAuthorAddition = async (req: Request, res: Response) => {
+export const callAuthorAddition = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const newAuthor = reqBodyToAuthor(req);
     const savedAuthor = await addAuthor(newAuthor);
@@ -47,7 +50,10 @@ export const callAuthorAddition = async (req: Request, res: Response) => {
   }
 };
 
-export const callAuthorUpdate = async (req: Request, res: Response) => {
+export const callAuthorUpdate = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const dataUpdateObject = reqBodyToAuthorUpdate(req);
     const id = dataUpdateObject.id;
@@ -79,7 +85,10 @@ export const callAuthorUpdate = async (req: Request, res: Response) => {
   }
 };
 
-export const callAuthorRetrievalById = async (req: Request, res: Response) => {
+export const callAuthorRetrievalById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const id = reqBodyToId(req);
     const retrievedAuthor = await getAuthorById(id);
