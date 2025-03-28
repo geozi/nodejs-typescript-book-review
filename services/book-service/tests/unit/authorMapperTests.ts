@@ -177,8 +177,7 @@ describe("Author mapper unit tests", () => {
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);
         assert.deepStrictEqual(authorToUpdate, {
-          first_name: validAuthorInputs.firstName,
-          last_name: undefined,
+          firstName: validAuthorInputs.firstName,
         });
       });
 
@@ -199,8 +198,7 @@ describe("Author mapper unit tests", () => {
         assert.strictEqual(Number.isInteger(id), true);
         assert.strictEqual(id, 1);
         assert.deepStrictEqual(authorToUpdate, {
-          first_name: undefined,
-          last_name: validAuthorInputs.lastName,
+          lastName: validAuthorInputs.lastName,
         });
       });
     });

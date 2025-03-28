@@ -14,7 +14,7 @@ import { Edition } from "entities/Edition";
 import { Genre } from "resources/enum/Genre";
 import { editionFailedValidation } from "messages/validation/editionValidationMessages";
 
-describe.only("Edition mapper unit tests", () => {
+describe("Edition mapper unit tests", () => {
   let req: Partial<Request>;
 
   describe(`${reqBodyToEdition.name}`, () => {
