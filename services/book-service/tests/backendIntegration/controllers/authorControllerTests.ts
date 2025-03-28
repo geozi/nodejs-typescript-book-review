@@ -76,6 +76,8 @@ describe("Author controller integration tests", () => {
     beforeEach(() => {
       sinon.restore();
 
+      functionStub = sinon.stub(AppDataSource.getRepository(Author), "save");
+
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -108,6 +110,8 @@ describe("Author controller integration tests", () => {
     });
 
     it("server error (500)", async () => {
+      functionStub.rejects();
+
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -117,9 +121,10 @@ describe("Author controller integration tests", () => {
         ),
       };
 
-      functionStub.rejects();
-
       await callAuthorAddition(req as Request, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
 
       assert.strictEqual(
         statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
