@@ -7,15 +7,19 @@ import {
   addBook,
   getBookById,
   getBookByTitle,
+  getBooksByGenre,
   updateBook,
 } from "repositories/bookRepository";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { ServerError } from "errors/serverErrorClass";
 import { NotFoundError } from "errors/notFoundErrorClass";
-import { reqBodyToId } from "mappers/commonMapper";
+import { reqBodyToGenre, reqBodyToId } from "mappers/commonMapper";
 
-export const callBookAddition = async (req: Request, res: Response) => {
+export const callBookAddition = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const newBook = reqBodyToBook(req);
     const savedBook = await addBook(newBook);
@@ -48,7 +52,10 @@ export const callBookAddition = async (req: Request, res: Response) => {
   }
 };
 
-export const callBookUpdate = async (req: Request, res: Response) => {
+export const callBookUpdate = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const dataUpdateObject = reqBodyToBookUpdate(req);
     const id = dataUpdateObject.id;
@@ -78,7 +85,10 @@ export const callBookUpdate = async (req: Request, res: Response) => {
   }
 };
 
-export const callBookRetrievalByTitle = async (req: Request, res: Response) => {
+export const callBookRetrievalByTitle = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { title } = req.body;
     const retrievedBook = await getBookByTitle(title);
@@ -106,7 +116,10 @@ export const callBookRetrievalByTitle = async (req: Request, res: Response) => {
   }
 };
 
-export const callBookRetrievalById = async (req: Request, res: Response) => {
+export const callBookRetrievalById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const id = reqBodyToId(req);
     const retrievedBook = await getBookById(id);
@@ -126,6 +139,36 @@ export const callBookRetrievalById = async (req: Request, res: Response) => {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
         `Author controller: ${callBookRetrievalById.name} -> ${error.name} detected and caught`
+      );
+
+      res.status(error.httpCode).json({ message: error.message });
+      return;
+    }
+  }
+};
+
+export const callBookRetrievalByGenre = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const genre = reqBodyToGenre(req);
+    const retrievedBooks = await getBooksByGenre(genre);
+    if (retrievedBooks.length === 0) {
+      throw new NotFoundError(bookControllerResponseMessages.BOOK_S_NOT_FOUND);
+    }
+
+    res
+      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .status(httpCodes.OK)
+      .json({
+        message: bookControllerResponseMessages.BOOK_RETRIEVED,
+        data: retrievedBooks,
+      });
+  } catch (error) {
+    if (error instanceof ServerError || error instanceof NotFoundError) {
+      appLogger.error(
+        `Author controller: ${callBookRetrievalByGenre.name} -> ${error.name} detected and caught`
       );
 
       res.status(error.httpCode).json({ message: error.message });
