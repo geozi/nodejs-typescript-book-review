@@ -80,7 +80,6 @@ describe("Author model entity unit tests", () => {
         author.firstName = invalidAuthorInputs.NAME_INVALID;
 
         const errors = validateSync(author);
-        console.log(errors);
 
         assert.strictEqual(errors.length, 2);
       });

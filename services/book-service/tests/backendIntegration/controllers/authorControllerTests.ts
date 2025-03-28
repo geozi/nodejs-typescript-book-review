@@ -8,6 +8,8 @@ import { callAuthorAddition } from "controllers/authorController";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
+import { authorFailedValidation } from "messages/validation/authorValidationMessages";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 
 describe("Author controller integration tests", () => {
   let req: Partial<Request>;
@@ -97,6 +99,38 @@ describe("Author controller integration tests", () => {
       jsonSpy = res.json as SinonSpy;
 
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          minLength: authorFailedValidation.FIRST_NAME_BELOW_MIN_LENGTH_MESSAGE,
+        }),
+        true
+      );
+    });
+
+    it("server error (500)", async () => {
+      req = {
+        body: JSON.parse(
+          JSON.stringify({
+            firstName: validAuthorInputs.firstName,
+            lastName: validAuthorInputs.lastName,
+          })
+        ),
+      };
+
+      functionStub.rejects();
+
+      await callAuthorAddition(req as Request, res as Response);
+
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
+        }),
+        true
+      );
     });
   });
 });
