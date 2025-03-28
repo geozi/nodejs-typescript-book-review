@@ -9,7 +9,7 @@ import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
 
-describe.only("Author controller integration tests", () => {
+describe("Author controller integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
@@ -81,7 +81,7 @@ describe.only("Author controller integration tests", () => {
       };
     });
 
-    it.only("validation error (400)", async () => {
+    it("validation error (400)", async () => {
       req = {
         body: JSON.parse(
           JSON.stringify({

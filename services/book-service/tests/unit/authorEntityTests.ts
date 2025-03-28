@@ -74,6 +74,16 @@ describe("Author model entity unit tests", () => {
           minLength: authorFailedValidation.LAST_NAME_BELOW_MIN_LENGTH_MESSAGE,
         });
       });
+
+      it("firstName and lastName are invalid", () => {
+        author.lastName = invalidAuthorInputs.NAME_INVALID;
+        author.firstName = invalidAuthorInputs.NAME_INVALID;
+
+        const errors = validateSync(author);
+        console.log(errors);
+
+        assert.strictEqual(errors.length, 2);
+      });
     });
   });
 });
