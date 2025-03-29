@@ -2,9 +2,11 @@
  * Person controller.
  * @module src/controllers/personController
  */
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
-import { appLogger } from "../../logs/loggerConfig";
+import { appLogger } from "logs/loggerConfig";
+import { recastReqToIReq } from "mappers/commonMapper";
 import { reqBodyToPerson, reqBodyToPersonUpdate } from "mappers/personMapper";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";
@@ -14,10 +16,8 @@ import {
   getPersonByUsername,
   updatePerson,
 } from "repositories/personRepository";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { NotFoundError } from "errors/notFoundErrorClass";
-import { recastReqToIReq } from "mappers/commonMapper";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { httpCodes } from "resources/codes/responseStatusCodes";
 
 /**
  * Handles HTTP requests for person info addition.

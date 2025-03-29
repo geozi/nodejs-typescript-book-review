@@ -4,9 +4,9 @@
  */
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { appLogger } from "../../../logs/loggerConfig";
-import { httpCodes } from "resources/codes/responseStatusCodes";
+import { appLogger } from "logs/loggerConfig";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { httpCodes } from "resources/codes/responseStatusCodes";
 
 /**
  * Handles express validation errors.

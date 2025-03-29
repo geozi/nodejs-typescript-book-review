@@ -3,10 +3,10 @@
  * @module src/routes/passportConfig
  */
 
+import * as dotenv from "dotenv";
 import passport from "passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { redisClient } from "../../redis.config";
-import * as dotenv from "dotenv";
+import { redisClient } from "redis/redis.config";
 dotenv.config();
 
 // Strategy for User role.
