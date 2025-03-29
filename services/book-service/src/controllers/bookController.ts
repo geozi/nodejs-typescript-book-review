@@ -162,7 +162,7 @@ export const callBookRetrievalByGenre = async (
       .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_RETRIEVED,
+        message: bookControllerResponseMessages.BOOK_S_RETRIEVED,
         data: retrievedBooks,
       });
   } catch (error) {
