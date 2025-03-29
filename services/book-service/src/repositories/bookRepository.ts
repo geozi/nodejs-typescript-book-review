@@ -1,9 +1,9 @@
 import { validate, ValidationError } from "class-validator";
 import { AppDataSource } from "config/dataSource";
 import { Book } from "entities/Book";
-import { IBookUpdate } from "interfaces/IBookUpdate";
-import { appLogger } from "../../logs/loggerConfigs";
 import { ServerError } from "errors/serverErrorClass";
+import { IBookUpdate } from "interfaces/IBookUpdate";
+import { appLogger } from "logs/loggerConfigs";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { Genre } from "resources/enum/Genre";
 

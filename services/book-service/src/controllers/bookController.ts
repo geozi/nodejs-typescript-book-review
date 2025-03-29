@@ -2,6 +2,7 @@ import { ValidationError } from "class-validator";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
+import { appLogger } from "logs/loggerConfigs";
 import { reqBodyToBook, reqBodyToBookUpdate } from "mappers/bookMapper";
 import { reqBodyToGenre, reqBodyToId } from "mappers/commonMapper";
 import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
@@ -14,7 +15,6 @@ import {
 } from "repositories/bookRepository";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { appLogger } from "../../logs/loggerConfigs";
 
 export const callBookAddition = async (
   req: Request,

@@ -1,18 +1,18 @@
 import { ValidationError } from "class-validator";
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
-import { appLogger } from "../../logs/loggerConfigs";
+import { appLogger } from "logs/loggerConfigs";
 import { reqBodyToAuthor, reqBodyToAuthorUpdate } from "mappers/authorMapper";
+import { reqBodyToId } from "mappers/commonMapper";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
 import {
   addAuthor,
   getAuthorById,
   updateAuthor,
 } from "repositories/authorRepository";
-import { httpCodes } from "resources/codes/responseStatusCodes";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
-import { NotFoundError } from "errors/notFoundErrorClass";
-import { reqBodyToId } from "mappers/commonMapper";
+import { httpCodes } from "resources/codes/responseStatusCodes";
 
 export const callAuthorAddition = async (
   req: Request,

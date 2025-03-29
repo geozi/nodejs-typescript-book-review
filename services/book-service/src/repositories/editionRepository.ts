@@ -1,11 +1,11 @@
+import { validate, ValidationError } from "class-validator";
 import { AppDataSource } from "config/dataSource";
+import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { ServerError } from "errors/serverErrorClass";
-import { appLogger } from "../../logs/loggerConfigs";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
-import { Book } from "entities/Book";
-import { validate, ValidationError } from "class-validator";
 import { IEditionUpdate } from "interfaces/IEditionUpdate";
+import { appLogger } from "logs/loggerConfigs";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 
 const editionRepository = AppDataSource.getRepository(Edition);
 
