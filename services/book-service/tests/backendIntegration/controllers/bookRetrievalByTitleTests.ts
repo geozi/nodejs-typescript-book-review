@@ -2,7 +2,7 @@ import { AppDataSource } from "config/dataSource";
 import { Book } from "entities/Book";
 import { Request, Response } from "express";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validBookInputs } from "../../testInputs";
+import { validBookInputs } from "tests/testInputs";
 
 describe("Book retrieval by title integration tests", () => {
   let req: Partial<Request>;

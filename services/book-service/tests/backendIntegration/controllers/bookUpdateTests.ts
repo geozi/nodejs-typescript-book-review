@@ -9,8 +9,8 @@ import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Genre } from "resources/enum/Genre";
 import sinon, { SinonSpy, SinonStub } from "sinon";
+import { validBookInputs } from "tests/testInputs";
 import { UpdateResult } from "typeorm";
-import { validBookInputs } from "../../testInputs";
 
 describe("Book update tests", () => {
   let req: Partial<Request>;

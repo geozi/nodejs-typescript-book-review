@@ -1,16 +1,16 @@
+import assert from "assert";
+import { ValidationError } from "class-validator";
+import { AppDataSource } from "config/dataSource";
+import { Author } from "entities/Author";
+import { ServerError } from "errors/serverErrorClass";
+import { IAuthorUpdate } from "interfaces/IAuthorUpdate";
 import {
   addAuthor,
   getAuthorById,
   updateAuthor,
 } from "repositories/authorRepository";
 import sinon, { SinonStub } from "sinon";
-import assert from "assert";
-import { Author } from "entities/Author";
-import { AppDataSource } from "config/dataSource";
-import { ServerError } from "errors/serverErrorClass";
-import { invalidAuthorInputs, validAuthorInputs } from "../../tests/testInputs";
-import { ValidationError } from "class-validator";
-import { IAuthorUpdate } from "interfaces/IAuthorUpdate";
+import { invalidAuthorInputs, validAuthorInputs } from "tests/testInputs";
 import { UpdateResult } from "typeorm";
 
 describe("Author repository unit tests", () => {

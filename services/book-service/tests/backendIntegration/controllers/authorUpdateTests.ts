@@ -8,8 +8,8 @@ import { commonResponseMessages } from "messages/response/commonResponseMessages
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
+import { validAuthorInputs } from "tests/testInputs";
 import { UpdateResult } from "typeorm";
-import { validAuthorInputs } from "../../testInputs";
 
 describe("Author update tests", () => {
   let req: Partial<Request>;

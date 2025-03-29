@@ -1,21 +1,21 @@
-import { AppDataSource } from "config/dataSource";
-import { Book } from "entities/Book";
-import {
-  getBookByTitle,
-  getBookById,
-  addBook,
-  updateBook,
-  getBooksByGenre,
-} from "repositories/bookRepository";
-import sinon, { SinonStub } from "sinon";
-import { invalidBookInputs, validBookInputs } from "../../tests/testInputs";
 import assert from "assert";
-import { ServerError } from "errors/serverErrorClass";
 import { ValidationError } from "class-validator";
-import { IBookUpdate } from "interfaces/IBookUpdate";
-import { UpdateResult } from "typeorm";
-import { Genre } from "resources/enum/Genre";
+import { AppDataSource } from "config/dataSource";
 import { Author } from "entities/Author";
+import { Book } from "entities/Book";
+import { ServerError } from "errors/serverErrorClass";
+import { IBookUpdate } from "interfaces/IBookUpdate";
+import {
+  addBook,
+  getBookById,
+  getBookByTitle,
+  getBooksByGenre,
+  updateBook,
+} from "repositories/bookRepository";
+import { Genre } from "resources/enum/Genre";
+import sinon, { SinonStub } from "sinon";
+import { invalidBookInputs, validBookInputs } from "tests/testInputs";
+import { UpdateResult } from "typeorm";
 
 describe("Book repository unit tests", () => {
   let findOneByStub: SinonStub;

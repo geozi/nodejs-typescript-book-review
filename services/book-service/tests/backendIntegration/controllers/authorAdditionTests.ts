@@ -9,7 +9,7 @@ import { authorFailedValidation } from "messages/validation/authorValidationMess
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidAuthorInputs, validAuthorInputs } from "../../testInputs";
+import { invalidAuthorInputs, validAuthorInputs } from "tests/testInputs";
 
 describe("Author addition integration tests", () => {
   let req: Partial<Request>;

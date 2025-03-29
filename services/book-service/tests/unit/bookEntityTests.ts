@@ -1,9 +1,9 @@
-import { Book } from "entities/Book";
-import { invalidBookInputs, validBookInputs } from "../testInputs";
-import { validateSync } from "class-validator";
 import assert from "assert";
+import { validateSync } from "class-validator";
+import { Book } from "entities/Book";
 import { bookFailedValidation } from "messages/validation/bookValidationMessages";
 import { Genre } from "resources/enum/Genre";
+import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
 describe("Book model entity unit tests", () => {
   let book: Book;

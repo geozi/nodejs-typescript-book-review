@@ -10,7 +10,7 @@ import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Genre } from "resources/enum/Genre";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidBookInputs, validBookInputs } from "../../testInputs";
+import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
 describe("Book addition integration tests", () => {
   let req: Partial<Request>;

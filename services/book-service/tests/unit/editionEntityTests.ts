@@ -1,10 +1,10 @@
+import assert from "assert";
+import { validateSync } from "class-validator";
 import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
-import { invalidEditionInputs, validEditionInputs } from "../testInputs";
-import { validateSync } from "class-validator";
-import assert from "assert";
 import { editionFailedValidation } from "messages/validation/editionValidationMessages";
 import { BookFormat } from "resources/enum/BookFormat";
+import { invalidEditionInputs, validEditionInputs } from "tests/testInputs";
 
 describe("Edition model entity unit tests", () => {
   let edition: Edition;

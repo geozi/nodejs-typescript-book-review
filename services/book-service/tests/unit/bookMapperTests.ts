@@ -1,11 +1,11 @@
+import assert from "assert";
+import { validateSync } from "class-validator";
+import { Book } from "entities/Book";
 import { Request } from "express";
 import { reqBodyToBook, reqBodyToBookUpdate } from "mappers/bookMapper";
-import { invalidBookInputs, validBookInputs } from "../../tests/testInputs";
-import { validateSync } from "class-validator";
-import assert from "assert";
-import { Book } from "entities/Book";
 import { bookFailedValidation } from "messages/validation/bookValidationMessages";
 import { Genre } from "resources/enum/Genre";
+import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
 describe("Book mapper unit tests", () => {
   let req: Partial<Request>;

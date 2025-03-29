@@ -1,8 +1,8 @@
-import { Author } from "entities/Author";
-import { invalidAuthorInputs, validAuthorInputs } from "../testInputs";
-import { validateSync } from "class-validator";
 import assert from "assert";
+import { validateSync } from "class-validator";
+import { Author } from "entities/Author";
 import { authorFailedValidation } from "messages/validation/authorValidationMessages";
+import { invalidAuthorInputs, validAuthorInputs } from "tests/testInputs";
 
 describe("Author model entity unit tests", () => {
   let author: Author;

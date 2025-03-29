@@ -1,10 +1,10 @@
+import assert from "assert";
+import { validateSync } from "class-validator";
 import { Author } from "entities/Author";
 import { Request } from "express";
 import { reqBodyToAuthor, reqBodyToAuthorUpdate } from "mappers/authorMapper";
-import assert from "assert";
-import { invalidAuthorInputs, validAuthorInputs } from "../../tests/testInputs";
-import { validateSync } from "class-validator";
 import { authorFailedValidation } from "messages/validation/authorValidationMessages";
+import { invalidAuthorInputs, validAuthorInputs } from "tests/testInputs";
 
 describe("Author mapper unit tests", () => {
   let req: Partial<Request>;

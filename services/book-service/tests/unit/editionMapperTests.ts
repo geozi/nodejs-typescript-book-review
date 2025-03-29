@@ -1,18 +1,18 @@
 import assert from "assert";
+import { validateSync } from "class-validator";
+import { Edition } from "entities/Edition";
 import { Request } from "express";
 import {
   reqBodyToEdition,
   reqBodyToEditionUpdate,
 } from "mappers/editionMapper";
+import { editionFailedValidation } from "messages/validation/editionValidationMessages";
+import { Genre } from "resources/enum/Genre";
 import {
   invalidEditionInputs,
   validBookInputs,
   validEditionInputs,
-} from "../../tests/testInputs";
-import { validateSync } from "class-validator";
-import { Edition } from "entities/Edition";
-import { Genre } from "resources/enum/Genre";
-import { editionFailedValidation } from "messages/validation/editionValidationMessages";
+} from "tests/testInputs";
 
 describe("Edition mapper unit tests", () => {
   let req: Partial<Request>;

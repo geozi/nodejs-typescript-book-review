@@ -1,20 +1,20 @@
+import assert from "assert";
+import { ValidationError } from "class-validator";
 import { AppDataSource } from "config/dataSource";
 import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
-import sinon, { SinonStub } from "sinon";
-import { validEditionInputs } from "../../tests/testInputs";
+import { ServerError } from "errors/serverErrorClass";
+import { IEditionUpdate } from "interfaces/IEditionUpdate";
 import {
   addEdition,
   getEditionByISBN,
   getEditionsByBook,
   updateEdition,
 } from "repositories/editionRepository";
-import assert from "assert";
-import { ServerError } from "errors/serverErrorClass";
-import { ValidationError } from "class-validator";
-import { IEditionUpdate } from "interfaces/IEditionUpdate";
-import { UpdateResult } from "typeorm";
 import { BookFormat } from "resources/enum/BookFormat";
+import sinon, { SinonStub } from "sinon";
+import { validEditionInputs } from "tests/testInputs";
+import { UpdateResult } from "typeorm";
 
 describe("Edition repository unit tests", () => {
   let findOneByStub: SinonStub;
