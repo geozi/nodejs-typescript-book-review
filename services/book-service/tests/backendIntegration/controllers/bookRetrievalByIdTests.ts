@@ -10,7 +10,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validBookInputs } from "tests/testInputs";
 
-describe.only("Book retrieval by ID integration tests", () => {
+describe("Book retrieval by ID integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
