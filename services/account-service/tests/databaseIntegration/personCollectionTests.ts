@@ -1,13 +1,12 @@
-import { Person } from "models/Person";
-import mongoose, { ConnectOptions } from "mongoose";
-import sinon, { SinonStub } from "sinon";
-import { Request, Response } from "express";
-import { validPersonInput } from "../testInputs";
-import { validUserInput } from "../testInputs";
-import { User } from "models/User";
-import { callPersonAddition } from "controllers/personController";
-import { httpCodes } from "resources/codes/responseStatusCodes";
 import assert from "assert";
+import { callPersonAddition } from "controllers/personController";
+import { Request, Response } from "express";
+import { Person } from "models/Person";
+import { User } from "models/User";
+import mongoose, { ConnectOptions } from "mongoose";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonStub } from "sinon";
+import { validPersonInput, validUserInput } from "tests/testInputs";
 
 describe("Person collection integration tests", () => {
   let req: Partial<Request>;

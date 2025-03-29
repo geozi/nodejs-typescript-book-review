@@ -1,10 +1,10 @@
-import { IUser } from "interfaces/documents/IUser";
-import { User } from "models/User";
-import sinon, { SinonStub } from "sinon";
-import { invalidUserInputs, validUserInput } from "../testInputs";
 import assert from "assert";
-import { Error } from "mongoose";
+import { IUser } from "interfaces/documents/IUser";
 import { userFailedValidation } from "messages/validation/userValidationMessages";
+import { User } from "models/User";
+import { Error } from "mongoose";
+import sinon, { SinonStub } from "sinon";
+import { invalidUserInputs, validUserInput } from "tests/testInputs";
 
 describe("User model unit tests", () => {
   let newUser: IUser;

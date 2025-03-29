@@ -1,14 +1,14 @@
-import { IRequest } from "interfaces/secondary/IRequest";
-import sinon, { SinonSpy, SinonStub } from "sinon";
-import { Response } from "express";
-import { Person } from "models/Person";
-import { validPersonInput, validUserInput } from "../../testInputs";
-import { User } from "models/User";
 import assert from "assert";
 import { callPersonUpdate } from "controllers/personController";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";
+import { Response } from "express";
+import { IRequest } from "interfaces/secondary/IRequest";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";
+import { Person } from "models/Person";
+import { User } from "models/User";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { validPersonInput, validUserInput } from "tests/testInputs";
 
 describe("Person update integration tests", () => {
   let req: Partial<IRequest>;

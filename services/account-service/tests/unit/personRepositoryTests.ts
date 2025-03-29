@@ -1,16 +1,16 @@
+import assert from "assert";
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { IPerson } from "interfaces/documents/IPerson";
+import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
 import { Person } from "models/Person";
+import { Error, Types } from "mongoose";
 import {
   addPerson,
   getPersonByUsername,
   updatePerson,
 } from "repositories/personRepository";
 import sinon, { SinonStub } from "sinon";
-import { validPersonInput } from "../testInputs";
-import assert from "assert";
-import { Error, Types } from "mongoose";
-import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
-import { NotFoundError } from "errors/notFoundErrorClass";
+import { validPersonInput } from "tests/testInputs";
 
 describe("Person repository unit tests", () => {
   let mockPerson: IPerson;

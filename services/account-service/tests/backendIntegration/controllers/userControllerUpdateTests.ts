@@ -1,16 +1,16 @@
-import { IRequest } from "interfaces/secondary/IRequest";
-import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validUserInput } from "../../testInputs";
-import { User } from "models/User";
-import { Request, Response } from "express";
-import { callUserUpdate } from "controllers/userController";
 import assert from "assert";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import bcrypt from "bcryptjs";
-import { redisClient } from "../../../redis.config";
+import { callUserUpdate } from "controllers/userController";
+import { Request, Response } from "express";
+import { IRequest } from "interfaces/secondary/IRequest";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
+import { User } from "models/User";
 import { AbortError, ErrorReply } from "redis";
+import { redisClient } from "redis/redis.config";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { validUserInput } from "tests/testInputs";
 
 describe("User update integration tests", () => {
   let req: Partial<IRequest>;

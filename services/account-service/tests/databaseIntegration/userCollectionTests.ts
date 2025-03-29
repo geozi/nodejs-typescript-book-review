@@ -1,12 +1,12 @@
 import assert from "assert";
-import mongoose, { ConnectOptions } from "mongoose";
-import sinon, { SinonStub } from "sinon";
-import * as dotenv from "dotenv";
-import { User } from "models/User";
-import { Request, Response } from "express";
-import { validUserInput } from "../testInputs";
 import { callUserRegistration } from "controllers/userController";
+import * as dotenv from "dotenv";
+import { Request, Response } from "express";
+import { User } from "models/User";
+import mongoose, { ConnectOptions } from "mongoose";
 import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonStub } from "sinon";
+import { validUserInput } from "tests/testInputs";
 dotenv.config();
 
 describe("User collection integration tests", () => {

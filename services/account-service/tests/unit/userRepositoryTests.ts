@@ -1,16 +1,16 @@
-import { IUser } from "interfaces/documents/IUser";
-import { User } from "models/User";
-import sinon, { SinonStub } from "sinon";
 import assert from "assert";
+import { NotFoundError } from "errors/notFoundErrorClass";
+import { IUser } from "interfaces/documents/IUser";
+import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
+import { User } from "models/User";
+import { Error, Types } from "mongoose";
 import {
   addUser,
   getUserByUsername,
   updateUser,
 } from "repositories/userRepository";
-import { validUserInput } from "../testInputs";
-import { Error, Types } from "mongoose";
-import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
-import { NotFoundError } from "errors/notFoundErrorClass";
+import sinon, { SinonStub } from "sinon";
+import { validUserInput } from "tests/testInputs";
 
 describe("User repository unit tests", () => {
   let mockUser: IUser;

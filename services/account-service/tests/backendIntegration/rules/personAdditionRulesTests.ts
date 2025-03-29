@@ -1,17 +1,17 @@
+import assert from "assert";
+import { Request, Response } from "express";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { addressFailedValidation } from "messages/validation/addressValidationMessages";
+import { personFailedValidation } from "messages/validation/personValidationMessages";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import { personInfoAdditionRules } from "middleware/rules/personRules";
+import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { Request, Response } from "express";
 import {
   invalidAddressInputs,
   invalidPersonInputs,
   validPersonInput,
-} from "../../testInputs";
-import assert from "assert";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
-import { personFailedValidation } from "messages/validation/personValidationMessages";
-import { addressFailedValidation } from "messages/validation/addressValidationMessages";
+} from "tests/testInputs";
 
 describe("Personal info addition rules integration tests", () => {
   let req: Partial<Request>;

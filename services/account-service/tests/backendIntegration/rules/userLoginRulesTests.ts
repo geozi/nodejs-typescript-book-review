@@ -1,12 +1,12 @@
-import { userLoginRules } from "auth/authRules";
-import sinon, { SinonSpy, SinonStub } from "sinon";
-import { Request, Response } from "express";
-import { invalidUserInputs, validUserInput } from "../../testInputs";
 import assert from "assert";
-import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
-import { httpCodes } from "resources/codes/responseStatusCodes";
+import { userLoginRules } from "auth/authRules";
+import { Request, Response } from "express";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { userFailedValidation } from "messages/validation/userValidationMessages";
+import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { invalidUserInputs, validUserInput } from "tests/testInputs";
 
 describe("User login rules integration tests", () => {
   let req: Partial<Request>;

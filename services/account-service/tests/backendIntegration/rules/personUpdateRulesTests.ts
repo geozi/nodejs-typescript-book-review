@@ -1,3 +1,12 @@
+import assert from "assert";
+import { Request, Response } from "express";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { addressFailedValidation } from "messages/validation/addressValidationMessages";
+import { personFailedValidation } from "messages/validation/personValidationMessages";
+import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
+import { personInfoUpdateRules } from "middleware/rules/personRules";
+import { User } from "models/User";
+import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import {
   invalidAddressInputs,
@@ -5,16 +14,7 @@ import {
   invalidPersonInputs,
   validPersonInput,
   validUserInput,
-} from "../../testInputs";
-import { personInfoUpdateRules } from "middleware/rules/personRules";
-import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
-import { Request, Response } from "express";
-import { User } from "models/User";
-import assert from "assert";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
-import { personFailedValidation } from "messages/validation/personValidationMessages";
-import { addressFailedValidation } from "messages/validation/addressValidationMessages";
+} from "tests/testInputs";
 
 describe("Person update rules integration tests", () => {
   let req: Partial<Request>;

@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
-import { User } from "models/User";
-import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validUserInput } from "../../testInputs";
-import { callUserRegistration } from "controllers/userController";
 import assert from "assert";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { Error } from "mongoose";
+import bcrypt from "bcryptjs";
+import { callUserRegistration } from "controllers/userController";
+import { Request, Response } from "express";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
-import bcrypt from "bcryptjs";
+import { User } from "models/User";
+import { Error } from "mongoose";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { validUserInput } from "tests/testInputs";
 
 describe("User registration integration tests", () => {
   let req: Partial<Request>;

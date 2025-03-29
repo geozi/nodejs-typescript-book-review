@@ -1,12 +1,12 @@
-import { Request, Response } from "express";
-import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidUserInputs, validUserInput } from "../../testInputs";
-import { userRegistrationRules } from "middleware/rules/userRules";
-import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import assert from "assert";
-import { httpCodes } from "resources/codes/responseStatusCodes";
+import { Request, Response } from "express";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { userFailedValidation } from "messages/validation/userValidationMessages";
+import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
+import { userRegistrationRules } from "middleware/rules/userRules";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { invalidUserInputs, validUserInput } from "tests/testInputs";
 
 describe("User registration rules integration tests", () => {
   let req: Partial<Request>;

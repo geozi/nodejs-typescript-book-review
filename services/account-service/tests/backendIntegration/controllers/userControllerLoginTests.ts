@@ -1,16 +1,16 @@
-import sinon, { SinonSpy, SinonStub } from "sinon";
-import { testToken, validUserInput } from "../../testInputs";
-import { Request, Response } from "express";
 import assert from "assert";
-import { User } from "models/User";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { redisClient } from "../../../redis.config";
 import { loginUser } from "auth/authController";
-import { httpCodes } from "resources/codes/responseStatusCodes";
 import { authResponseMessages } from "auth/authResponseMessages";
+import bcrypt from "bcryptjs";
+import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { User } from "models/User";
 import { AbortError, ErrorReply } from "redis";
+import { redisClient } from "redis/redis.config";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { testToken, validUserInput } from "tests/testInputs";
 
 describe("User login integration tests", () => {
   let req: Partial<Request>;

@@ -1,13 +1,13 @@
-import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
-import { userUpdateRules } from "middleware/rules/userRules";
-import sinon, { SinonSpy, SinonStub } from "sinon";
-import { Request, Response } from "express";
 import assert from "assert";
-import { invalidUserInputs, validUserInput } from "../../testInputs";
-import { httpCodes } from "resources/codes/responseStatusCodes";
+import { Request, Response } from "express";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { userFailedValidation } from "messages/validation/userValidationMessages";
+import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
+import { userUpdateRules } from "middleware/rules/userRules";
 import { User } from "models/User";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { invalidUserInputs, validUserInput } from "tests/testInputs";
 
 describe("User update rules integration tests", () => {
   let req: Partial<Request>;

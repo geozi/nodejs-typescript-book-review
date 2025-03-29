@@ -1,11 +1,11 @@
-import { IPerson } from "interfaces/documents/IPerson";
-import { Person } from "models/Person";
-import sinon, { SinonStub } from "sinon";
-import { invalidPersonInputs, validPersonInput } from "../testInputs";
 import assert from "assert";
-import { Error } from "mongoose";
+import { IPerson } from "interfaces/documents/IPerson";
 import { personFailedValidation } from "messages/validation/personValidationMessages";
 import { userFailedValidation } from "messages/validation/userValidationMessages";
+import { Person } from "models/Person";
+import { Error } from "mongoose";
+import sinon, { SinonStub } from "sinon";
+import { invalidPersonInputs, validPersonInput } from "tests/testInputs";
 
 describe("Person model unit tests", () => {
   let newPerson: IPerson;
