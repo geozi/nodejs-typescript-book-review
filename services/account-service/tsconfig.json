@@ -5,7 +5,7 @@
     "outDir": "./dist/src",
     "rootDirs": ["./src", "./tests"],
     "baseUrl": "./",
-    "paths": { "*": ["src/*"] },
+    "paths": { "*": ["src/*"], "tests/*": ["tests/*"], "logs/*": ["logs/*"] },
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
