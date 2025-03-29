@@ -1,7 +1,9 @@
 import { ValidationError } from "class-validator";
+import { NotFoundError } from "errors/notFoundErrorClass";
+import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
-import { appLogger } from "../../logs/loggerConfigs";
 import { reqBodyToBook, reqBodyToBookUpdate } from "mappers/bookMapper";
+import { reqBodyToGenre, reqBodyToId } from "mappers/commonMapper";
 import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
 import {
   addBook,
@@ -12,9 +14,7 @@ import {
 } from "repositories/bookRepository";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { ServerError } from "errors/serverErrorClass";
-import { NotFoundError } from "errors/notFoundErrorClass";
-import { reqBodyToGenre, reqBodyToId } from "mappers/commonMapper";
+import { appLogger } from "../../logs/loggerConfigs";
 
 export const callBookAddition = async (
   req: Request,
@@ -76,7 +76,7 @@ export const callBookUpdate = async (
   } catch (error) {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
-        `Author controller: ${callBookUpdate.name} -> ${error.name} detected and caught`
+        `Book controller: ${callBookUpdate.name} -> ${error.name} detected and caught`
       );
 
       res.status(error.httpCode).json({ message: error.message });
@@ -107,7 +107,7 @@ export const callBookRetrievalByTitle = async (
   } catch (error) {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
-        `Author controller: ${callBookRetrievalByTitle.name} -> ${error.name} detected and caught`
+        `Book controller: ${callBookRetrievalByTitle.name} -> ${error.name} detected and caught`
       );
 
       res.status(error.httpCode).json({ message: error.message });
@@ -138,7 +138,7 @@ export const callBookRetrievalById = async (
   } catch (error) {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
-        `Author controller: ${callBookRetrievalById.name} -> ${error.name} detected and caught`
+        `Book controller: ${callBookRetrievalById.name} -> ${error.name} detected and caught`
       );
 
       res.status(error.httpCode).json({ message: error.message });
@@ -168,7 +168,7 @@ export const callBookRetrievalByGenre = async (
   } catch (error) {
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
-        `Author controller: ${callBookRetrievalByGenre.name} -> ${error.name} detected and caught`
+        `Book controller: ${callBookRetrievalByGenre.name} -> ${error.name} detected and caught`
       );
 
       res.status(error.httpCode).json({ message: error.message });
