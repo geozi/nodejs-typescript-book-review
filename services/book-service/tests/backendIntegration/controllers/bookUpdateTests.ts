@@ -12,7 +12,7 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import { UpdateResult } from "typeorm";
 import { validBookInputs } from "../../testInputs";
 
-describe.only("Book controller update tests", () => {
+describe("Book controller update tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
