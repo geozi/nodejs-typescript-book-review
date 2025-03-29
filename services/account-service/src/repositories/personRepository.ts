@@ -2,15 +2,15 @@
  * Person repository.
  * @module src/repositories/personRepository
  */
+import { NotFoundError } from "errors/notFoundErrorClass";
+import { ServerError } from "errors/serverErrorClass";
 import { IPerson } from "interfaces/documents/IPerson";
 import { IPersonUpdate } from "interfaces/secondary/IPersonUpdate";
-import { appLogger } from "../../logs/loggerConfig";
+import { appLogger } from "logs/loggerConfig";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";
 import { Person } from "models/Person";
 import { Error } from "mongoose";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
-import { ServerError } from "errors/serverErrorClass";
-import { NotFoundError } from "errors/notFoundErrorClass";
-import { personControllerResponseMessages } from "messages/response/personControllerResponseMessages";
 
 /**
  * Adds the personal information of a user to the database.

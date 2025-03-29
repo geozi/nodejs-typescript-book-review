@@ -2,15 +2,15 @@
  * User repository.
  * @module src/repositories/userRepository
  */
+import { NotFoundError } from "errors/notFoundErrorClass";
+import { ServerError } from "errors/serverErrorClass";
 import { IUser } from "interfaces/documents/IUser";
 import { IUserUpdate } from "interfaces/secondary/IUserUpdate";
-import { User } from "models/User";
-import { appLogger } from "../../logs/loggerConfig";
-import { Error } from "mongoose";
+import { appLogger } from "logs/loggerConfig";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
-import { ServerError } from "errors/serverErrorClass";
-import { NotFoundError } from "errors/notFoundErrorClass";
 import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
+import { User } from "models/User";
+import { Error } from "mongoose";
 
 /**
  * Returns a user with the specified username.

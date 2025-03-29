@@ -2,21 +2,21 @@
  * Auth controller.
  * @module src/auth/authController
  */
-import { Request, Response } from "express";
-import { getUserByUsername } from "repositories/userRepository";
 import bcrypt from "bcryptjs";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { authResponseMessages } from "./authResponseMessages";
-import { RoleType } from "resources/enums/roleTypeEnums";
-import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import { NotFoundError } from "errors/notFoundErrorClass";
-import { appLogger } from "../../logs/loggerConfig";
 import { ServerError } from "errors/serverErrorClass";
-import { redisClient } from "../../redis.config";
-import { AbortError, ErrorReply } from "redis";
+import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { appLogger } from "logs/loggerConfig";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { AbortError, ErrorReply } from "redis";
+import { redisClient } from "redis/redis.config";
+import { getUserByUsername } from "repositories/userRepository";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import { RoleType } from "resources/enums/roleTypeEnums";
+import { authResponseMessages } from "./authResponseMessages";
 dotenv.config();
 
 /**

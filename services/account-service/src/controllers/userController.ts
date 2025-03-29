@@ -2,20 +2,20 @@
  * User controller.
  * @module src/controllers/userController
  */
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
-import { appLogger } from "../../logs/loggerConfig";
-import { reqBodyToUser, reqBodyToUserUpdate } from "mappers/userMapper";
-import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
-import { addUser, updateUser } from "repositories/userRepository";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { Error } from "mongoose";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
-import { NotFoundError } from "errors/notFoundErrorClass";
-import { ErrorReply, AbortError } from "redis";
+import { appLogger } from "logs/loggerConfig";
 import { recastReqToIReq } from "mappers/commonMapper";
+import { reqBodyToUser, reqBodyToUserUpdate } from "mappers/userMapper";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { userControllerResponseMessages } from "messages/response/userControllerResponseMessages";
+import { Error } from "mongoose";
+import { AbortError, ErrorReply } from "redis";
+import { redisClient } from "redis/redis.config";
+import { addUser, updateUser } from "repositories/userRepository";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
-import { redisClient } from "../../redis.config";
+import { httpCodes } from "resources/codes/responseStatusCodes";
 
 /**
  * Handles HTTP requests for user registration.
