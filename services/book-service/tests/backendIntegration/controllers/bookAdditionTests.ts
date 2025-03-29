@@ -84,7 +84,6 @@ describe("Book addition integration tests", () => {
       savedStub = sinon.stub(AppDataSource.getRepository(Book), "save");
 
       res = {
-        setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };

@@ -102,7 +102,6 @@ describe("Book update tests", () => {
       );
 
       res = {
-        setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };
