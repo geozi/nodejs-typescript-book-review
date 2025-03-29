@@ -7,7 +7,7 @@
     "rootDirs": ["./src", "./tests"],
     "outDir": "./build",
     "baseUrl": "./",
-    "paths": { "*": ["src/*"], "tests/*": ["tests/*"], "logs/*": ["logs/"] },
+    "paths": { "*": ["src/*"], "tests/*": ["tests/*"], "logs/*": ["logs/*"] },
     "types": ["node", "mocha"],
     "strict": true,
     "noUnusedLocals": true,

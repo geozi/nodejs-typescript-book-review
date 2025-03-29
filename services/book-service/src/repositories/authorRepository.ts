@@ -1,10 +1,10 @@
+import { validate, ValidationError } from "class-validator";
 import { AppDataSource } from "config/dataSource";
 import { Author } from "entities/Author";
 import { ServerError } from "errors/serverErrorClass";
-import { appLogger } from "../../logs/loggerConfigs";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
-import { validate, ValidationError } from "class-validator";
 import { IAuthorUpdate } from "interfaces/IAuthorUpdate";
+import { appLogger } from "logs/loggerConfigs";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 
 const authorRepository = AppDataSource.getRepository(Author);
 
