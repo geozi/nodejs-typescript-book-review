@@ -1,15 +1,15 @@
-import { Author } from "entities/Author";
-import { Request, Response } from "express";
-import sinon, { SinonSpy, SinonStub } from "sinon";
 import assert from "assert";
 import { AppDataSource } from "config/dataSource";
 import { callAuthorRetrievalById } from "controllers/authorController";
-import { httpCodes } from "resources/codes/responseStatusCodes";
-import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { Author } from "entities/Author";
+import { Request, Response } from "express";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
 
-describe("Author controller retrieval integration tests", () => {
+describe("Author retrieval integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;

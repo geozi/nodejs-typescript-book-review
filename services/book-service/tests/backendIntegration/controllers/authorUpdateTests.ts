@@ -1,17 +1,17 @@
+import assert from "assert";
 import { AppDataSource } from "config/dataSource";
+import { callAuthorUpdate } from "controllers/authorController";
 import { Author } from "entities/Author";
 import { Request, Response } from "express";
-import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validAuthorInputs } from "../../testInputs";
-import { UpdateResult } from "typeorm";
-import { callAuthorUpdate } from "controllers/authorController";
-import assert from "assert";
-import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
-import { httpCodes } from "resources/codes/responseStatusCodes";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { UpdateResult } from "typeorm";
+import { validAuthorInputs } from "../../testInputs";
 
-describe("Author controller update tests", () => {
+describe("Author update tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;

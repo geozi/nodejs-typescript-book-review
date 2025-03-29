@@ -1,17 +1,17 @@
-import { Author } from "entities/Author";
-import { Request, Response } from "express";
-import sinon, { SinonSpy, SinonStub } from "sinon";
 import assert from "assert";
 import { AppDataSource } from "config/dataSource";
-import { invalidAuthorInputs, validAuthorInputs } from "../../testInputs";
 import { callAuthorAddition } from "controllers/authorController";
+import { Author } from "entities/Author";
+import { Request, Response } from "express";
+import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
-import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
-import { authorFailedValidation } from "messages/validation/authorValidationMessages";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import sinon, { SinonSpy, SinonStub } from "sinon";
+import { invalidAuthorInputs, validAuthorInputs } from "../../testInputs";
 
-describe("Author controller addition integration tests", () => {
+describe("Author addition integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
