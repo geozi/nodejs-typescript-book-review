@@ -21,6 +21,7 @@ describe("Author update tests", () => {
   let findOneByStub: SinonStub;
   let mockUpdateResult: UpdateResult;
   let mockAuthor: Author;
+  let mockId: string;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -44,10 +45,11 @@ describe("Author update tests", () => {
       };
 
       // Mocks
+      mockId = "1";
       mockUpdateResult = new UpdateResult();
       mockUpdateResult.affected = 1;
       mockAuthor = new Author();
-      mockAuthor.id = 1;
+      mockAuthor.id = Number(mockId).valueOf();
       mockAuthor.firstName = validAuthorInputs.firstName;
     });
 
@@ -58,7 +60,7 @@ describe("Author update tests", () => {
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: 1,
+            id: mockId,
             firstName: validAuthorInputs.firstName,
           })
         ),
@@ -118,7 +120,7 @@ describe("Author update tests", () => {
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: 1,
+            id: mockId,
             firstName: validAuthorInputs.firstName,
           })
         ),

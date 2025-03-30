@@ -21,7 +21,7 @@ describe("Book update tests", () => {
   let updateFuncStub: SinonStub;
   let findOneByStub: SinonStub;
   let mockUpdateResult: UpdateResult;
-  let mockId: number;
+  let mockId: string;
   let mockBook: Book;
 
   describe("Positive scenarios", () => {
@@ -45,9 +45,9 @@ describe("Book update tests", () => {
       // Mocks
       mockUpdateResult = new UpdateResult();
       mockUpdateResult.affected = 1;
-      mockId = 1;
+      mockId = "1";
       mockBook = new Book();
-      mockBook.id = mockId;
+      mockBook.id = Number(mockId).valueOf();
       mockBook.title = validBookInputs.title;
       mockBook.genre = Genre.FICTION;
     });
@@ -107,7 +107,7 @@ describe("Book update tests", () => {
       };
 
       // Mocks
-      mockId = 1;
+      mockId = "1";
       mockUpdateResult = new UpdateResult();
     });
 

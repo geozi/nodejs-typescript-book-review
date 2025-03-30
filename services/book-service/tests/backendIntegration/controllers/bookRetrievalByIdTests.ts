@@ -18,7 +18,7 @@ describe("Book retrieval by ID integration tests", () => {
   let setHeaderStub: SinonStub;
   let findOneByStub: SinonStub;
   let mockBook: Book;
-  let mockId: number;
+  let mockId: string;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -38,9 +38,9 @@ describe("Book retrieval by ID integration tests", () => {
       };
 
       // Mocks
-      mockId = 1;
+      mockId = "1";
       mockBook = new Book();
-      mockBook.id = mockId;
+      mockBook.id = Number(mockId).valueOf();
       mockBook.title = validBookInputs.title;
     });
 
@@ -96,9 +96,9 @@ describe("Book retrieval by ID integration tests", () => {
       };
 
       // Mocks
-      mockId = 1;
+      mockId = "1";
       mockBook = new Book();
-      mockBook.id = mockId;
+      mockBook.id = Number(mockId).valueOf();
       mockBook.title = validBookInputs.title;
     });
 
