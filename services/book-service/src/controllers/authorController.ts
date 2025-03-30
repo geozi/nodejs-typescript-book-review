@@ -23,7 +23,7 @@ export const callAuthorAddition = async (
     const savedAuthor = await addAuthor(newAuthor);
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
         message: authorControllerResponseMessages.AUTHOR_ADDED,
@@ -67,7 +67,7 @@ export const callAuthorUpdate = async (
     }
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: authorControllerResponseMessages.AUTHOR_UPDATED,
@@ -100,7 +100,7 @@ export const callAuthorRetrievalById = async (
     }
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: authorControllerResponseMessages.AUTHOR_RETRIEVED,

@@ -29,7 +29,7 @@ export const callBookAddition = async (
     const savedBook = await addBook(newBook);
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
         message: bookControllerResponseMessages.BOOK_ADDED,
@@ -71,7 +71,7 @@ export const callBookUpdate = async (
     }
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: bookControllerResponseMessages.BOOK_UPDATED,
@@ -102,7 +102,7 @@ export const callBookRetrievalByTitle = async (
     }
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: bookControllerResponseMessages.BOOK_RETRIEVED,
@@ -133,7 +133,7 @@ export const callBookRetrievalById = async (
     }
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: bookControllerResponseMessages.BOOK_RETRIEVED,
@@ -163,7 +163,7 @@ export const callBookRetrievalByGenre = async (
     }
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: bookControllerResponseMessages.BOOK_S_RETRIEVED,
