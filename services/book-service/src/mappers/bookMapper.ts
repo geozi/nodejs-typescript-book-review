@@ -1,7 +1,7 @@
 import { Book } from "entities/Book";
 import { Request } from "express";
 import { IBookUpdate } from "interfaces/IBookUpdate";
-import { Genre } from "resources/enum/Genre";
+import { Genre, genreArray } from "resources/enum/Genre";
 
 export const reqBodyToBook = (req: Request): Book => {
   const { title, genre } = req.body;
@@ -65,4 +65,18 @@ export const reqBodyToBookUpdate = (
   };
 
   return data;
+};
+
+export const reqBodyToGenre = (req: Request) => {
+  const { genre } = req.body;
+
+  let genreAsEnum = Genre.FICTION;
+  for (let i = 1; i < genreArray.length; i++) {
+    if (genreArray[i].toString() === genre) {
+      genreAsEnum = genreArray[i];
+      break;
+    }
+  }
+
+  return genreAsEnum;
 };

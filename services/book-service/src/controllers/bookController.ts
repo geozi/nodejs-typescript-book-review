@@ -3,8 +3,12 @@ import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "logs/loggerConfigs";
-import { reqBodyToBook, reqBodyToBookUpdate } from "mappers/bookMapper";
-import { reqBodyToGenre, reqBodyToId } from "mappers/commonMapper";
+import {
+  reqBodyToBook,
+  reqBodyToBookUpdate,
+  reqBodyToGenre,
+} from "mappers/bookMapper";
+import { reqBodyToId } from "mappers/commonMapper";
 import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
 import {
   addBook,
