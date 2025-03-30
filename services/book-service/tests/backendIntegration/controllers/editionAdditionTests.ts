@@ -1,8 +1,17 @@
+import assert from "assert";
 import { AppDataSource } from "config/dataSource";
+import { callEditionAddition } from "controllers/editionController";
+import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { Request, Response } from "express";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { editionControllerResponseMessages } from "messages/response/editionControllerResponseMessages";
+import { editionFailedValidation } from "messages/validation/editionValidationMessages";
+import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
+import { httpCodes } from "resources/codes/responseStatusCodes";
+import { BookFormat } from "resources/enum/BookFormat";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validEditionInputs } from "tests/testInputs";
+import { invalidEditionInputs, validEditionInputs } from "tests/testInputs";
 
 describe("Edition addition integration tests", () => {
   let req: Partial<Request>;
@@ -12,6 +21,7 @@ describe("Edition addition integration tests", () => {
   let setHeaderStub: SinonStub;
   let saveStub: SinonStub;
   let mockEdition: Edition;
+  let mockBook: Book;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -42,7 +52,108 @@ describe("Edition addition integration tests", () => {
       };
 
       // Mocks
+      mockBook = new Book();
       mockEdition = new Edition();
+      mockEdition.isbn = validEditionInputs.isbn;
+      mockEdition.publicationDate = new Date(
+        validEditionInputs.publication_date
+      );
+      mockEdition.publisher = validEditionInputs.publisher;
+      mockEdition.pageCount = Number(validEditionInputs.page_count).valueOf();
+      mockEdition.bookFormat = BookFormat.HARDCOVER;
+      mockEdition.bookLanguage = validEditionInputs.book_language;
+      mockEdition.book = mockBook;
+    });
+
+    it("created (201)", async () => {
+      saveStub.resolves(mockEdition);
+
+      await callEditionAddition(req as Request, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+      setHeaderStub = res.setHeader as SinonStub;
+
+      assert.strictEqual(
+        setHeaderStub.calledWith(
+          "X-api-version",
+          apiVersionNumbers.VERSION_1_0
+        ),
+        true
+      );
+      assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          message: editionControllerResponseMessages.EDITION_ADDED,
+          data: mockEdition,
+        }),
+        true
+      );
+    });
+  });
+
+  describe("Negative scenarios", () => {
+    beforeEach(() => {
+      // Reset stubs and mocks
+      sinon.restore();
+
+      // Stubs
+      saveStub = sinon.stub(AppDataSource.getRepository(Edition), "save");
+      res = {
+        status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
+        json: sinon.spy(),
+      };
+
+      req = {
+        body: JSON.parse(
+          JSON.stringify({
+            isbn: validEditionInputs.isbn,
+            publicationDate: validEditionInputs.publication_date,
+            publisher: validEditionInputs.publisher,
+            pageCount: validEditionInputs.page_count,
+            bookFormat: validEditionInputs.book_format,
+            bookLanguage: validEditionInputs.book_language,
+            book: "1",
+          })
+        ),
+      };
+    });
+
+    it("validation error (500)", async () => {
+      req.body.isbn = invalidEditionInputs.INVALID_ISBN;
+
+      await callEditionAddition(req as Request, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          isIsbn: editionFailedValidation.ISBN_INVALID_MESSAGE,
+        }),
+        true
+      );
+    });
+
+    it("server error (500)", async () => {
+      saveStub.rejects();
+
+      await callEditionAddition(req as Request, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
+        }),
+        true
+      );
     });
   });
 });

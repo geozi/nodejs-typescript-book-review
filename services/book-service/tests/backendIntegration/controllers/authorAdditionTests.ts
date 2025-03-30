@@ -78,25 +78,28 @@ describe("Author addition integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and mocks
       sinon.restore();
 
+      // Stubs
       saveStub = sinon.stub(AppDataSource.getRepository(Author), "save");
-
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };
-    });
 
-    it("validation error (400)", async () => {
       req = {
         body: JSON.parse(
           JSON.stringify({
-            firstName: invalidAuthorInputs.NAME_TOO_SHORT,
+            firstName: validAuthorInputs.firstName,
             lastName: validAuthorInputs.lastName,
           })
         ),
       };
+    });
+
+    it("validation error (400)", async () => {
+      req.body.firstName = invalidAuthorInputs.NAME_TOO_SHORT;
 
       await callAuthorAddition(req as Request, res as Response);
 
@@ -114,15 +117,6 @@ describe("Author addition integration tests", () => {
 
     it("server error (500)", async () => {
       saveStub.rejects();
-
-      req = {
-        body: JSON.parse(
-          JSON.stringify({
-            firstName: validAuthorInputs.firstName,
-            lastName: validAuthorInputs.lastName,
-          })
-        ),
-      };
 
       await callAuthorAddition(req as Request, res as Response);
 
