@@ -27,7 +27,7 @@ export const callEditionAddition = async (req: Request, res: Response) => {
     const savedEdition = await addEdition(newEdition);
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
         message: editionControllerResponseMessages.EDITION_ADDED,
@@ -64,7 +64,7 @@ export const callEditionUpdate = async (req: Request, res: Response) => {
     const updatedEdition = await updateEdition(id, editionToUpdate);
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: editionControllerResponseMessages.EDITION_UPDATED,
@@ -91,7 +91,7 @@ export const callEditionRetrievalByISBN = async (
     const retrievedEdition = await getEditionByISBN(isbn);
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: editionControllerResponseMessages.EDITION_RETRIEVED,
@@ -129,7 +129,7 @@ export const callEditionRetrievalByBook = async (
     }
 
     res
-      .setHeader("X-api-version", apiVersionNumbers.VERSION_1_0)
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
         message: editionControllerResponseMessages.EDITION_S_RETRIEVED,
