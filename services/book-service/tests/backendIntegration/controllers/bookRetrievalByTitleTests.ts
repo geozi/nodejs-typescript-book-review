@@ -86,7 +86,6 @@ describe("Book retrieval by title integration tests", () => {
         AppDataSource.getRepository(Book),
         "findOneBy"
       );
-
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
@@ -95,6 +94,14 @@ describe("Book retrieval by title integration tests", () => {
       // Mocks
       mockBook = new Book();
       mockBook.title = validBookInputs.title;
+
+      req = {
+        body: JSON.parse(
+          JSON.stringify({
+            title: validBookInputs.title,
+          })
+        ),
+      };
     });
 
     it("server error (500)", async () => {

@@ -82,20 +82,21 @@ describe("Book addition integration tests", () => {
 
       // Stubs
       savedStub = sinon.stub(AppDataSource.getRepository(Book), "save");
-
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };
-    });
 
-    it("validation error (400)", async () => {
       req = {
         body: {
-          title: invalidBookInputs.TITLE_TOO_LONG,
+          title: validBookInputs.title,
           genre: validBookInputs.genre,
         },
       };
+    });
+
+    it("validation error (400)", async () => {
+      req.body.title = invalidBookInputs.TITLE_TOO_LONG;
 
       await callBookAddition(req as Request, res as Response);
 
@@ -114,12 +115,6 @@ describe("Book addition integration tests", () => {
     it("server error (500)", async () => {
       savedStub.rejects();
 
-      req = {
-        body: {
-          title: validBookInputs.title,
-          genre: validBookInputs.genre,
-        },
-      };
       await callBookAddition(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;

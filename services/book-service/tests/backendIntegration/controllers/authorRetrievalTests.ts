@@ -97,10 +97,6 @@ describe("Author retrieval integration tests", () => {
       mockId = "1";
       mockAuthor = new Author();
       mockAuthor.id = Number(mockId).valueOf();
-    });
-
-    it("server error (500)", async () => {
-      findOneByStub.rejects();
 
       req = {
         body: JSON.parse(
@@ -109,6 +105,10 @@ describe("Author retrieval integration tests", () => {
           })
         ),
       };
+    });
+
+    it("server error (500)", async () => {
+      findOneByStub.rejects();
 
       await callAuthorRetrievalById(req as Request, res as Response);
 
@@ -129,14 +129,6 @@ describe("Author retrieval integration tests", () => {
 
     it("not found (404)", async () => {
       findOneByStub.resolves(null);
-
-      req = {
-        body: JSON.parse(
-          JSON.stringify({
-            id: mockId,
-          })
-        ),
-      };
 
       await callAuthorRetrievalById(req as Request, res as Response);
 

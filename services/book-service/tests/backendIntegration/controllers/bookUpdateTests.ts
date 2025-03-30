@@ -109,10 +109,6 @@ describe("Book update tests", () => {
       // Mocks
       mockId = "1";
       mockUpdateResult = new UpdateResult();
-    });
-
-    it("server error (500) -> update rejects", async () => {
-      updateFuncStub.rejects();
 
       req = {
         body: JSON.parse(
@@ -122,6 +118,10 @@ describe("Book update tests", () => {
           })
         ),
       };
+    });
+
+    it("server error (500) -> update rejects", async () => {
+      updateFuncStub.rejects();
 
       await callBookUpdate(req as Request, res as Response);
 
@@ -143,15 +143,6 @@ describe("Book update tests", () => {
     it("server error (500) -> findOneBy rejects", async () => {
       updateFuncStub.resolves(mockUpdateResult);
       findOneByStub.rejects();
-
-      req = {
-        body: JSON.parse(
-          JSON.stringify({
-            id: mockId,
-            title: validBookInputs.title,
-          })
-        ),
-      };
 
       await callBookUpdate(req as Request, res as Response);
 

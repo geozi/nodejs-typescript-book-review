@@ -100,6 +100,14 @@ describe("Book retrieval by ID integration tests", () => {
       mockBook = new Book();
       mockBook.id = Number(mockId).valueOf();
       mockBook.title = validBookInputs.title;
+
+      req = {
+        body: JSON.parse(
+          JSON.stringify({
+            id: mockId,
+          })
+        ),
+      };
     });
 
     it("server error (500)", async () => {

@@ -97,6 +97,14 @@ describe("Book retrieval by Genre tests", () => {
       mockBook2 = new Book();
       mockBook2.genre = Genre.FICTION;
       mockBooks = [mockBook1, mockBook2];
+
+      req = {
+        body: JSON.parse(
+          JSON.stringify({
+            genre: "Fiction",
+          })
+        ),
+      };
     });
 
     it("server error (500)", async () => {

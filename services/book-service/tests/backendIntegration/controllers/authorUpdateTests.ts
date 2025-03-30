@@ -112,10 +112,6 @@ describe("Author update tests", () => {
 
       // Mocks
       mockUpdateResult = new UpdateResult();
-    });
-
-    it("server error (500) -> update rejects", async () => {
-      updateFuncStub.rejects();
 
       req = {
         body: JSON.parse(
@@ -125,6 +121,10 @@ describe("Author update tests", () => {
           })
         ),
       };
+    });
+
+    it("server error (500) -> update rejects", async () => {
+      updateFuncStub.rejects();
 
       await callAuthorUpdate(req as Request, res as Response);
 
@@ -147,15 +147,6 @@ describe("Author update tests", () => {
       updateFuncStub.resolves(mockUpdateResult);
       findOneByStub.rejects();
 
-      req = {
-        body: JSON.parse(
-          JSON.stringify({
-            id: 1,
-            firstName: validAuthorInputs.firstName,
-          })
-        ),
-      };
-
       await callAuthorUpdate(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
@@ -176,15 +167,6 @@ describe("Author update tests", () => {
     it("not found (404)", async () => {
       mockUpdateResult.affected = 0;
       updateFuncStub.resolves(mockUpdateResult);
-
-      req = {
-        body: JSON.parse(
-          JSON.stringify({
-            id: 1,
-            firstName: validAuthorInputs.firstName,
-          })
-        ),
-      };
 
       await callAuthorUpdate(req as Request, res as Response);
 
