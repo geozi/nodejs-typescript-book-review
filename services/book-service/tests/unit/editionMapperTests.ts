@@ -32,12 +32,12 @@ describe("Edition mapper unit tests", () => {
               publicationDate: validEditionInputs.publication_date,
               publisher: validEditionInputs.publisher,
               pageCount: validEditionInputs.page_count,
-              bookFormat: validEditionInputs.book_format,
+              bookFormat: validEditionInputs.book_format.toString(),
               bookLanguage: validEditionInputs.book_language,
               book: {
                 id: mockId,
                 title: validBookInputs.title,
-                genre: validBookInputs.genre,
+                genre: validBookInputs.genre.toString(),
               },
             })
           ),
@@ -69,24 +69,28 @@ describe("Edition mapper unit tests", () => {
     });
 
     describe("Negative scenarios", () => {
-      it("isbn is invalid", () => {
+      beforeEach(() => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              isbn: invalidEditionInputs.INVALID_ISBN,
+              isbn: validEditionInputs.isbn,
               publicationDate: validEditionInputs.publication_date,
               publisher: validEditionInputs.publisher,
               pageCount: validEditionInputs.page_count,
-              bookFormat: validEditionInputs.book_format,
+              bookFormat: validEditionInputs.book_format.toString(),
               bookLanguage: validEditionInputs.book_language,
               book: {
                 id: mockId,
                 title: validBookInputs.title,
-                genre: validBookInputs.genre,
+                genre: validBookInputs.genre.toString(),
               },
             })
           ),
         };
+      });
+
+      it("isbn is invalid", () => {
+        req.body.isbn = invalidEditionInputs.INVALID_ISBN;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -99,23 +103,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("publicationDate is invalid", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              isbn: validEditionInputs.isbn,
-              publicationDate: invalidEditionInputs.INVALID_DATE,
-              publisher: validEditionInputs.publisher,
-              pageCount: validEditionInputs.page_count,
-              bookFormat: validEditionInputs.book_format,
-              bookLanguage: validEditionInputs.book_language,
-              book: {
-                id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre,
-              },
-            })
-          ),
-        };
+        req.body.publicationDate = invalidEditionInputs.INVALID_DATE;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -128,23 +116,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("publisher name is too short", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              isbn: validEditionInputs.isbn,
-              publicationDate: validEditionInputs.publication_date,
-              publisher: invalidEditionInputs.PUBLISHER_NAME_TOO_SHORT,
-              pageCount: validEditionInputs.page_count,
-              bookFormat: validEditionInputs.book_format,
-              bookLanguage: validEditionInputs.book_language,
-              book: {
-                id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre,
-              },
-            })
-          ),
-        };
+        req.body.publisher = invalidEditionInputs.PUBLISHER_NAME_TOO_SHORT;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -157,23 +129,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("publisher name is too long", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              isbn: validEditionInputs.isbn,
-              publicationDate: validEditionInputs.publication_date,
-              publisher: invalidEditionInputs.PUBLISHER_NAME_TOO_LONG,
-              pageCount: validEditionInputs.page_count,
-              bookFormat: validEditionInputs.book_format,
-              bookLanguage: validEditionInputs.book_language,
-              book: {
-                id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre,
-              },
-            })
-          ),
-        };
+        req.body.publisher = invalidEditionInputs.PUBLISHER_NAME_TOO_LONG;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -186,23 +142,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("pageCount is negative", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              isbn: validEditionInputs.isbn,
-              publicationDate: validEditionInputs.publication_date,
-              publisher: validEditionInputs.publisher,
-              pageCount: invalidEditionInputs.PAGE_COUNT_NEGATIVE,
-              bookFormat: validEditionInputs.book_format,
-              bookLanguage: validEditionInputs.book_language,
-              book: {
-                id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre,
-              },
-            })
-          ),
-        };
+        req.body.pageCount = invalidEditionInputs.PAGE_COUNT_NEGATIVE;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -216,23 +156,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("pageCount is too low", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              isbn: validEditionInputs.isbn,
-              publicationDate: validEditionInputs.publication_date,
-              publisher: validEditionInputs.publisher,
-              pageCount: invalidEditionInputs.PAGE_COUNT_MIN,
-              bookFormat: validEditionInputs.book_format,
-              bookLanguage: validEditionInputs.book_language,
-              book: {
-                id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre,
-              },
-            })
-          ),
-        };
+        req.body.pageCount = invalidEditionInputs.PAGE_COUNT_MIN;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -245,23 +169,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("bookFormat is invalid", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              isbn: validEditionInputs.isbn,
-              publicationDate: validEditionInputs.publication_date,
-              publisher: validEditionInputs.publisher,
-              pageCount: validEditionInputs.page_count,
-              bookFormat: invalidEditionInputs.INVALID_BOOK_FORMAT,
-              bookLanguage: validEditionInputs.book_language,
-              book: {
-                id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre,
-              },
-            })
-          ),
-        };
+        req.body.bookFormat = invalidEditionInputs.INVALID_BOOK_FORMAT;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -274,23 +182,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("bookLanguage is too short", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              isbn: validEditionInputs.isbn,
-              publicationDate: validEditionInputs.publication_date,
-              publisher: validEditionInputs.publisher,
-              pageCount: validEditionInputs.page_count,
-              bookFormat: validEditionInputs.book_format,
-              bookLanguage: invalidEditionInputs.LANGUAGE_TOO_SHORT,
-              book: {
-                id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre,
-              },
-            })
-          ),
-        };
+        req.body.bookLanguage = invalidEditionInputs.LANGUAGE_TOO_SHORT;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -303,23 +195,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("bookLanguage is invalid", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              isbn: validEditionInputs.isbn,
-              publicationDate: validEditionInputs.publication_date,
-              publisher: validEditionInputs.publisher,
-              pageCount: validEditionInputs.page_count,
-              bookFormat: validEditionInputs.book_format,
-              bookLanguage: invalidEditionInputs.INVALID_LANGUAGE,
-              book: {
-                id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre,
-              },
-            })
-          ),
-        };
+        req.body.bookLanguage = invalidEditionInputs.INVALID_LANGUAGE;
 
         const newEdition = reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -343,7 +219,7 @@ describe("Edition mapper unit tests", () => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              id: 1,
+              id: mockId,
               publicationDate: validEditionInputs.publication_date,
             })
           ),

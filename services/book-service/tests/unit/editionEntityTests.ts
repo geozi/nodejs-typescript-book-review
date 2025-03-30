@@ -3,7 +3,6 @@ import { validateSync } from "class-validator";
 import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { editionFailedValidation } from "messages/validation/editionValidationMessages";
-import { BookFormat } from "resources/enum/BookFormat";
 import { invalidEditionInputs, validEditionInputs } from "tests/testInputs";
 
 describe("Edition model entity unit tests", () => {
@@ -17,7 +16,7 @@ describe("Edition model entity unit tests", () => {
       edition.publicationDate = new Date(validEditionInputs.publication_date);
       edition.publisher = validEditionInputs.publisher;
       edition.pageCount = validEditionInputs.page_count;
-      edition.bookFormat = BookFormat.HARDCOVER;
+      edition.bookFormat = validEditionInputs.book_format;
       edition.bookLanguage = validEditionInputs.book_language;
       edition.book = mockBook;
     });
@@ -29,6 +28,7 @@ describe("Edition model entity unit tests", () => {
       assert.strictEqual(edition.book.id, mockBook.id);
     });
   });
+
   describe("Negative scenarios", () => {
     describe("validation-oriented", () => {
       beforeEach(() => {
@@ -38,7 +38,7 @@ describe("Edition model entity unit tests", () => {
         edition.publicationDate = new Date(validEditionInputs.publication_date);
         edition.publisher = validEditionInputs.publisher;
         edition.pageCount = validEditionInputs.page_count;
-        edition.bookFormat = BookFormat.HARDCOVER;
+        edition.bookFormat = validEditionInputs.book_format;
         edition.bookLanguage = validEditionInputs.book_language;
         edition.book = mockBook;
       });

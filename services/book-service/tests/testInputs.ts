@@ -1,3 +1,4 @@
+import { BookFormat } from "resources/enum/BookFormat";
 import { Genre } from "resources/enum/Genre";
 
 export const validAuthorInputs = {
@@ -15,7 +16,7 @@ export const validEditionInputs = {
   publication_date: "2008-10-14",
   publisher: "Scholastic Press",
   page_count: 374,
-  book_format: "Hardcover",
+  book_format: BookFormat.HARDCOVER,
   book_language: "English",
 };
 
