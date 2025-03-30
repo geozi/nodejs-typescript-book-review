@@ -1,6 +1,6 @@
 import assert from "assert";
 import { AppDataSource } from "config/dataSource";
-import { callEditionUpdate } from "controllers/editionController";
+import { callEditionRetrievalByISBN } from "controllers/editionController";
 import { Edition } from "entities/Edition";
 import { Request, Response } from "express";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
@@ -9,19 +9,15 @@ import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validEditionInputs } from "tests/testInputs";
-import { UpdateResult } from "typeorm";
 
-describe("Edition update integration tests", () => {
+describe("Edition retrieval by ISBN integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
-  let updateFuncStub: SinonStub;
   let findOneByStub: SinonStub;
-  let mockUpdateResult: UpdateResult;
   let mockEdition: Edition;
-  let mockId: string;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -29,10 +25,6 @@ describe("Edition update integration tests", () => {
       sinon.restore();
 
       // Stubs
-      updateFuncStub = sinon.stub(
-        AppDataSource.getRepository(Edition),
-        "update"
-      );
       findOneByStub = sinon.stub(
         AppDataSource.getRepository(Edition),
         "findOneBy"
@@ -45,28 +37,22 @@ describe("Edition update integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
-      mockUpdateResult = new UpdateResult();
-      mockUpdateResult.affected = 1;
       mockEdition = new Edition();
-      mockEdition.id = Number(mockId).valueOf();
-      mockEdition.pageCount = validEditionInputs.page_count;
+      mockEdition.isbn = validEditionInputs.isbn;
     });
 
     it("ok (200)", async () => {
-      updateFuncStub.resolves(mockUpdateResult);
       findOneByStub.resolves(mockEdition);
 
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: mockId,
-            pageCount: validEditionInputs.page_count.toString(),
+            isbn: validEditionInputs.isbn,
           })
         ),
       };
 
-      await callEditionUpdate(req as Request, res as Response);
+      await callEditionRetrievalByISBN(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -82,7 +68,7 @@ describe("Edition update integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: editionControllerResponseMessages.EDITION_UPDATED,
+          message: editionControllerResponseMessages.EDITION_RETRIEVED,
           data: mockEdition,
         }),
         true
@@ -96,10 +82,6 @@ describe("Edition update integration tests", () => {
       sinon.restore();
 
       // Stubs
-      updateFuncStub = sinon.stub(
-        AppDataSource.getRepository(Edition),
-        "update"
-      );
       findOneByStub = sinon.stub(
         AppDataSource.getRepository(Edition),
         "findOneBy"
@@ -111,45 +93,22 @@ describe("Edition update integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
-      mockUpdateResult = new UpdateResult();
+      mockEdition = new Edition();
+      mockEdition.isbn = validEditionInputs.isbn;
 
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: mockId,
-            pageCount: validEditionInputs.page_count.toString(),
+            isbn: validEditionInputs.isbn,
           })
         ),
       };
     });
 
-    it("server error (500) -> update rejects", async () => {
-      updateFuncStub.rejects();
-
-      await callEditionUpdate(req as Request, res as Response);
-
-      statusStub = res.status as SinonStub;
-      jsonSpy = res.json as SinonSpy;
-
-      assert.strictEqual(
-        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
-        true
-      );
-      assert.strictEqual(
-        jsonSpy.calledWith({
-          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
-        }),
-        true
-      );
-    });
-
-    it("server error (500) -> findOneBy rejects", async () => {
-      mockUpdateResult.affected = 1;
-      updateFuncStub.resolves(mockUpdateResult);
+    it("server error (500)", async () => {
       findOneByStub.rejects();
 
-      await callEditionUpdate(req as Request, res as Response);
+      await callEditionRetrievalByISBN(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -167,10 +126,9 @@ describe("Edition update integration tests", () => {
     });
 
     it("not found (404)", async () => {
-      mockUpdateResult.affected = 0;
-      updateFuncStub.resolves(mockUpdateResult);
+      findOneByStub.resolves(null);
 
-      await callEditionUpdate(req as Request, res as Response);
+      await callEditionRetrievalByISBN(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
