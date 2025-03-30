@@ -22,7 +22,10 @@ describe("Author addition integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and mocks
       sinon.restore();
+
+      // Stubs
       saveStub = sinon.stub(AppDataSource.getRepository(Author), "save");
 
       res = {
@@ -40,6 +43,7 @@ describe("Author addition integration tests", () => {
         ),
       };
 
+      // Mocks
       mockAuthor = new Author();
       mockAuthor.firstName = validAuthorInputs.firstName;
       mockAuthor.lastName = validAuthorInputs.lastName;
