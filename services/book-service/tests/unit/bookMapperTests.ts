@@ -18,7 +18,7 @@ describe("Book mapper unit tests", () => {
           body: JSON.parse(
             JSON.stringify({
               title: validBookInputs.title,
-              genre: validBookInputs.genre,
+              genre: validBookInputs.genre.toString(),
             })
           ),
         };
@@ -34,15 +34,19 @@ describe("Book mapper unit tests", () => {
     });
 
     describe("Negative scenarios", () => {
-      it("title is too short", () => {
+      beforeEach(() => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              title: invalidBookInputs.TITLE_TOO_SHORT,
-              genre: validBookInputs.genre,
+              title: validBookInputs.title,
+              genre: validBookInputs.genre.toString(),
             })
           ),
         };
+      });
+
+      it("title is too short", () => {
+        req.body.title = invalidBookInputs.TITLE_TOO_SHORT;
 
         const newBook = reqBodyToBook(req as Request);
         const errors = validateSync(newBook);
@@ -55,14 +59,7 @@ describe("Book mapper unit tests", () => {
       });
 
       it("title is too long", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              title: invalidBookInputs.TITLE_TOO_LONG,
-              genre: validBookInputs.genre,
-            })
-          ),
-        };
+        req.body.title = invalidBookInputs.TITLE_TOO_LONG;
 
         const newBook = reqBodyToBook(req as Request);
         const errors = validateSync(newBook);
@@ -75,14 +72,7 @@ describe("Book mapper unit tests", () => {
       });
 
       it("genre is invalid", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              title: validBookInputs.title,
-              genre: invalidBookInputs.GENRE_INVALID,
-            })
-          ),
-        };
+        req.body.genre = invalidBookInputs.GENRE_INVALID;
 
         const newBook = reqBodyToBook(req as Request);
         const errors = validateSync(newBook);
@@ -95,14 +85,7 @@ describe("Book mapper unit tests", () => {
       });
 
       it("title is undefined", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              title: undefined,
-              genre: validBookInputs.genre,
-            })
-          ),
-        };
+        req.body.title = undefined;
 
         const newBook = reqBodyToBook(req as Request);
         const errors = validateSync(newBook);
@@ -117,14 +100,7 @@ describe("Book mapper unit tests", () => {
       });
 
       it("genre is undefined", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              title: validBookInputs.title,
-              genre: undefined,
-            })
-          ),
-        };
+        req.body.genre = undefined;
 
         const newBook = reqBodyToBook(req as Request);
         const errors = validateSync(newBook);
@@ -150,7 +126,6 @@ describe("Book mapper unit tests", () => {
             JSON.stringify({
               id: mockId,
               title: validBookInputs.title,
-              genre: undefined,
             })
           ),
         };
@@ -171,7 +146,7 @@ describe("Book mapper unit tests", () => {
           body: JSON.parse(
             JSON.stringify({
               id: mockId,
-              genre: validBookInputs.genre,
+              genre: validBookInputs.genre.toString(),
             })
           ),
         };

@@ -9,6 +9,7 @@ import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Genre } from "resources/enum/Genre";
 import sinon, { SinonSpy, SinonStub } from "sinon";
+import { validBookInputs } from "tests/testInputs";
 
 describe("Book retrieval by genre integration tests", () => {
   let req: Partial<Request>;
@@ -49,7 +50,7 @@ describe("Book retrieval by genre integration tests", () => {
       req = {
         body: JSON.parse(
           JSON.stringify({
-            genre: "Fiction",
+            genre: validBookInputs.genre.toString(),
           })
         ),
       };
@@ -101,7 +102,7 @@ describe("Book retrieval by genre integration tests", () => {
       req = {
         body: JSON.parse(
           JSON.stringify({
-            genre: "Fiction",
+            genre: validBookInputs.genre.toString(),
           })
         ),
       };

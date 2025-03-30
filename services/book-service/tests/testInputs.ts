@@ -1,3 +1,5 @@
+import { Genre } from "resources/enum/Genre";
+
 export const validAuthorInputs = {
   firstName: "Lilah",
   lastName: "Wong",
@@ -31,7 +33,7 @@ export const invalidEditionInputs = {
 
 export const validBookInputs = {
   title: "The Hunger Games",
-  genre: "Fiction",
+  genre: Genre.FICTION,
 };
 
 export const invalidBookInputs = {

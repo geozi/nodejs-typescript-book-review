@@ -47,7 +47,7 @@ describe("Book addition integration tests", () => {
       req = {
         body: {
           title: validBookInputs.title,
-          genre: validBookInputs.genre,
+          genre: validBookInputs.genre.toString(),
         },
       };
 
@@ -90,7 +90,7 @@ describe("Book addition integration tests", () => {
       req = {
         body: {
           title: validBookInputs.title,
-          genre: validBookInputs.genre,
+          genre: validBookInputs.genre.toString(),
         },
       };
     });

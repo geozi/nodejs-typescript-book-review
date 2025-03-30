@@ -10,7 +10,7 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validEditionInputs } from "tests/testInputs";
 import { UpdateResult } from "typeorm";
 
-describe.only("Edition update integration tests", () => {
+describe("Edition update integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
