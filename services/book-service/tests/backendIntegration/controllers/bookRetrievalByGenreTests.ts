@@ -10,7 +10,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import { Genre } from "resources/enum/Genre";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 
-describe("Book retrieval by Genre tests", () => {
+describe("Book retrieval by genre integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;

@@ -11,7 +11,7 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validAuthorInputs } from "tests/testInputs";
 import { UpdateResult } from "typeorm";
 
-describe("Author update tests", () => {
+describe("Author update integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
