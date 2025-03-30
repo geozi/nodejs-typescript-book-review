@@ -118,17 +118,18 @@ describe("Book mapper unit tests", () => {
     describe("Positive scenarios", () => {
       beforeEach(() => {
         mockId = "1";
-      });
 
-      it("request has valid title", () => {
         req = {
           body: JSON.parse(
             JSON.stringify({
               id: mockId,
-              title: validBookInputs.title,
             })
           ),
         };
+      });
+
+      it("request has valid title", () => {
+        req.body.title = validBookInputs.title;
 
         const updateObj = reqBodyToBookUpdate(req as Request);
         const id = updateObj.id;
@@ -142,14 +143,7 @@ describe("Book mapper unit tests", () => {
       });
 
       it("request has valid genre", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              id: mockId,
-              genre: validBookInputs.genre.toString(),
-            })
-          ),
-        };
+        req.body.genre = validBookInputs.genre.toString();
 
         const updateObj = reqBodyToBookUpdate(req as Request);
         const id = updateObj.id;

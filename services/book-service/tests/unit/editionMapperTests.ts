@@ -210,20 +210,20 @@ describe("Edition mapper unit tests", () => {
   });
 
   describe(`${reqBodyToEditionUpdate.name}`, () => {
-    beforeEach(() => {
-      mockId = "1";
-    });
-
     describe("Positive scenarios", () => {
-      it("request has valid publication date", () => {
+      beforeEach(() => {
+        mockId = "1";
+
         req = {
           body: JSON.parse(
             JSON.stringify({
               id: mockId,
-              publicationDate: validEditionInputs.publication_date,
             })
           ),
         };
+      });
+      it("request has valid publication date", () => {
+        req.body.publicationDate = validEditionInputs.publication_date;
 
         const updateObj = reqBodyToEditionUpdate(req as Request);
         const id = updateObj.id;
@@ -237,15 +237,7 @@ describe("Edition mapper unit tests", () => {
       });
 
       it("request has valid publisher field", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              id: mockId,
-              publisher: validEditionInputs.publisher,
-            })
-          ),
-        };
-
+        req.body.publisher = validEditionInputs.publisher;
         const updateObj = reqBodyToEditionUpdate(req as Request);
         const id = updateObj.id;
         const editionToUpdate = updateObj.edition;

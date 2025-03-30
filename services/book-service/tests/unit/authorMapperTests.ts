@@ -33,15 +33,19 @@ describe("Author mapper unit tests", () => {
     });
 
     describe("Negative scenarios", () => {
-      it("firstName is too short", () => {
+      beforeEach(() => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              firstName: invalidAuthorInputs.NAME_TOO_SHORT,
+              firstName: validAuthorInputs.firstName,
               lastName: validAuthorInputs.lastName,
             })
           ),
         };
+      });
+
+      it("firstName is too short", () => {
+        req.body.firstName = invalidAuthorInputs.NAME_TOO_SHORT;
 
         const newAuthor = reqBodyToAuthor(req as Request);
         const errors = validateSync(newAuthor);
@@ -54,14 +58,7 @@ describe("Author mapper unit tests", () => {
       });
 
       it("firstName is invalid", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              firstName: invalidAuthorInputs.NAME_INVALID,
-              lastName: validAuthorInputs.lastName,
-            })
-          ),
-        };
+        req.body.firstName = invalidAuthorInputs.NAME_INVALID;
 
         const newAuthor = reqBodyToAuthor(req as Request);
         const errors = validateSync(newAuthor);
@@ -74,14 +71,7 @@ describe("Author mapper unit tests", () => {
       });
 
       it("lastName is too short", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              firstName: validAuthorInputs.firstName,
-              lastName: invalidAuthorInputs.NAME_TOO_SHORT,
-            })
-          ),
-        };
+        req.body.lastName = invalidAuthorInputs.NAME_TOO_SHORT;
 
         const newAuthor = reqBodyToAuthor(req as Request);
         const errors = validateSync(newAuthor);
@@ -94,14 +84,7 @@ describe("Author mapper unit tests", () => {
       });
 
       it("lastName is invalid", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              firstName: validAuthorInputs.firstName,
-              lastName: invalidAuthorInputs.NAME_INVALID,
-            })
-          ),
-        };
+        req.body.lastName = invalidAuthorInputs.NAME_INVALID;
 
         const newAuthor = reqBodyToAuthor(req as Request);
         const errors = validateSync(newAuthor);
@@ -114,14 +97,7 @@ describe("Author mapper unit tests", () => {
       });
 
       it("firstName is undefined", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              firstName: undefined,
-              lastName: validAuthorInputs.lastName,
-            })
-          ),
-        };
+        req.body.firstName = undefined;
 
         const newAuthor = reqBodyToAuthor(req as Request);
         const errors = validateSync(newAuthor);
@@ -136,14 +112,7 @@ describe("Author mapper unit tests", () => {
       });
 
       it("lastName is undefined", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              firstName: validAuthorInputs.firstName,
-              lastName: undefined,
-            })
-          ),
-        };
+        req.body.lastName = undefined;
 
         const newAuthor = reqBodyToAuthor(req as Request);
         const errors = validateSync(newAuthor);
@@ -163,16 +132,18 @@ describe("Author mapper unit tests", () => {
     describe("Positive scenarios", () => {
       beforeEach(() => {
         mockId = "1";
-      });
-      it("request has valid firstName", () => {
+
         req = {
           body: JSON.parse(
             JSON.stringify({
               id: mockId,
-              firstName: validAuthorInputs.firstName,
             })
           ),
         };
+      });
+
+      it("request has valid firstName", () => {
+        req.body.firstName = validAuthorInputs.firstName;
 
         const updateObj = reqBodyToAuthorUpdate(req as Request);
         const id = updateObj.id;
@@ -186,14 +157,7 @@ describe("Author mapper unit tests", () => {
       });
 
       it("request has valid lastName", () => {
-        req = {
-          body: JSON.parse(
-            JSON.stringify({
-              id: mockId,
-              lastName: validAuthorInputs.lastName,
-            })
-          ),
-        };
+        req.body.lastName = validAuthorInputs.lastName;
 
         const updateObj = reqBodyToAuthorUpdate(req as Request);
         const id = updateObj.id;
