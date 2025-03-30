@@ -76,7 +76,7 @@ describe("Edition addition integration tests", () => {
 
       assert.strictEqual(
         setHeaderStub.calledWith(
-          "X-api-version",
+          "x-api-version",
           apiVersionNumbers.VERSION_1_0
         ),
         true

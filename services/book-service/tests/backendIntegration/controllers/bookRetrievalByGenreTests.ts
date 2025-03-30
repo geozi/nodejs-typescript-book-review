@@ -62,7 +62,7 @@ describe("Book retrieval by Genre tests", () => {
 
       assert.strictEqual(
         setHeaderStub.calledWith(
-          "X-api-version",
+          "x-api-version",
           apiVersionNumbers.VERSION_1_0
         ),
         true
