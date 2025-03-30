@@ -8,6 +8,7 @@ import { invalidAuthorInputs, validAuthorInputs } from "tests/testInputs";
 
 describe("Author mapper unit tests", () => {
   let req: Partial<Request>;
+  let mockId: string;
 
   describe(`${reqBodyToAuthor.name}`, () => {
     describe("Positive scenario", () => {
@@ -160,11 +161,14 @@ describe("Author mapper unit tests", () => {
 
   describe(`${reqBodyToAuthorUpdate.name}`, () => {
     describe("Positive scenarios", () => {
+      beforeEach(() => {
+        mockId = "1";
+      });
       it("request has valid firstName", () => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              id: 1,
+              id: mockId,
               firstName: validAuthorInputs.firstName,
             })
           ),
@@ -185,7 +189,7 @@ describe("Author mapper unit tests", () => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              id: 1,
+              id: mockId,
               lastName: validAuthorInputs.lastName,
             })
           ),

@@ -9,6 +9,8 @@ import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
 describe("Book mapper unit tests", () => {
   let req: Partial<Request>;
+  let mockId: string;
+
   describe(`${reqBodyToBook.name}`, () => {
     describe("Positive scenario", () => {
       it("request has valid inputs", () => {
@@ -138,11 +140,15 @@ describe("Book mapper unit tests", () => {
 
   describe(`${reqBodyToBookUpdate.name}`, () => {
     describe("Positive scenarios", () => {
+      beforeEach(() => {
+        mockId = "1";
+      });
+
       it("request has valid title", () => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              id: 1,
+              id: mockId,
               title: validBookInputs.title,
               genre: undefined,
             })
@@ -164,7 +170,7 @@ describe("Book mapper unit tests", () => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              id: 1,
+              id: mockId,
               genre: validBookInputs.genre,
             })
           ),

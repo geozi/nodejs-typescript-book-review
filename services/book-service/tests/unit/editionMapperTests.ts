@@ -16,8 +16,13 @@ import {
 
 describe("Edition mapper unit tests", () => {
   let req: Partial<Request>;
+  let mockId: string;
 
   describe(`${reqBodyToEdition.name}`, () => {
+    beforeEach(() => {
+      mockId = "1";
+    });
+
     describe("Positive scenario", () => {
       it("request has valid inputs", () => {
         req = {
@@ -30,7 +35,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: validEditionInputs.book_language,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -75,7 +80,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: validEditionInputs.book_language,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -104,7 +109,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: validEditionInputs.book_language,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -133,7 +138,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: validEditionInputs.book_language,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -162,7 +167,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: validEditionInputs.book_language,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -191,7 +196,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: validEditionInputs.book_language,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -221,7 +226,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: validEditionInputs.book_language,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -250,7 +255,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: invalidEditionInputs.INVALID_BOOK_FORMAT,
               bookLanguage: validEditionInputs.book_language,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -279,7 +284,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: invalidEditionInputs.LANGUAGE_TOO_SHORT,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -308,7 +313,7 @@ describe("Edition mapper unit tests", () => {
               bookFormat: validEditionInputs.book_format,
               bookLanguage: invalidEditionInputs.INVALID_LANGUAGE,
               book: {
-                id: 1,
+                id: mockId,
                 title: validBookInputs.title,
                 genre: validBookInputs.genre,
               },
@@ -329,6 +334,10 @@ describe("Edition mapper unit tests", () => {
   });
 
   describe(`${reqBodyToEditionUpdate.name}`, () => {
+    beforeEach(() => {
+      mockId = "1";
+    });
+
     describe("Positive scenarios", () => {
       it("request has valid publication date", () => {
         req = {
@@ -355,7 +364,7 @@ describe("Edition mapper unit tests", () => {
         req = {
           body: JSON.parse(
             JSON.stringify({
-              id: 1,
+              id: mockId,
               publisher: validEditionInputs.publisher,
             })
           ),
