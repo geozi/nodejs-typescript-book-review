@@ -144,6 +144,7 @@ describe("Author update integration tests", () => {
     });
 
     it("server error(500) -> findOneBy rejects", async () => {
+      mockUpdateResult.affected = 1;
       updateFuncStub.resolves(mockUpdateResult);
       findOneByStub.rejects();
 
