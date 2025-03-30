@@ -63,6 +63,12 @@ export const callEditionUpdate = async (req: Request, res: Response) => {
     const editionToUpdate = updateDataObject.edition;
     const updatedEdition = await updateEdition(id, editionToUpdate);
 
+    if (updatedEdition === null) {
+      throw new NotFoundError(
+        editionControllerResponseMessages.EDITION_NOT_FOUND
+      );
+    }
+
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
@@ -89,6 +95,12 @@ export const callEditionRetrievalByISBN = async (
   try {
     const { isbn } = req.body;
     const retrievedEdition = await getEditionByISBN(isbn);
+
+    if (retrievedEdition === null) {
+      throw new NotFoundError(
+        editionControllerResponseMessages.EDITION_NOT_FOUND
+      );
+    }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
