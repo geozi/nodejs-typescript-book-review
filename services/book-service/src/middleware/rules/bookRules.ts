@@ -67,7 +67,7 @@ export const bookRetrievalByIdRules = (): ValidationChain[] => {
   ];
 };
 
-export const bookRetrievalByGenre = (): ValidationChain[] => {
+export const bookRetrievalByGenreRules = (): ValidationChain[] => {
   return [
     check("genre")
       .notEmpty()
