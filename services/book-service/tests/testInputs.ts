@@ -9,6 +9,7 @@ export const validAuthorInputs = {
 export const invalidAuthorInputs = {
   NAME_INVALID: "12",
   NAME_TOO_SHORT: "a",
+  INVALID_AUTHOR_ID: "ab123",
 };
 
 export const validEditionInputs = {
