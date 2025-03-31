@@ -3,7 +3,7 @@ import { authorFailedValidation } from "messages/validation/authorValidationMess
 import { authorConstants } from "resources/constants/authorConstants";
 import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
 
-export const authorRegistrationRules = (): ValidationChain[] => {
+export const authorAdditionRules = (): ValidationChain[] => {
   return [
     check("firstName")
       .notEmpty()
