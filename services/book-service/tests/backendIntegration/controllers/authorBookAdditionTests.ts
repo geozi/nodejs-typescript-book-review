@@ -30,7 +30,7 @@ describe("AuthorBook addition integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
       // Stubs and spies
@@ -44,7 +44,6 @@ describe("AuthorBook addition integration tests", () => {
         "findOneBy"
       );
       authorSaveStub = sinon.stub(AppDataSource.getRepository(Author), "save");
-
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -104,7 +103,7 @@ describe("AuthorBook addition integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
       // Stubs and spies
@@ -118,7 +117,6 @@ describe("AuthorBook addition integration tests", () => {
         "findOneBy"
       );
       authorSaveStub = sinon.stub(AppDataSource.getRepository(Author), "save");
-
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),

@@ -26,16 +26,15 @@ describe("Edition retrieval by book integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       findByStub = sinon.stub(AppDataSource.getRepository(Edition), "findBy");
       findOneByStub = sinon.stub(
         AppDataSource.getRepository(Book),
         "findOneBy"
       );
-
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -91,18 +90,16 @@ describe("Edition retrieval by book integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       findByStub = sinon.stub(AppDataSource.getRepository(Edition), "findBy");
       findOneByStub = sinon.stub(
         AppDataSource.getRepository(Book),
         "findOneBy"
       );
-
       res = {
-        setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };

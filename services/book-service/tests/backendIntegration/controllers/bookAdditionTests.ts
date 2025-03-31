@@ -23,12 +23,11 @@ describe("Book addition integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       savedStub = sinon.stub(AppDataSource.getRepository(Book), "save");
-
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -77,10 +76,10 @@ describe("Book addition integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       savedStub = sinon.stub(AppDataSource.getRepository(Book), "save");
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,

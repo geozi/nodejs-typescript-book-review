@@ -24,12 +24,11 @@ describe("Book retrieval by genre integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       findByStub = sinon.stub(AppDataSource.getRepository(Book), "findBy");
-
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -81,17 +80,15 @@ describe("Book retrieval by genre integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       findByStub = sinon.stub(AppDataSource.getRepository(Book), "findBy");
-
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };
-
       // Mocks
       mockBook1 = new Book();
       mockBook1.genre = Genre.FICTION;

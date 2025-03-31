@@ -25,10 +25,10 @@ describe("Edition update integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       updateFuncStub = sinon.stub(
         AppDataSource.getRepository(Edition),
         "update"
@@ -37,7 +37,6 @@ describe("Edition update integration tests", () => {
         AppDataSource.getRepository(Edition),
         "findOneBy"
       );
-
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -92,10 +91,10 @@ describe("Edition update integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       updateFuncStub = sinon.stub(
         AppDataSource.getRepository(Edition),
         "update"
@@ -104,7 +103,6 @@ describe("Edition update integration tests", () => {
         AppDataSource.getRepository(Edition),
         "findOneBy"
       );
-
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),

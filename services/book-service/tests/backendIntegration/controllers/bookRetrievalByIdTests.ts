@@ -22,15 +22,14 @@ describe("Book retrieval by ID integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       findOneByStub = sinon.stub(
         AppDataSource.getRepository(Book),
         "findOneBy"
       );
-
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -81,14 +80,18 @@ describe("Book retrieval by ID integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs, spies, and mocks
       sinon.restore();
 
-      // Stubs
+      // Stubs and spies
       findOneByStub = sinon.stub(
         AppDataSource.getRepository(Book),
         "findOneBy"
       );
+      res = {
+        status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
+        json: sinon.spy(),
+      };
 
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
