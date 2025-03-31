@@ -1,5 +1,5 @@
 import { validate, ValidationError } from "class-validator";
-import { AppDataSource } from "config/dataSource";
+import { AppDataSource } from "db/dataSource";
 import { Book } from "entities/Book";
 import { ServerError } from "errors/serverErrorClass";
 import { IBookUpdate } from "interfaces/IBookUpdate";
