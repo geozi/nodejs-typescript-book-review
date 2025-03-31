@@ -7,7 +7,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidAuthorInputs, validAuthorInputs } from "tests/testInputs";
 
-describe.only("Author update rules integration tests", () => {
+describe("Author update rules integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
