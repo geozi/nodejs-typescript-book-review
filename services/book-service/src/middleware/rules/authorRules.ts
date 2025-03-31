@@ -47,7 +47,7 @@ export const authorUpdateRules = (): ValidationChain[] => {
   ];
 };
 
-export const authorRetrievalById = (): ValidationChain[] => {
+export const authorRetrievalByIdRules = (): ValidationChain[] => {
   return [
     check("id")
       .notEmpty()
