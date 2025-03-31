@@ -27,9 +27,11 @@ export const callBookAuthorAddition = async (req: Request, res: Response) => {
       );
     }
 
+    book.authors = [];
     book.authors.push(author);
     await addBook(book);
 
+    author.books = [];
     author.books.push(book);
     await addAuthor(author);
 
