@@ -1,6 +1,6 @@
 import assert from "assert";
-import { AppDataSource } from "config/dataSource";
 import { callAuthorUpdate } from "controllers/authorController";
+import { AppDataSource } from "db/dataSource";
 import { Author } from "entities/Author";
 import { Request, Response } from "express";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";

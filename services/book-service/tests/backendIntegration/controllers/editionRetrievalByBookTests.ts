@@ -1,6 +1,6 @@
 import assert from "assert";
-import { AppDataSource } from "config/dataSource";
 import { callEditionRetrievalByBook } from "controllers/editionController";
+import { AppDataSource } from "db/dataSource";
 import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { Request, Response } from "express";

@@ -1,6 +1,6 @@
 import assert from "assert";
 import { ValidationError } from "class-validator";
-import { AppDataSource } from "config/dataSource";
+import { AppDataSource } from "db/dataSource";
 import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { ServerError } from "errors/serverErrorClass";
