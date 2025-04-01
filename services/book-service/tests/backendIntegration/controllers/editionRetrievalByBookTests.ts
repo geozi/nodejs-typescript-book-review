@@ -22,7 +22,7 @@ describe("Edition retrieval by book integration tests", () => {
   let mockEdition1: Edition;
   let mockEdition2: Edition;
   let mockBook: Book;
-  let mockId: string;
+  let mockId: number;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -42,7 +42,7 @@ describe("Edition retrieval by book integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
       mockBook = new Book();
       mockBook.id = Number(mockId).valueOf();
       mockEdition1 = new Edition();
@@ -59,7 +59,7 @@ describe("Edition retrieval by book integration tests", () => {
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: mockId,
+            book: { id: mockId },
           })
         ),
       };
@@ -105,13 +105,13 @@ describe("Edition retrieval by book integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
       mockBook = new Book();
 
       req = {
         body: JSON.parse(
           JSON.stringify({
-            id: mockId,
+            book: { id: mockId },
           })
         ),
       };

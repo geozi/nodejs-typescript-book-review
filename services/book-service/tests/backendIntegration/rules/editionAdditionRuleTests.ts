@@ -13,6 +13,7 @@ describe("Edition addition rules integration tests", () => {
   let next: SinonSpy;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
+  let mockId: number;
   const editionAdditionArray = [
     ...editionAdditionRules(),
     catchExpressValidationErrors,
@@ -31,6 +32,9 @@ describe("Edition addition rules integration tests", () => {
         json: sinon.spy(),
       };
       next = sinon.spy();
+
+      // Mocks
+      mockId = 1;
     });
 
     it("request has valid inputs", async () => {
@@ -40,9 +44,12 @@ describe("Edition addition rules integration tests", () => {
             isbn: validEditionInputs.isbn,
             publicationDate: validEditionInputs.publication_date,
             publisher: validEditionInputs.publisher,
-            pageCount: validEditionInputs.page_count.toString(),
+            pageCount: validEditionInputs.page_count,
             bookFormat: validEditionInputs.book_format.toString(),
             bookLanguage: validEditionInputs.book_language,
+            book: {
+              id: mockId,
+            },
           })
         ),
       };
@@ -79,9 +86,12 @@ describe("Edition addition rules integration tests", () => {
             isbn: validEditionInputs.isbn,
             publicationDate: validEditionInputs.publication_date,
             publisher: validEditionInputs.publisher,
-            pageCount: validEditionInputs.page_count.toString(),
+            pageCount: validEditionInputs.page_count,
             bookFormat: validEditionInputs.book_format.toString(),
             bookLanguage: validEditionInputs.book_language,
+            book: {
+              id: mockId,
+            },
           })
         ),
       };

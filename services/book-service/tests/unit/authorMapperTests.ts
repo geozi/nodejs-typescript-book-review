@@ -8,7 +8,7 @@ import { invalidAuthorInputs, validAuthorInputs } from "tests/testInputs";
 
 describe("Author mapper unit tests", () => {
   let req: Partial<Request>;
-  let mockId: string;
+  let mockId: number;
 
   describe(`${reqBodyToAuthor.name}`, () => {
     describe("Positive scenario", () => {
@@ -131,7 +131,7 @@ describe("Author mapper unit tests", () => {
   describe(`${reqBodyToAuthorUpdate.name}`, () => {
     describe("Positive scenarios", () => {
       beforeEach(() => {
-        mockId = "1";
+        mockId = 1;
 
         req = {
           body: JSON.parse(

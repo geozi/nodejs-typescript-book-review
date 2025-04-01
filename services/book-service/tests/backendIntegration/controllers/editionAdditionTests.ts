@@ -19,10 +19,11 @@ describe("Edition addition integration tests", () => {
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
-  let saveStub: SinonStub;
+  let bookFindOneByStub: SinonStub;
+  let editionSaveStub: SinonStub;
   let mockEdition: Edition;
   let mockBook: Book;
-  let mockId: string;
+  let mockId: number;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -30,7 +31,14 @@ describe("Edition addition integration tests", () => {
       sinon.restore();
 
       // Stubs and spies
-      saveStub = sinon.stub(AppDataSource.getRepository(Edition), "save");
+      bookFindOneByStub = sinon.stub(
+        AppDataSource.getRepository(Book),
+        "findOneBy"
+      );
+      editionSaveStub = sinon.stub(
+        AppDataSource.getRepository(Edition),
+        "save"
+      );
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -38,7 +46,7 @@ describe("Edition addition integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
 
       req = {
         body: JSON.parse(
@@ -46,7 +54,7 @@ describe("Edition addition integration tests", () => {
             isbn: validEditionInputs.isbn,
             publicationDate: validEditionInputs.publication_date,
             publisher: validEditionInputs.publisher,
-            pageCount: validEditionInputs.page_count.toString(),
+            pageCount: validEditionInputs.page_count,
             bookFormat: validEditionInputs.book_format.toString(),
             bookLanguage: validEditionInputs.book_language,
             book: {
@@ -64,14 +72,15 @@ describe("Edition addition integration tests", () => {
         validEditionInputs.publication_date
       );
       mockEdition.publisher = validEditionInputs.publisher;
-      mockEdition.pageCount = Number(validEditionInputs.page_count).valueOf();
+      mockEdition.pageCount = validEditionInputs.page_count;
       mockEdition.bookFormat = BookFormat.HARDCOVER;
       mockEdition.bookLanguage = validEditionInputs.book_language;
       mockEdition.book = mockBook;
     });
 
     it("created (201)", async () => {
-      saveStub.resolves(mockEdition);
+      bookFindOneByStub.resolves(mockBook);
+      editionSaveStub.resolves(mockEdition);
 
       await callEditionAddition(req as Request, res as Response);
 
@@ -103,14 +112,23 @@ describe("Edition addition integration tests", () => {
       sinon.restore();
 
       // Stubs and spies
-      saveStub = sinon.stub(AppDataSource.getRepository(Edition), "save");
+      bookFindOneByStub = sinon.stub(
+        AppDataSource.getRepository(Book),
+        "findOneBy"
+      );
+      editionSaveStub = sinon.stub(
+        AppDataSource.getRepository(Edition),
+        "save"
+      );
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
+      mockBook = new Book();
+      mockBook.id = mockId;
 
       req = {
         body: JSON.parse(
@@ -118,7 +136,7 @@ describe("Edition addition integration tests", () => {
             isbn: validEditionInputs.isbn,
             publicationDate: validEditionInputs.publication_date,
             publisher: validEditionInputs.publisher,
-            pageCount: validEditionInputs.page_count.toString(),
+            pageCount: validEditionInputs.page_count,
             bookFormat: validEditionInputs.book_format.toString(),
             bookLanguage: validEditionInputs.book_language,
             book: {
@@ -130,6 +148,8 @@ describe("Edition addition integration tests", () => {
     });
 
     it("validation error (500)", async () => {
+      bookFindOneByStub.resolves(mockBook);
+
       req.body.isbn = invalidEditionInputs.INVALID_ISBN;
 
       await callEditionAddition(req as Request, res as Response);
@@ -146,8 +166,29 @@ describe("Edition addition integration tests", () => {
       );
     });
 
-    it("server error (500)", async () => {
-      saveStub.rejects();
+    it("server error (500) -> findOneBy (book) rejects", async () => {
+      bookFindOneByStub.rejects();
+
+      await callEditionAddition(req as Request, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          message: commonResponseMessages.SERVER_ERROR_MESSAGE,
+        }),
+        true
+      );
+    });
+
+    it("server error (500) -> save (edition) rejects", async () => {
+      bookFindOneByStub.resolves(mockBook);
+      editionSaveStub.rejects();
 
       await callEditionAddition(req as Request, res as Response);
 

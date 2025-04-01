@@ -9,7 +9,7 @@ import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
 describe("Book mapper unit tests", () => {
   let req: Partial<Request>;
-  let mockId: string;
+  let mockId: number;
 
   describe(`${reqBodyToBook.name}`, () => {
     describe("Positive scenario", () => {
@@ -117,7 +117,7 @@ describe("Book mapper unit tests", () => {
   describe(`${reqBodyToBookUpdate.name}`, () => {
     describe("Positive scenarios", () => {
       beforeEach(() => {
-        mockId = "1";
+        mockId = 1;
 
         req = {
           body: JSON.parse(

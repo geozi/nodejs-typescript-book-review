@@ -1,6 +1,7 @@
 import assert from "assert";
 import { callEditionUpdate } from "controllers/editionController";
 import { AppDataSource } from "db/dataSource";
+import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { Request, Response } from "express";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
@@ -18,10 +19,11 @@ describe("Edition update integration tests", () => {
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
   let updateFuncStub: SinonStub;
-  let findOneByStub: SinonStub;
+  let bookFindOneByStub: SinonStub;
+  let editionFindOneByStub: SinonStub;
   let mockUpdateResult: UpdateResult;
   let mockEdition: Edition;
-  let mockId: string;
+  let mockId: number;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -33,7 +35,11 @@ describe("Edition update integration tests", () => {
         AppDataSource.getRepository(Edition),
         "update"
       );
-      findOneByStub = sinon.stub(
+      bookFindOneByStub = sinon.stub(
+        AppDataSource.getRepository(Book),
+        "findOneBy"
+      );
+      editionFindOneByStub = sinon.stub(
         AppDataSource.getRepository(Edition),
         "findOneBy"
       );
@@ -44,23 +50,23 @@ describe("Edition update integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
       mockUpdateResult = new UpdateResult();
       mockUpdateResult.affected = 1;
       mockEdition = new Edition();
-      mockEdition.id = Number(mockId).valueOf();
+      mockEdition.id = mockId;
       mockEdition.pageCount = validEditionInputs.page_count;
     });
 
-    it("ok (200)", async () => {
+    it.only("ok (200)", async () => {
       updateFuncStub.resolves(mockUpdateResult);
-      findOneByStub.resolves(mockEdition);
+      editionFindOneByStub.resolves(mockEdition);
 
       req = {
         body: JSON.parse(
           JSON.stringify({
             id: mockId,
-            pageCount: validEditionInputs.page_count.toString(),
+            pageCount: validEditionInputs.page_count,
           })
         ),
       };
@@ -99,7 +105,7 @@ describe("Edition update integration tests", () => {
         AppDataSource.getRepository(Edition),
         "update"
       );
-      findOneByStub = sinon.stub(
+      editionFindOneByStub = sinon.stub(
         AppDataSource.getRepository(Edition),
         "findOneBy"
       );
@@ -109,14 +115,14 @@ describe("Edition update integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
       mockUpdateResult = new UpdateResult();
 
       req = {
         body: JSON.parse(
           JSON.stringify({
             id: mockId,
-            pageCount: validEditionInputs.page_count.toString(),
+            pageCount: validEditionInputs.page_count,
           })
         ),
       };
@@ -145,7 +151,7 @@ describe("Edition update integration tests", () => {
     it("server error (500) -> findOneBy rejects", async () => {
       mockUpdateResult.affected = 1;
       updateFuncStub.resolves(mockUpdateResult);
-      findOneByStub.rejects();
+      editionFindOneByStub.rejects();
 
       await callEditionUpdate(req as Request, res as Response);
 

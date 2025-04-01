@@ -16,11 +16,11 @@ import {
 
 describe("Edition mapper unit tests", () => {
   let req: Partial<Request>;
-  let mockId: string;
+  let mockId: number;
 
   describe(`${reqBodyToEdition.name}`, () => {
     beforeEach(() => {
-      mockId = "1";
+      mockId = 1;
     });
 
     describe("Positive scenario", () => {
@@ -36,8 +36,6 @@ describe("Edition mapper unit tests", () => {
               bookLanguage: validEditionInputs.book_language,
               book: {
                 id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre.toString(),
               },
             })
           ),
@@ -212,7 +210,7 @@ describe("Edition mapper unit tests", () => {
   describe(`${reqBodyToEditionUpdate.name}`, () => {
     describe("Positive scenarios", () => {
       beforeEach(() => {
-        mockId = "1";
+        mockId = 1;
 
         req = {
           body: JSON.parse(
@@ -222,10 +220,10 @@ describe("Edition mapper unit tests", () => {
           ),
         };
       });
-      it("request has valid publication date", () => {
+      it("request has valid publication date", async () => {
         req.body.publicationDate = validEditionInputs.publication_date;
 
-        const updateObj = reqBodyToEditionUpdate(req as Request);
+        const updateObj = await reqBodyToEditionUpdate(req as Request);
         const id = updateObj.id;
         const editionToUpdate = updateObj.edition;
 
@@ -236,9 +234,9 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("request has valid publisher field", () => {
+      it("request has valid publisher field", async () => {
         req.body.publisher = validEditionInputs.publisher;
-        const updateObj = reqBodyToEditionUpdate(req as Request);
+        const updateObj = await reqBodyToEditionUpdate(req as Request);
         const id = updateObj.id;
         const editionToUpdate = updateObj.edition;
 
