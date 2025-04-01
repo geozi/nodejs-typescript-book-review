@@ -8,7 +8,6 @@ import {
   reqBodyToBookUpdate,
   reqBodyToGenre,
 } from "mappers/bookMapper";
-import { reqBodyToId } from "mappers/commonMapper";
 import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
 import {
   addBook,
@@ -125,7 +124,7 @@ export const callBookRetrievalById = async (
   res: Response
 ): Promise<void> => {
   try {
-    const id = reqBodyToId(req);
+    const { id } = req.body;
     const retrievedBook = await getBookById(id);
 
     if (retrievedBook === null) {

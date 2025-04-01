@@ -2,7 +2,6 @@ import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "logs/loggerConfigs";
-import { reqBodyToMultiIds } from "mappers/commonMapper";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
 import { bookAuthorControllerResponseMessages } from "messages/response/bookAuthorControllerResponseMessages";
 import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
@@ -13,7 +12,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 
 export const callBookAuthorAddition = async (req: Request, res: Response) => {
   try {
-    const { bookId, authorId } = reqBodyToMultiIds(req);
+    const { bookId, authorId } = req.body;
 
     const book = await getBookById(bookId);
     if (book === null) {
