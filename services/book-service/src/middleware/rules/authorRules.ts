@@ -30,7 +30,7 @@ export const authorUpdateRules = (): ValidationChain[] => {
       .notEmpty()
       .withMessage(authorFailedValidation.AUTHOR_ID_REQUIRED_MESSAGE)
       .bail()
-      .isNumeric()
+      .isInt()
       .withMessage(authorFailedValidation.AUTHOR_ID_INVALID),
     check("firstName")
       .optional()
@@ -53,7 +53,7 @@ export const authorRetrievalByIdRules = (): ValidationChain[] => {
       .notEmpty()
       .withMessage(authorFailedValidation.AUTHOR_ID_REQUIRED_MESSAGE)
       .bail()
-      .isNumeric()
+      .isInt()
       .withMessage(authorFailedValidation.AUTHOR_ID_INVALID),
   ];
 };

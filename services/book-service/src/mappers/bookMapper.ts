@@ -35,7 +35,6 @@ export const reqBodyToBookUpdate = (
 } => {
   const { id, title, genre } = req.body;
 
-  const idAsNumber = new Number(id).valueOf();
   const book: IBookUpdate = {};
 
   if (title) {
@@ -60,7 +59,7 @@ export const reqBodyToBookUpdate = (
   }
 
   const data = {
-    id: idAsNumber,
+    id: id,
     book: book,
   };
 

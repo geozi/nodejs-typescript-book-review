@@ -4,7 +4,6 @@ import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "logs/loggerConfigs";
 import { reqBodyToAuthor, reqBodyToAuthorUpdate } from "mappers/authorMapper";
-import { reqBodyToId } from "mappers/commonMapper";
 import { authorControllerResponseMessages } from "messages/response/authorControllerResponseMessages";
 import {
   addAuthor,
@@ -90,7 +89,7 @@ export const callAuthorRetrievalById = async (
   res: Response
 ): Promise<void> => {
   try {
-    const id = reqBodyToId(req);
+    const { id } = req.body;
     const retrievedAuthor = await getAuthorById(id);
 
     if (retrievedAuthor === null) {

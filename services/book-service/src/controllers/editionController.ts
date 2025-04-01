@@ -3,7 +3,6 @@ import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
 import { appLogger } from "logs/loggerConfigs";
-import { reqBodyToId } from "mappers/commonMapper";
 import {
   reqBodyToEdition,
   reqBodyToEditionUpdate,
@@ -23,7 +22,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 
 export const callEditionAddition = async (req: Request, res: Response) => {
   try {
-    const newEdition = reqBodyToEdition(req);
+    const newEdition = await reqBodyToEdition(req);
     const savedEdition = await addEdition(newEdition);
 
     res
@@ -58,7 +57,7 @@ export const callEditionAddition = async (req: Request, res: Response) => {
 
 export const callEditionUpdate = async (req: Request, res: Response) => {
   try {
-    const updateDataObject = reqBodyToEditionUpdate(req);
+    const updateDataObject = await reqBodyToEditionUpdate(req);
     const id = updateDataObject.id;
     const editionToUpdate = updateDataObject.edition;
     const updatedEdition = await updateEdition(id, editionToUpdate);
@@ -126,14 +125,14 @@ export const callEditionRetrievalByBook = async (
   res: Response
 ) => {
   try {
-    const id = reqBodyToId(req);
+    const { book } = req.body;
 
-    const book = await getBookById(id);
-    if (book === null) {
+    const retrievedBook = await getBookById(book.id);
+    if (retrievedBook === null) {
       throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
     }
 
-    const retrievedEditions = await getEditionsByBook(book);
+    const retrievedEditions = await getEditionsByBook(retrievedBook);
     if (retrievedEditions.length === 0) {
       throw new NotFoundError(
         editionControllerResponseMessages.EDITION_S_NOT_FOUND

@@ -17,7 +17,6 @@ export const reqBodyToAuthorUpdate = (
 ): { id: number; author: IAuthorUpdate } => {
   const { id, firstName, lastName } = req.body;
 
-  const idAsNumber = new Number(id).valueOf();
   const author: IAuthorUpdate = {};
 
   if (firstName) {
@@ -29,7 +28,7 @@ export const reqBodyToAuthorUpdate = (
   }
 
   const data = {
-    id: idAsNumber,
+    id: id,
     author: author,
   };
 

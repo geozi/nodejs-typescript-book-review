@@ -1,11 +1,12 @@
-import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
+import { NotFoundError } from "errors/notFoundErrorClass";
 import { Request } from "express";
 import { IEditionUpdate } from "interfaces/IEditionUpdate";
+import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
+import { getBookById } from "repositories/bookRepository";
 import { BookFormat } from "resources/enum/BookFormat";
-import { Genre } from "resources/enum/Genre";
 
-export const reqBodyToEdition = (req: Request): Edition => {
+export const reqBodyToEdition = async (req: Request): Promise<Edition> => {
   const {
     isbn,
     publicationDate,
@@ -20,7 +21,7 @@ export const reqBodyToEdition = (req: Request): Edition => {
   newEdition.isbn = isbn;
   newEdition.publicationDate = new Date(publicationDate);
   newEdition.publisher = publisher;
-  newEdition.pageCount = new Number(pageCount).valueOf();
+  newEdition.pageCount = pageCount;
   newEdition.bookLanguage = bookLanguage;
 
   switch (bookFormat) {
@@ -32,33 +33,20 @@ export const reqBodyToEdition = (req: Request): Edition => {
       break;
   }
 
-  const relatedBook = new Book();
-  relatedBook.id = book.id;
-  relatedBook.title = book.title;
+  const relatedBook = await getBookById(book.id);
 
-  switch (book.genre) {
-    case Genre.DRAMA.toString():
-      relatedBook.genre = Genre.DRAMA;
-      break;
-    case Genre.FICTION.toString():
-      relatedBook.genre = Genre.FICTION;
-      break;
-    case Genre.NON_FICTION.toString():
-      relatedBook.genre = Genre.NON_FICTION;
-      break;
-    case Genre.POETRY.toString():
-      relatedBook.genre = Genre.POETRY;
-      break;
+  if (relatedBook) {
+    newEdition.book = relatedBook;
+  } else {
+    throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
   }
-
-  newEdition.book = relatedBook;
 
   return newEdition;
 };
 
-export const reqBodyToEditionUpdate = (
+export const reqBodyToEditionUpdate = async (
   req: Request
-): { id: number; edition: IEditionUpdate } => {
+): Promise<{ id: number; edition: IEditionUpdate }> => {
   const {
     id,
     isbn,
@@ -70,7 +58,6 @@ export const reqBodyToEditionUpdate = (
     book,
   } = req.body;
 
-  const idAsNumber = new Number(id).valueOf();
   const edition: IEditionUpdate = {};
 
   if (isbn) {
@@ -86,7 +73,7 @@ export const reqBodyToEditionUpdate = (
   }
 
   if (pageCount) {
-    edition.pageCount = new Number(pageCount).valueOf();
+    edition.pageCount = pageCount;
   }
 
   if (bookFormat) {
@@ -104,31 +91,17 @@ export const reqBodyToEditionUpdate = (
     edition.bookLanguage = bookLanguage;
   }
 
-  if (book) {
-    const relatedBook = new Book();
-    relatedBook.id = book.id;
-    relatedBook.title = book.title;
-
-    switch (book.genre) {
-      case Genre.DRAMA.toString():
-        relatedBook.genre = Genre.DRAMA;
-        break;
-      case Genre.FICTION.toString():
-        relatedBook.genre = Genre.FICTION;
-        break;
-      case Genre.NON_FICTION.toString():
-        relatedBook.genre = Genre.NON_FICTION;
-        break;
-      case Genre.POETRY.toString():
-        relatedBook.genre = Genre.POETRY;
-        break;
+  if (book.id) {
+    const relatedBook = await getBookById(book.id);
+    if (relatedBook) {
+      edition.book = relatedBook;
+    } else {
+      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
     }
-
-    edition.book = relatedBook;
   }
 
   const data = {
-    id: idAsNumber,
+    id: id,
     edition: edition,
   };
 
