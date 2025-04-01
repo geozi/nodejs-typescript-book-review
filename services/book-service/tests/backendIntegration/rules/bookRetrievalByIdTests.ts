@@ -13,7 +13,7 @@ describe("Book retrieval by ID rules integration tests", () => {
   let next: SinonSpy;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
-  let mockId: string;
+  let mockId: number;
   const bookRetrievalByIdArray = [
     ...bookRetrievalByIdRules(),
     catchExpressValidationErrors,
@@ -34,7 +34,7 @@ describe("Book retrieval by ID rules integration tests", () => {
       next = sinon.spy();
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
     });
 
     it("request has valid book ID", async () => {
@@ -67,7 +67,7 @@ describe("Book retrieval by ID rules integration tests", () => {
       next = sinon.spy();
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
 
       req = { body: JSON.parse(JSON.stringify({ id: mockId })) };
     });

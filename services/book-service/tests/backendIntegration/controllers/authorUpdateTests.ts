@@ -21,7 +21,7 @@ describe("Author update integration tests", () => {
   let findOneByStub: SinonStub;
   let mockUpdateResult: UpdateResult;
   let mockAuthor: Author;
-  let mockId: string;
+  let mockId: number;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -44,7 +44,7 @@ describe("Author update integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
       mockUpdateResult = new UpdateResult();
       mockUpdateResult.affected = 1;
       mockAuthor = new Author();

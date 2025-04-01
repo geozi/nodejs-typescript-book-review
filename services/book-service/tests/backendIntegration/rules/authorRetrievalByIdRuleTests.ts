@@ -34,7 +34,7 @@ describe("Author retrieval by ID rules integration tests", () => {
     });
 
     it("request has valid author ID", async () => {
-      req = { body: JSON.parse(JSON.stringify({ id: "1" })) };
+      req = { body: JSON.parse(JSON.stringify({ id: 1 })) };
 
       for (const middleware of authorRetrievalByIdArray) {
         await middleware(req as Request, res as Response, next);
@@ -99,7 +99,9 @@ describe("Author retrieval by ID rules integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          errors: [{ message: authorFailedValidation.AUTHOR_ID_INVALID }],
+          errors: [
+            { message: authorFailedValidation.AUTHOR_ID_INVALID_MESSAGE },
+          ],
         }),
         true
       );

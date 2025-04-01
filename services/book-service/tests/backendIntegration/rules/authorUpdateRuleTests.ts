@@ -36,7 +36,7 @@ describe("Author update rules integration tests", () => {
     it("request has valid inputs", async () => {
       req = {
         body: JSON.parse(
-          JSON.stringify({ id: "1", firstName: validAuthorInputs.firstName })
+          JSON.stringify({ id: 1, firstName: validAuthorInputs.firstName })
         ),
       };
 
@@ -68,7 +68,7 @@ describe("Author update rules integration tests", () => {
 
       req = {
         body: JSON.parse(
-          JSON.stringify({ id: "1", firstName: validAuthorInputs.firstName })
+          JSON.stringify({ id: 1, firstName: validAuthorInputs.firstName })
         ),
       };
     });
@@ -107,7 +107,9 @@ describe("Author update rules integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          errors: [{ message: authorFailedValidation.AUTHOR_ID_INVALID }],
+          errors: [
+            { message: authorFailedValidation.AUTHOR_ID_INVALID_MESSAGE },
+          ],
         }),
         true
       );

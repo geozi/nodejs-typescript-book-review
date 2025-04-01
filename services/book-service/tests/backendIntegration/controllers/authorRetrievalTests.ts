@@ -16,7 +16,7 @@ describe("Author retrieval integration tests", () => {
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
   let findOneByStub: SinonStub;
-  let mockId: string;
+  let mockId: number;
   let mockAuthor: Author;
 
   describe("Positive scenarios", () => {
@@ -36,9 +36,9 @@ describe("Author retrieval integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
       mockAuthor = new Author();
-      mockAuthor.id = Number(mockId).valueOf();
+      mockAuthor.id = mockId;
     });
 
     it("ok (200)", async () => {
@@ -92,9 +92,9 @@ describe("Author retrieval integration tests", () => {
       };
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
       mockAuthor = new Author();
-      mockAuthor.id = Number(mockId).valueOf();
+      mockAuthor.id = mockId;
 
       req = {
         body: JSON.parse(
