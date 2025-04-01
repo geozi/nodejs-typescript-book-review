@@ -1,5 +1,7 @@
 import assert from "assert";
 import { validateSync } from "class-validator";
+import { AppDataSource } from "db/dataSource";
+import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { Request } from "express";
 import {
@@ -7,24 +9,36 @@ import {
   reqBodyToEditionUpdate,
 } from "mappers/editionMapper";
 import { editionFailedValidation } from "messages/validation/editionValidationMessages";
-import { Genre } from "resources/enum/Genre";
-import {
-  invalidEditionInputs,
-  validBookInputs,
-  validEditionInputs,
-} from "tests/testInputs";
+import sinon, { SinonStub } from "sinon";
+import { invalidEditionInputs, validEditionInputs } from "tests/testInputs";
 
 describe("Edition mapper unit tests", () => {
   let req: Partial<Request>;
+  let bookFindOneStub: SinonStub;
   let mockId: number;
+  let mockBook: Book;
 
   describe(`${reqBodyToEdition.name}`, () => {
-    beforeEach(() => {
-      mockId = 1;
-    });
-
     describe("Positive scenario", () => {
-      it("request has valid inputs", () => {
+      beforeEach(() => {
+        // Restore stubs, spies, and mocks
+        sinon.restore();
+
+        // Stubs
+        bookFindOneStub = sinon.stub(
+          AppDataSource.getRepository(Book),
+          "findOneBy"
+        );
+
+        // Mocks
+        mockId = 1;
+        mockBook = new Book();
+        mockBook.id = mockId;
+      });
+
+      it("request has valid inputs", async () => {
+        bookFindOneStub.resolves(mockBook);
+
         req = {
           body: JSON.parse(
             JSON.stringify({
@@ -41,7 +55,7 @@ describe("Edition mapper unit tests", () => {
           ),
         };
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -61,13 +75,26 @@ describe("Edition mapper unit tests", () => {
           newEdition.bookLanguage,
           validEditionInputs.book_language
         );
-        assert.strictEqual(newEdition.book.title, validBookInputs.title);
-        assert.strictEqual(newEdition.book.genre, Genre.FICTION);
+        assert.strictEqual(newEdition.book.id, mockId);
       });
     });
 
     describe("Negative scenarios", () => {
       beforeEach(() => {
+        // Restore stubs, spies, and mocks
+        sinon.restore();
+
+        // Stubs
+        bookFindOneStub = sinon.stub(
+          AppDataSource.getRepository(Book),
+          "findOneBy"
+        );
+
+        // Mocks
+        mockId = 1;
+        mockBook = new Book();
+        mockBook.id = mockId;
+
         req = {
           body: JSON.parse(
             JSON.stringify({
@@ -79,18 +106,18 @@ describe("Edition mapper unit tests", () => {
               bookLanguage: validEditionInputs.book_language,
               book: {
                 id: mockId,
-                title: validBookInputs.title,
-                genre: validBookInputs.genre.toString(),
               },
             })
           ),
         };
+
+        bookFindOneStub.resolves(mockBook);
       });
 
-      it("isbn is invalid", () => {
+      it("isbn is invalid", async () => {
         req.body.isbn = invalidEditionInputs.INVALID_ISBN;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -100,10 +127,10 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("publicationDate is invalid", () => {
+      it("publicationDate is invalid", async () => {
         req.body.publicationDate = invalidEditionInputs.INVALID_DATE;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -113,10 +140,10 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("publisher name is too short", () => {
+      it("publisher name is too short", async () => {
         req.body.publisher = invalidEditionInputs.PUBLISHER_NAME_TOO_SHORT;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -126,10 +153,10 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("publisher name is too long", () => {
+      it("publisher name is too long", async () => {
         req.body.publisher = invalidEditionInputs.PUBLISHER_NAME_TOO_LONG;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -139,10 +166,10 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("pageCount is negative", () => {
+      it("pageCount is negative", async () => {
         req.body.pageCount = invalidEditionInputs.PAGE_COUNT_NEGATIVE;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -153,10 +180,10 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("pageCount is too low", () => {
+      it("pageCount is too low", async () => {
         req.body.pageCount = invalidEditionInputs.PAGE_COUNT_MIN;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -166,10 +193,10 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("bookFormat is invalid", () => {
+      it("bookFormat is invalid", async () => {
         req.body.bookFormat = invalidEditionInputs.INVALID_BOOK_FORMAT;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -179,10 +206,10 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("bookLanguage is too short", () => {
+      it("bookLanguage is too short", async () => {
         req.body.bookLanguage = invalidEditionInputs.LANGUAGE_TOO_SHORT;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
@@ -192,10 +219,10 @@ describe("Edition mapper unit tests", () => {
         });
       });
 
-      it("bookLanguage is invalid", () => {
+      it("bookLanguage is invalid", async () => {
         req.body.bookLanguage = invalidEditionInputs.INVALID_LANGUAGE;
 
-        const newEdition = reqBodyToEdition(req as Request);
+        const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
 
         assert(newEdition instanceof Edition);
