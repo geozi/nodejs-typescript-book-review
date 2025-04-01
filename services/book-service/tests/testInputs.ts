@@ -23,6 +23,7 @@ export const validEditionInputs = {
 
 export const invalidEditionInputs = {
   INVALID_EDITION_ID: "4a",
+  INVALID_BOOK_ID: "1245*",
   INVALID_ISBN: "123456",
   INVALID_DATE: "December",
   PUBLISHER_NAME_TOO_SHORT: "p",
