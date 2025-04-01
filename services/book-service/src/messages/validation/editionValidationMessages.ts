@@ -20,4 +20,9 @@ export const editionFailedValidation = {
   LANGUAGE_NOT_STRING_MESSAGE: "Book language must be a string",
   LANGUAGE_INVALID_MESSAGE: "Book language must only contain letters",
   LANGUAGE_MIN_LENGTH_MESSAGE: `Book language must be at least ${editionConstants.LANGUAGE_MIN_LENGTH} characters long`,
+  EDITION_ID_REQUIRED_MESSAGE: "Edition ID is a required field",
+  EDITION_ID_INVALID_MESSAGE: "Edition ID must be a number",
+  BOOK_REQUIRED_MESSAGE: "Book is a required field",
+  BOOK_ID_REQUIRED_MESSAGE: "Book ID is a required field",
+  BOOK_ID_INVALID_MESSAGE: "Book ID must be an integer",
 };

@@ -28,7 +28,7 @@ export const bookUpdateRules = (): ValidationChain[] => {
       .notEmpty()
       .withMessage(bookFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
       .bail()
-      .isNumeric()
+      .isInt()
       .withMessage(bookFailedValidation.BOOK_ID_INVALID_MESSAGE),
     check("title")
       .optional()
@@ -62,7 +62,7 @@ export const bookRetrievalByIdRules = (): ValidationChain[] => {
       .notEmpty()
       .withMessage(bookFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
       .bail()
-      .isNumeric()
+      .isInt()
       .withMessage(bookFailedValidation.BOOK_ID_INVALID_MESSAGE),
   ];
 };
