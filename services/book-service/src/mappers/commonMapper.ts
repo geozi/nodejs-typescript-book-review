@@ -10,7 +10,7 @@ export const reqBodyToMultiIds = (
 ): { bookId: number; authorId: number } => {
   const { bookId, authorId } = req.body;
   return {
-    bookId: Number(bookId).valueOf(),
-    authorId: Number(authorId).valueOf(),
+    bookId: bookId,
+    authorId: authorId,
   };
 };
