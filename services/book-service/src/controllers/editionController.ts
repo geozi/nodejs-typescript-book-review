@@ -8,7 +8,6 @@ import {
   reqBodyToEditionUpdate,
 } from "mappers/editionMapper";
 import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
-import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { editionControllerResponseMessages } from "messages/response/editionControllerResponseMessages";
 import { getBookById } from "repositories/bookRepository";
 import {
@@ -42,14 +41,12 @@ export const callEditionAddition = async (req: Request, res: Response) => {
       return;
     }
 
-    if (error instanceof ServerError) {
+    if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
         `Edition controller: ${callEditionAddition.name} -> ${error.name} detected and caught`
       );
 
-      res
-        .status(error.httpCode)
-        .json({ message: commonResponseMessages.SERVER_ERROR_MESSAGE });
+      res.status(error.httpCode).json({ message: error.message });
       return;
     }
   }
