@@ -22,6 +22,7 @@ describe("Edition addition integration tests", () => {
   let saveStub: SinonStub;
   let mockEdition: Edition;
   let mockBook: Book;
+  let mockId: string;
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
@@ -36,16 +37,21 @@ describe("Edition addition integration tests", () => {
         json: sinon.spy(),
       };
 
+      // Mocks
+      mockId = "1";
+
       req = {
         body: JSON.parse(
           JSON.stringify({
             isbn: validEditionInputs.isbn,
             publicationDate: validEditionInputs.publication_date,
             publisher: validEditionInputs.publisher,
-            pageCount: validEditionInputs.page_count,
-            bookFormat: validEditionInputs.book_format,
+            pageCount: validEditionInputs.page_count.toString(),
+            bookFormat: validEditionInputs.book_format.toString(),
             bookLanguage: validEditionInputs.book_language,
-            book: "1",
+            book: {
+              id: mockId,
+            },
           })
         ),
       };
@@ -103,16 +109,21 @@ describe("Edition addition integration tests", () => {
         json: sinon.spy(),
       };
 
+      // Mocks
+      mockId = "1";
+
       req = {
         body: JSON.parse(
           JSON.stringify({
             isbn: validEditionInputs.isbn,
             publicationDate: validEditionInputs.publication_date,
             publisher: validEditionInputs.publisher,
-            pageCount: validEditionInputs.page_count,
-            bookFormat: validEditionInputs.book_format,
+            pageCount: validEditionInputs.page_count.toString(),
+            bookFormat: validEditionInputs.book_format.toString(),
             bookLanguage: validEditionInputs.book_language,
-            book: "1",
+            book: {
+              id: mockId,
+            },
           })
         ),
       };
