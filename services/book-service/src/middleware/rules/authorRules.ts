@@ -31,7 +31,7 @@ export const authorUpdateRules = (): ValidationChain[] => {
       .withMessage(authorFailedValidation.AUTHOR_ID_REQUIRED_MESSAGE)
       .bail()
       .isInt()
-      .withMessage(authorFailedValidation.AUTHOR_ID_INVALID),
+      .withMessage(authorFailedValidation.AUTHOR_ID_INVALID_MESSAGE),
     check("firstName")
       .optional()
       .isLength({ min: authorConstants.NAME_MIN_LENGTH })
@@ -54,6 +54,6 @@ export const authorRetrievalByIdRules = (): ValidationChain[] => {
       .withMessage(authorFailedValidation.AUTHOR_ID_REQUIRED_MESSAGE)
       .bail()
       .isInt()
-      .withMessage(authorFailedValidation.AUTHOR_ID_INVALID),
+      .withMessage(authorFailedValidation.AUTHOR_ID_INVALID_MESSAGE),
   ];
 };
