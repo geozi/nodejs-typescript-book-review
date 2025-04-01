@@ -4,6 +4,7 @@ import { AppDataSource } from "db/dataSource";
 import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { Request, Response } from "express";
+import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { editionControllerResponseMessages } from "messages/response/editionControllerResponseMessages";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
@@ -158,7 +159,24 @@ describe("Edition retrieval by book integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("not found (404) -> findOneBy (book) returns null", async () => {
+      findOneByStub.resolves(null);
+
+      await callEditionRetrievalByBook(req as Request, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          message: bookControllerResponseMessages.BOOK_NOT_FOUND,
+        }),
+        true
+      );
+    });
+
+    it("not found (404) -> findBy (edition) returns []", async () => {
       findOneByStub.resolves(mockBook);
       findByStub.resolves([]);
 

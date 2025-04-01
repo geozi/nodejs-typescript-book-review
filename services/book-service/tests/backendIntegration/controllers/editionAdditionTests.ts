@@ -4,6 +4,7 @@ import { AppDataSource } from "db/dataSource";
 import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
 import { Request, Response } from "express";
+import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { editionControllerResponseMessages } from "messages/response/editionControllerResponseMessages";
 import { editionFailedValidation } from "messages/validation/editionValidationMessages";
@@ -202,6 +203,23 @@ describe("Edition addition integration tests", () => {
       assert.strictEqual(
         jsonSpy.calledWith({
           message: commonResponseMessages.SERVER_ERROR_MESSAGE,
+        }),
+        true
+      );
+    });
+
+    it("not found (404) -> findOneBy (book) returns null", async () => {
+      bookFindOneByStub.resolves(null);
+
+      await callEditionAddition(req as Request, res as Response);
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          message: bookControllerResponseMessages.BOOK_NOT_FOUND,
         }),
         true
       );
