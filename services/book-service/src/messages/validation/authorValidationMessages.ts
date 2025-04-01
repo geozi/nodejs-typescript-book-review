@@ -10,5 +10,5 @@ export const authorFailedValidation = {
   LAST_NAME_INVALID_MESSAGE: "Last name must only contain letters",
   LAST_NAME_BELOW_MIN_LENGTH_MESSAGE: `Last name must be at least ${authorConstants.NAME_MIN_LENGTH} characters long`,
   AUTHOR_ID_REQUIRED_MESSAGE: "Author ID is a required field",
-  AUTHOR_ID_INVALID: "Author ID must be number",
+  AUTHOR_ID_INVALID_MESSAGE: "Author ID must be number",
 };
