@@ -91,7 +91,7 @@ export const reqBodyToEditionUpdate = async (
     edition.bookLanguage = bookLanguage;
   }
 
-  if (book.id) {
+  if (book) {
     const relatedBook = await getBookById(book.id);
     if (relatedBook) {
       edition.book = relatedBook;
