@@ -67,7 +67,7 @@ describe("Author addition integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: authorControllerResponseMessages.AUTHOR_ADDED,
+          message: authorControllerResponseMessages.AUTHOR_ADDED_MESSAGE,
           data: mockAuthor,
         }),
         true

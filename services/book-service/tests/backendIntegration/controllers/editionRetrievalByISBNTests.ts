@@ -67,7 +67,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: editionControllerResponseMessages.EDITION_RETRIEVED,
+          message: editionControllerResponseMessages.EDITION_RETRIEVED_MESSAGE,
           data: mockEdition,
         }),
         true
@@ -134,7 +134,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: editionControllerResponseMessages.EDITION_NOT_FOUND,
+          message: editionControllerResponseMessages.EDITION_NOT_FOUND_MESSAGE,
         }),
         true
       );

@@ -67,7 +67,7 @@ describe("Book retrieval by title integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: bookControllerResponseMessages.BOOK_RETRIEVED,
+          message: bookControllerResponseMessages.BOOK_RETRIEVED_MESSAGE,
           data: mockBook,
         }),
         true
@@ -134,7 +134,7 @@ describe("Book retrieval by title integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: bookControllerResponseMessages.BOOK_NOT_FOUND,
+          message: bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE,
         }),
         true
       );

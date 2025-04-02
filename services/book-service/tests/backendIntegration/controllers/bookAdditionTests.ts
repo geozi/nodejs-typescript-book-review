@@ -66,7 +66,7 @@ describe("Book addition integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: bookControllerResponseMessages.BOOK_ADDED,
+          message: bookControllerResponseMessages.BOOK_ADDED_MESSAGE,
           data: mockBook,
         }),
         true

@@ -81,7 +81,7 @@ describe("Author update integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: authorControllerResponseMessages.AUTHOR_UPDATED,
+          message: authorControllerResponseMessages.AUTHOR_UPDATED_MESSAGE,
           data: mockAuthor,
         }),
         true
@@ -175,7 +175,7 @@ describe("Author update integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: authorControllerResponseMessages.AUTHOR_NOT_FOUND,
+          message: authorControllerResponseMessages.AUTHOR_NOT_FOUND_MESSAGE,
         }),
         true
       );

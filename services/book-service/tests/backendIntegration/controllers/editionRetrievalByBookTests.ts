@@ -81,7 +81,8 @@ describe("Edition retrieval by book integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: editionControllerResponseMessages.EDITION_S_RETRIEVED,
+          message:
+            editionControllerResponseMessages.EDITION_S_RETRIEVED_MESSAGE,
           data: mockEditions,
         }),
         true
@@ -170,7 +171,7 @@ describe("Edition retrieval by book integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: bookControllerResponseMessages.BOOK_NOT_FOUND,
+          message: bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE,
         }),
         true
       );
@@ -188,7 +189,8 @@ describe("Edition retrieval by book integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: editionControllerResponseMessages.EDITION_S_NOT_FOUND,
+          message:
+            editionControllerResponseMessages.EDITION_S_NOT_FOUND_MESSAGE,
         }),
         true
       );

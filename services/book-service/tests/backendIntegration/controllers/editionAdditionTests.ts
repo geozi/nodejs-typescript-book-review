@@ -99,7 +99,7 @@ describe("Edition addition integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: editionControllerResponseMessages.EDITION_ADDED,
+          message: editionControllerResponseMessages.EDITION_ADDED_MESSAGE,
           data: mockEdition,
         }),
         true
@@ -219,7 +219,7 @@ describe("Edition addition integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: bookControllerResponseMessages.BOOK_NOT_FOUND,
+          message: bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE,
         }),
         true
       );

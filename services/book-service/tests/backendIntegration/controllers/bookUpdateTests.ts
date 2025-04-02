@@ -80,7 +80,7 @@ describe("Book update integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: bookControllerResponseMessages.BOOK_UPDATED,
+          message: bookControllerResponseMessages.BOOK_UPDATED_MESSAGE,
           data: mockBook,
         }),
         true
@@ -171,7 +171,7 @@ describe("Book update integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: bookControllerResponseMessages.BOOK_NOT_FOUND,
+          message: bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE,
         }),
         true
       );
