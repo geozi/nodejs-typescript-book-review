@@ -1,3 +1,7 @@
+/**
+ * Edition controller.
+ * @module src/controllers/editionController
+ */
 import { ValidationError } from "class-validator";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
@@ -19,7 +23,17 @@ import {
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
-export const callEditionAddition = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for edition addition.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export const callEditionAddition = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const newEdition = await reqBodyToEdition(req);
     const savedEdition = await addEdition(newEdition);
@@ -52,7 +66,18 @@ export const callEditionAddition = async (req: Request, res: Response) => {
   }
 };
 
-export const callEditionUpdate = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for edition update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
+export const callEditionUpdate = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const updateDataObject = await reqBodyToEditionUpdate(req);
     const id = updateDataObject.id;
@@ -84,10 +109,18 @@ export const callEditionUpdate = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Handles HTTP requests for edition retrieval by ISBN.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callEditionRetrievalByISBN = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   try {
     const { isbn } = req.body;
     const retrievedEdition = await getEditionByISBN(isbn);
@@ -117,10 +150,18 @@ export const callEditionRetrievalByISBN = async (
   }
 };
 
+/**
+ * Handles HTTP requests for edition retrieval by book ID.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callEditionRetrievalByBook = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   try {
     const { book } = req.body;
 

@@ -1,3 +1,7 @@
+/**
+ * Author controller.
+ * @module src/controllers/authorController
+ */
 import { ValidationError } from "class-validator";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
@@ -13,6 +17,13 @@ import {
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
+/**
+ * Handles HTTP requests for author addition.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callAuthorAddition = async (
   req: Request,
   res: Response
@@ -49,6 +60,14 @@ export const callAuthorAddition = async (
   }
 };
 
+/**
+ * Handles HTTP requests for author update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callAuthorUpdate = async (
   req: Request,
   res: Response
@@ -84,6 +103,14 @@ export const callAuthorUpdate = async (
   }
 };
 
+/**
+ * Handles HTTP requests for author retrieval by ID.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callAuthorRetrievalById = async (
   req: Request,
   res: Response

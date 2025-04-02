@@ -1,3 +1,7 @@
+/**
+ * BookAuthor controller.
+ * @module src/controllers/bookAuthorController
+ */
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
@@ -10,7 +14,18 @@ import { addBook, getBookById } from "repositories/bookRepository";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
-export const callBookAuthorAddition = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for record addition to intermediary table.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
+export const callBookAuthorAddition = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { bookId, authorId } = req.body;
 

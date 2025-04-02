@@ -1,3 +1,7 @@
+/**
+ * Book controller.
+ * @module src/controllers/bookController
+ */
 import { ValidationError } from "class-validator";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
@@ -19,6 +23,13 @@ import {
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
+/**
+ * Handles HTTP requests for book addition.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callBookAddition = async (
   req: Request,
   res: Response
@@ -55,6 +66,14 @@ export const callBookAddition = async (
   }
 };
 
+/**
+ * Handles HTTP requests for book update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callBookUpdate = async (
   req: Request,
   res: Response
@@ -88,6 +107,14 @@ export const callBookUpdate = async (
   }
 };
 
+/**
+ * Handles HTTP requests for book retrieval by title.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callBookRetrievalByTitle = async (
   req: Request,
   res: Response
@@ -119,6 +146,14 @@ export const callBookRetrievalByTitle = async (
   }
 };
 
+/**
+ * Handles HTTP requests for book retrieval by ID.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callBookRetrievalById = async (
   req: Request,
   res: Response
@@ -150,6 +185,14 @@ export const callBookRetrievalById = async (
   }
 };
 
+/**
+ * Handles HTTP requests for book retrieval by genre.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callBookRetrievalByGenre = async (
   req: Request,
   res: Response
