@@ -1,6 +1,6 @@
 /**
  * Edition model entity.
- * @module src/entities
+ * @module src/entities/Edition
  */
 import {
   IsDate,

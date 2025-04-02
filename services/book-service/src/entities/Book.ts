@@ -1,6 +1,6 @@
 /**
  * Book model entity.
- * @module src/entities
+ * @module src/entities/Book
  */
 import { IsEnum, IsString, MaxLength, MinLength } from "class-validator";
 import { bookFailedValidation } from "messages/validation/bookValidationMessages";
