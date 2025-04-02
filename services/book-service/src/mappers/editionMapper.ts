@@ -49,7 +49,9 @@ export const reqBodyToEdition = async (req: Request): Promise<Edition> => {
   if (relatedBook) {
     newEdition.book = relatedBook;
   } else {
-    throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+    throw new NotFoundError(
+      bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+    );
   }
 
   return newEdition;
@@ -114,7 +116,9 @@ export const reqBodyToEditionUpdate = async (
     if (relatedBook) {
       edition.book = relatedBook;
     } else {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
   }
 
