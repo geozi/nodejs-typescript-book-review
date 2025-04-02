@@ -31,13 +31,15 @@ export const callBookAuthorAddition = async (
 
     const book = await getBookById(bookId);
     if (book === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     const author = await getAuthorById(authorId);
     if (author === null) {
       throw new NotFoundError(
-        authorControllerResponseMessages.AUTHOR_NOT_FOUND
+        authorControllerResponseMessages.AUTHOR_NOT_FOUND_MESSAGE
       );
     }
 

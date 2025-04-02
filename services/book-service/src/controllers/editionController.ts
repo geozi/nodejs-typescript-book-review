@@ -42,7 +42,7 @@ export const callEditionAddition = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
-        message: editionControllerResponseMessages.EDITION_ADDED,
+        message: editionControllerResponseMessages.EDITION_ADDED_MESSAGE,
         data: savedEdition,
       });
   } catch (error) {
@@ -86,7 +86,7 @@ export const callEditionUpdate = async (
 
     if (updatedEdition === null) {
       throw new NotFoundError(
-        editionControllerResponseMessages.EDITION_NOT_FOUND
+        editionControllerResponseMessages.EDITION_NOT_FOUND_MESSAGE
       );
     }
 
@@ -94,7 +94,7 @@ export const callEditionUpdate = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: editionControllerResponseMessages.EDITION_UPDATED,
+        message: editionControllerResponseMessages.EDITION_UPDATED_MESSAGE,
         data: updatedEdition,
       });
   } catch (error) {
@@ -127,7 +127,7 @@ export const callEditionRetrievalByISBN = async (
 
     if (retrievedEdition === null) {
       throw new NotFoundError(
-        editionControllerResponseMessages.EDITION_NOT_FOUND
+        editionControllerResponseMessages.EDITION_NOT_FOUND_MESSAGE
       );
     }
 
@@ -135,7 +135,7 @@ export const callEditionRetrievalByISBN = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: editionControllerResponseMessages.EDITION_RETRIEVED,
+        message: editionControllerResponseMessages.EDITION_RETRIEVED_MESSAGE,
         data: retrievedEdition,
       });
   } catch (error) {
@@ -167,13 +167,15 @@ export const callEditionRetrievalByBook = async (
 
     const retrievedBook = await getBookById(book.id);
     if (retrievedBook === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     const retrievedEditions = await getEditionsByBook(retrievedBook);
     if (retrievedEditions.length === 0) {
       throw new NotFoundError(
-        editionControllerResponseMessages.EDITION_S_NOT_FOUND
+        editionControllerResponseMessages.EDITION_S_NOT_FOUND_MESSAGE
       );
     }
 
@@ -181,7 +183,7 @@ export const callEditionRetrievalByBook = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: editionControllerResponseMessages.EDITION_S_RETRIEVED,
+        message: editionControllerResponseMessages.EDITION_S_RETRIEVED_MESSAGE,
         data: retrievedEditions,
       });
   } catch (error) {

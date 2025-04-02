@@ -42,7 +42,7 @@ export const callBookAddition = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
-        message: bookControllerResponseMessages.BOOK_ADDED,
+        message: bookControllerResponseMessages.BOOK_ADDED_MESSAGE,
         data: savedBook,
       });
   } catch (error) {
@@ -85,14 +85,16 @@ export const callBookUpdate = async (
     const updatedBook = await updateBook(id, bookToUpdate);
 
     if (updatedBook === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_UPDATED,
+        message: bookControllerResponseMessages.BOOK_UPDATED_MESSAGE,
         data: updatedBook,
       });
   } catch (error) {
@@ -124,14 +126,16 @@ export const callBookRetrievalByTitle = async (
     const retrievedBook = await getBookByTitle(title);
 
     if (retrievedBook === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_RETRIEVED,
+        message: bookControllerResponseMessages.BOOK_RETRIEVED_MESSAGE,
         data: retrievedBook,
       });
   } catch (error) {
@@ -163,14 +167,16 @@ export const callBookRetrievalById = async (
     const retrievedBook = await getBookById(id);
 
     if (retrievedBook === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_RETRIEVED,
+        message: bookControllerResponseMessages.BOOK_RETRIEVED_MESSAGE,
         data: retrievedBook,
       });
   } catch (error) {
@@ -201,14 +207,16 @@ export const callBookRetrievalByGenre = async (
     const genre = reqBodyToGenre(req);
     const retrievedBooks = await getBooksByGenre(genre);
     if (retrievedBooks.length === 0) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_S_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_S_NOT_FOUND_MESSAGE
+      );
     }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_S_RETRIEVED,
+        message: bookControllerResponseMessages.BOOK_S_RETRIEVED_MESSAGE,
         data: retrievedBooks,
       });
   } catch (error) {
