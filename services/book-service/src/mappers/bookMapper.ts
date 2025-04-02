@@ -1,8 +1,18 @@
+/**
+ * Book mapper.
+ * @module src/mappers/bookMapper
+ */
 import { Book } from "entities/Book";
 import { Request } from "express";
 import { IBookUpdate } from "interfaces/IBookUpdate";
 import { Genre, genreArray } from "resources/enum/Genre";
 
+/**
+ * Maps the body of a Request object to a {@link Book} object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {Book} A {@link Book} object.
+ */
 export const reqBodyToBook = (req: Request): Book => {
   const { title, genre } = req.body;
 
@@ -27,6 +37,12 @@ export const reqBodyToBook = (req: Request): Book => {
   return newBook;
 };
 
+/**
+ * Maps the body of a Request object to a custom data object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns A custom object containing an ID and an {@link IBookUpdate} object.
+ */
 export const reqBodyToBookUpdate = (
   req: Request
 ): {
@@ -66,7 +82,13 @@ export const reqBodyToBookUpdate = (
   return data;
 };
 
-export const reqBodyToGenre = (req: Request) => {
+/**
+ * Maps the body of a Request object to a {@link Genre} enum.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {Genre} A {@link Genre} enum.
+ */
+export const reqBodyToGenre = (req: Request): Genre => {
   const { genre } = req.body;
 
   let genreAsEnum = Genre.FICTION;
