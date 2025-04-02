@@ -1,3 +1,7 @@
+/**
+ * Author controller.
+ * @module src/controllers/authorController
+ */
 import { ValidationError } from "class-validator";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
@@ -13,6 +17,13 @@ import {
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
+/**
+ * Handles HTTP requests for author addition.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callAuthorAddition = async (
   req: Request,
   res: Response
@@ -25,7 +36,7 @@ export const callAuthorAddition = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
-        message: authorControllerResponseMessages.AUTHOR_ADDED,
+        message: authorControllerResponseMessages.AUTHOR_ADDED_MESSAGE,
         data: savedAuthor,
       });
   } catch (error) {
@@ -49,6 +60,14 @@ export const callAuthorAddition = async (
   }
 };
 
+/**
+ * Handles HTTP requests for author update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callAuthorUpdate = async (
   req: Request,
   res: Response
@@ -61,7 +80,7 @@ export const callAuthorUpdate = async (
 
     if (updatedAuthor === null) {
       throw new NotFoundError(
-        authorControllerResponseMessages.AUTHOR_NOT_FOUND
+        authorControllerResponseMessages.AUTHOR_NOT_FOUND_MESSAGE
       );
     }
 
@@ -69,7 +88,7 @@ export const callAuthorUpdate = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: authorControllerResponseMessages.AUTHOR_UPDATED,
+        message: authorControllerResponseMessages.AUTHOR_UPDATED_MESSAGE,
         data: updatedAuthor,
       });
   } catch (error) {
@@ -84,6 +103,14 @@ export const callAuthorUpdate = async (
   }
 };
 
+/**
+ * Handles HTTP requests for author retrieval by ID.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callAuthorRetrievalById = async (
   req: Request,
   res: Response
@@ -94,7 +121,7 @@ export const callAuthorRetrievalById = async (
 
     if (retrievedAuthor === null) {
       throw new NotFoundError(
-        authorControllerResponseMessages.AUTHOR_NOT_FOUND
+        authorControllerResponseMessages.AUTHOR_NOT_FOUND_MESSAGE
       );
     }
 
@@ -102,7 +129,7 @@ export const callAuthorRetrievalById = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: authorControllerResponseMessages.AUTHOR_RETRIEVED,
+        message: authorControllerResponseMessages.AUTHOR_RETRIEVED_MESSAGE,
         data: retrievedAuthor,
       });
   } catch (error) {

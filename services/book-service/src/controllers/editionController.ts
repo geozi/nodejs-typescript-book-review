@@ -1,3 +1,7 @@
+/**
+ * Edition controller.
+ * @module src/controllers/editionController
+ */
 import { ValidationError } from "class-validator";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
@@ -19,7 +23,17 @@ import {
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
-export const callEditionAddition = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for edition addition.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export const callEditionAddition = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const newEdition = await reqBodyToEdition(req);
     const savedEdition = await addEdition(newEdition);
@@ -28,7 +42,7 @@ export const callEditionAddition = async (req: Request, res: Response) => {
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
-        message: editionControllerResponseMessages.EDITION_ADDED,
+        message: editionControllerResponseMessages.EDITION_ADDED_MESSAGE,
         data: savedEdition,
       });
   } catch (error) {
@@ -52,7 +66,18 @@ export const callEditionAddition = async (req: Request, res: Response) => {
   }
 };
 
-export const callEditionUpdate = async (req: Request, res: Response) => {
+/**
+ * Handles HTTP requests for edition update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
+export const callEditionUpdate = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const updateDataObject = await reqBodyToEditionUpdate(req);
     const id = updateDataObject.id;
@@ -61,7 +86,7 @@ export const callEditionUpdate = async (req: Request, res: Response) => {
 
     if (updatedEdition === null) {
       throw new NotFoundError(
-        editionControllerResponseMessages.EDITION_NOT_FOUND
+        editionControllerResponseMessages.EDITION_NOT_FOUND_MESSAGE
       );
     }
 
@@ -69,7 +94,7 @@ export const callEditionUpdate = async (req: Request, res: Response) => {
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: editionControllerResponseMessages.EDITION_UPDATED,
+        message: editionControllerResponseMessages.EDITION_UPDATED_MESSAGE,
         data: updatedEdition,
       });
   } catch (error) {
@@ -84,17 +109,25 @@ export const callEditionUpdate = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Handles HTTP requests for edition retrieval by ISBN.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callEditionRetrievalByISBN = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   try {
     const { isbn } = req.body;
     const retrievedEdition = await getEditionByISBN(isbn);
 
     if (retrievedEdition === null) {
       throw new NotFoundError(
-        editionControllerResponseMessages.EDITION_NOT_FOUND
+        editionControllerResponseMessages.EDITION_NOT_FOUND_MESSAGE
       );
     }
 
@@ -102,7 +135,7 @@ export const callEditionRetrievalByISBN = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: editionControllerResponseMessages.EDITION_RETRIEVED,
+        message: editionControllerResponseMessages.EDITION_RETRIEVED_MESSAGE,
         data: retrievedEdition,
       });
   } catch (error) {
@@ -117,22 +150,32 @@ export const callEditionRetrievalByISBN = async (
   }
 };
 
+/**
+ * Handles HTTP requests for edition retrieval by book ID.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callEditionRetrievalByBook = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   try {
     const { book } = req.body;
 
     const retrievedBook = await getBookById(book.id);
     if (retrievedBook === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     const retrievedEditions = await getEditionsByBook(retrievedBook);
     if (retrievedEditions.length === 0) {
       throw new NotFoundError(
-        editionControllerResponseMessages.EDITION_S_NOT_FOUND
+        editionControllerResponseMessages.EDITION_S_NOT_FOUND_MESSAGE
       );
     }
 
@@ -140,7 +183,7 @@ export const callEditionRetrievalByBook = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: editionControllerResponseMessages.EDITION_S_RETRIEVED,
+        message: editionControllerResponseMessages.EDITION_S_RETRIEVED_MESSAGE,
         data: retrievedEditions,
       });
   } catch (error) {

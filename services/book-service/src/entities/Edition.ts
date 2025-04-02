@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Book } from "./Book";
-import { BookFormat } from "resources/enum/BookFormat";
+/**
+ * Edition model entity.
+ * @module src/entities/Edition
+ */
 import {
   IsDate,
   IsEnum,
@@ -13,9 +14,12 @@ import {
   Min,
   MinLength,
 } from "class-validator";
-import { editionConstants } from "resources/constants/editionConstants";
 import { editionFailedValidation } from "messages/validation/editionValidationMessages";
+import { editionConstants } from "resources/constants/editionConstants";
+import { BookFormat } from "resources/enum/BookFormat";
 import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Book } from "./Book";
 
 @Entity()
 export class Edition {

@@ -1,3 +1,7 @@
+/**
+ * Author model entity.
+ * @module src/entities/Author
+ */
 import { IsString, Matches, MinLength } from "class-validator";
 import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 import { authorConstants } from "resources/constants/authorConstants";

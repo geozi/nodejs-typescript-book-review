@@ -1,3 +1,7 @@
+/**
+ * Book controller.
+ * @module src/controllers/bookController
+ */
 import { ValidationError } from "class-validator";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
@@ -19,6 +23,13 @@ import {
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
+/**
+ * Handles HTTP requests for book addition.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callBookAddition = async (
   req: Request,
   res: Response
@@ -31,7 +42,7 @@ export const callBookAddition = async (
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.CREATED)
       .json({
-        message: bookControllerResponseMessages.BOOK_ADDED,
+        message: bookControllerResponseMessages.BOOK_ADDED_MESSAGE,
         data: savedBook,
       });
   } catch (error) {
@@ -55,6 +66,14 @@ export const callBookAddition = async (
   }
 };
 
+/**
+ * Handles HTTP requests for book update.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callBookUpdate = async (
   req: Request,
   res: Response
@@ -66,14 +85,16 @@ export const callBookUpdate = async (
     const updatedBook = await updateBook(id, bookToUpdate);
 
     if (updatedBook === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_UPDATED,
+        message: bookControllerResponseMessages.BOOK_UPDATED_MESSAGE,
         data: updatedBook,
       });
   } catch (error) {
@@ -88,6 +109,14 @@ export const callBookUpdate = async (
   }
 };
 
+/**
+ * Handles HTTP requests for book retrieval by title.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callBookRetrievalByTitle = async (
   req: Request,
   res: Response
@@ -97,14 +126,16 @@ export const callBookRetrievalByTitle = async (
     const retrievedBook = await getBookByTitle(title);
 
     if (retrievedBook === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_RETRIEVED,
+        message: bookControllerResponseMessages.BOOK_RETRIEVED_MESSAGE,
         data: retrievedBook,
       });
   } catch (error) {
@@ -119,6 +150,14 @@ export const callBookRetrievalByTitle = async (
   }
 };
 
+/**
+ * Handles HTTP requests for book retrieval by ID.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callBookRetrievalById = async (
   req: Request,
   res: Response
@@ -128,14 +167,16 @@ export const callBookRetrievalById = async (
     const retrievedBook = await getBookById(id);
 
     if (retrievedBook === null) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
     }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_RETRIEVED,
+        message: bookControllerResponseMessages.BOOK_RETRIEVED_MESSAGE,
         data: retrievedBook,
       });
   } catch (error) {
@@ -150,6 +191,14 @@ export const callBookRetrievalById = async (
   }
 };
 
+/**
+ * Handles HTTP requests for book retrieval by genre.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
 export const callBookRetrievalByGenre = async (
   req: Request,
   res: Response
@@ -158,14 +207,16 @@ export const callBookRetrievalByGenre = async (
     const genre = reqBodyToGenre(req);
     const retrievedBooks = await getBooksByGenre(genre);
     if (retrievedBooks.length === 0) {
-      throw new NotFoundError(bookControllerResponseMessages.BOOK_S_NOT_FOUND);
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_S_NOT_FOUND_MESSAGE
+      );
     }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
       .status(httpCodes.OK)
       .json({
-        message: bookControllerResponseMessages.BOOK_S_RETRIEVED,
+        message: bookControllerResponseMessages.BOOK_S_RETRIEVED_MESSAGE,
         data: retrievedBooks,
       });
   } catch (error) {

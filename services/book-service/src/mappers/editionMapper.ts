@@ -1,3 +1,7 @@
+/**
+ * Edition mapper.
+ * @module src/mappers/editionMapper
+ */
 import { Edition } from "entities/Edition";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { Request } from "express";
@@ -6,6 +10,13 @@ import { bookControllerResponseMessages } from "messages/response/bookController
 import { getBookById } from "repositories/bookRepository";
 import { BookFormat } from "resources/enum/BookFormat";
 
+/**
+ * Maps the body of a Request object to an {@link Edition} object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {Promise<Edition>} A promise that resolves to an {@link Edition} object.
+ * @throws - {@link NotFoundError}
+ */
 export const reqBodyToEdition = async (req: Request): Promise<Edition> => {
   const {
     isbn,
@@ -44,6 +55,13 @@ export const reqBodyToEdition = async (req: Request): Promise<Edition> => {
   return newEdition;
 };
 
+/**
+ * Maps the body of a Request object to a custom data object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns A promise that resolves to an object containing an ID and an {@link IEditionUpdate} object.
+ * @throws - {@link NotFoundError}
+ */
 export const reqBodyToEditionUpdate = async (
   req: Request
 ): Promise<{ id: number; edition: IEditionUpdate }> => {

@@ -1,3 +1,11 @@
+/**
+ * Book model entity.
+ * @module src/entities/Book
+ */
+import { IsEnum, IsString, MaxLength, MinLength } from "class-validator";
+import { bookFailedValidation } from "messages/validation/bookValidationMessages";
+import { bookConstants } from "resources/constants/bookConstants";
+import { Genre } from "resources/enum/Genre";
 import {
   Column,
   Entity,
@@ -6,12 +14,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Edition } from "./Edition";
 import { Author } from "./Author";
-import { Genre } from "resources/enum/Genre";
-import { IsString, MinLength, MaxLength, IsEnum } from "class-validator";
-import { bookConstants } from "resources/constants/bookConstants";
-import { bookFailedValidation } from "messages/validation/bookValidationMessages";
+import { Edition } from "./Edition";
 
 @Entity()
 export class Book {
