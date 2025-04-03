@@ -1,8 +1,16 @@
+/**
+ * Express validation rules for author requests.
+ * @module src/middleware/rules/authorRules
+ */
 import { check, ValidationChain } from "express-validator";
 import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 import { authorConstants } from "resources/constants/authorConstants";
 import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
 
+/**
+ * Returns a validation chain for author addition requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const authorAdditionRules = (): ValidationChain[] => {
   return [
     check("firstName")
@@ -24,6 +32,10 @@ export const authorAdditionRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for author update requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const authorUpdateRules = (): ValidationChain[] => {
   return [
     check("id")
@@ -47,6 +59,10 @@ export const authorUpdateRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for author retrieval by ID requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const authorRetrievalByIdRules = (): ValidationChain[] => {
   return [
     check("id")

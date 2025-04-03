@@ -1,7 +1,15 @@
+/**
+ * Express validation rules for intermediary table requests.
+ * @module src/middleware/rules/authorBookRules
+ */
 import { check, ValidationChain } from "express-validator";
 import { authorFailedValidation } from "messages/validation/authorValidationMessages";
 import { bookFailedValidation } from "messages/validation/bookValidationMessages";
 
+/**
+ * Returns a validation chain for record addition requests in intermediary table.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const authorBookAdditionRules = (): ValidationChain[] => {
   return [
     check("bookId")

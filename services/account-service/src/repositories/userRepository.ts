@@ -17,6 +17,7 @@ import { Error } from "mongoose";
  *
  * @param {string} username - The username of a user.
  * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object.
+ * @throws - {@link NotFoundError}
  */
 export const getUserByUsername = async (username: string): Promise<IUser> => {
   try {
@@ -76,6 +77,7 @@ export const addUser = async (newUser: IUser): Promise<IUser> => {
  *
  * @param {IUserUpdate} updateDataObject - The new information to be persisted.
  * @returns {Promise<IUser>} A promise that resolves to an {@link IUser} object representing the updated document.
+ * @throws - {@link NotFoundError}
  */
 export const updateUser = async (
   updateDataObject: IUserUpdate

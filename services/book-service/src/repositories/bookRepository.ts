@@ -1,3 +1,7 @@
+/**
+ * Book repository.
+ * @module src/repositories/bookRepository
+ */
 import { validate, ValidationError } from "class-validator";
 import { AppDataSource } from "db/dataSource";
 import { Book } from "entities/Book";
@@ -9,6 +13,12 @@ import { Genre } from "resources/enum/Genre";
 
 const bookRepository = AppDataSource.getRepository(Book);
 
+/**
+ * Returns the information of books with the specified genre.
+ *
+ * @param {Genre} genre - A {@link Genre} assigned to books.
+ * @returns {Promise<Book[]>} A promise that resolves to an array of {@link Book} objects.
+ */
 export const getBooksByGenre = async (genre: Genre): Promise<Book[]> => {
   try {
     return await bookRepository.findBy({ genre: genre });
@@ -22,6 +32,12 @@ export const getBooksByGenre = async (genre: Genre): Promise<Book[]> => {
   }
 };
 
+/**
+ * Returns the information of a book with the specified title.
+ *
+ * @param {string} title - The title of a book.
+ * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ */
 export const getBookByTitle = async (title: string): Promise<Book | null> => {
   try {
     return await bookRepository.findOneBy({ title: title });
@@ -35,6 +51,12 @@ export const getBookByTitle = async (title: string): Promise<Book | null> => {
   }
 };
 
+/**
+ * Returns the information of a book with the specified ID.
+ *
+ * @param {number} id - The ID of a book.
+ * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ */
 export const getBookById = async (id: number): Promise<Book | null> => {
   try {
     return await bookRepository.findOneBy({ id: id });
@@ -48,6 +70,13 @@ export const getBookById = async (id: number): Promise<Book | null> => {
   }
 };
 
+/**
+ * Adds the information of a new book to the database.
+ *
+ * @param {Book} newBook - A {@link Book} object containing the information of the new book.
+ * @returns {Promise<Book>} A promise that resolves to a {@link Book} object.
+ * @throws - ValidationError
+ */
 export const addBook = async (newBook: Book): Promise<Book> => {
   try {
     const errors = await validate(newBook);
@@ -76,6 +105,13 @@ export const addBook = async (newBook: Book): Promise<Book> => {
   }
 };
 
+/**
+ * Updates the information of a book.
+ *
+ * @param {number} id - The ID of a book.
+ * @param {IBookUpdate} updateObj - An {@link IBookUpdate} object containing the new information to be persisted.
+ * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ */
 export const updateBook = async (
   id: number,
   updateObj: IBookUpdate

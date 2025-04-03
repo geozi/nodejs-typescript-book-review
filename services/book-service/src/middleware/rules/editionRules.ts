@@ -1,9 +1,17 @@
+/**
+ * Express validation rules for edition requests.
+ * @module src/middleware/rules/editionRules
+ */
 import { body, check, ValidationChain } from "express-validator";
 import { editionFailedValidation } from "messages/validation/editionValidationMessages";
 import { editionConstants } from "resources/constants/editionConstants";
 import { bookFormatArray } from "resources/enum/BookFormat";
 import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
 
+/**
+ * Returns a validation chain for edition addition requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const editionAdditionRules = (): ValidationChain[] => {
   return [
     check("isbn")
@@ -69,6 +77,10 @@ export const editionAdditionRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for edition update requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const editionUpdateRules = (): ValidationChain[] => {
   return [
     check("id")
@@ -125,6 +137,10 @@ export const editionUpdateRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for edition retrieval by ISBN requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const editionRetrievalByIsbnRules = (): ValidationChain[] => {
   return [
     check("isbn")
@@ -136,6 +152,10 @@ export const editionRetrievalByIsbnRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for edition retrieval by book ID requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const editionRetrievalByBookRules = (): ValidationChain[] => {
   return [
     check("book")

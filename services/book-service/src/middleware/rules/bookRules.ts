@@ -1,8 +1,16 @@
+/**
+ * Express validation rules for book requests.
+ * @module src/middleware/rules/bookRules
+ */
 import { check, ValidationChain } from "express-validator";
 import { bookFailedValidation } from "messages/validation/bookValidationMessages";
 import { bookConstants } from "resources/constants/bookConstants";
 import { genreArray } from "resources/enum/Genre";
 
+/**
+ * Returns a validation chain for book addition requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const bookAdditionRules = (): ValidationChain[] => {
   return [
     check("title")
@@ -22,6 +30,10 @@ export const bookAdditionRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for book update requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const bookUpdateRules = (): ValidationChain[] => {
   return [
     check("id")
@@ -43,6 +55,10 @@ export const bookUpdateRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for book retrieval by title requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const bookRetrievalByTitleRules = (): ValidationChain[] => {
   return [
     check("title")
@@ -56,6 +72,10 @@ export const bookRetrievalByTitleRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for book retrieval by ID requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const bookRetrievalByIdRules = (): ValidationChain[] => {
   return [
     check("id")
@@ -67,6 +87,10 @@ export const bookRetrievalByIdRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for book retrieval by genre requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const bookRetrievalByGenreRules = (): ValidationChain[] => {
   return [
     check("genre")
