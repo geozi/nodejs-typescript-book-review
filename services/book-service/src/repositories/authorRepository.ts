@@ -1,3 +1,7 @@
+/**
+ * Author repository.
+ * @module src/repositories/authorRepository
+ */
 import { validate, ValidationError } from "class-validator";
 import { AppDataSource } from "db/dataSource";
 import { Author } from "entities/Author";
@@ -8,6 +12,12 @@ import { commonResponseMessages } from "messages/response/commonResponseMessages
 
 const authorRepository = AppDataSource.getRepository(Author);
 
+/**
+ * Returns the information of an author with the specified ID.
+ *
+ * @param {number} id - The ID of an author.
+ * @returns {Promise<Author | null>} A promise that resolves to an {@link Author} object or null.
+ */
 export const getAuthorById = async (id: number): Promise<Author | null> => {
   try {
     return await authorRepository.findOneBy({ id: id });
@@ -21,6 +31,13 @@ export const getAuthorById = async (id: number): Promise<Author | null> => {
   }
 };
 
+/**
+ * Adds the information of a new author to the database.
+ *
+ * @param {Author} newAuthor - An {@link Author} object containing the information of the new author.
+ * @returns {Promise<Author>} A promise that resolves to an {@link Author} object.
+ * @throws - {@link ValidationError}
+ */
 export const addAuthor = async (newAuthor: Author): Promise<Author> => {
   try {
     const errors = await validate(newAuthor);
@@ -51,6 +68,13 @@ export const addAuthor = async (newAuthor: Author): Promise<Author> => {
   }
 };
 
+/**
+ * Updates the information of an author.
+ *
+ * @param {number} id - The ID of an author.
+ * @param {IAuthorUpdate} updateObj - An {@link IAuthorUpdate} object containing the new information to be persisted.
+ * @returns {Promise<Author | null>} A promise that resolves to an {@link Author} object or null.
+ */
 export const updateAuthor = async (
   id: number,
   updateObj: IAuthorUpdate
