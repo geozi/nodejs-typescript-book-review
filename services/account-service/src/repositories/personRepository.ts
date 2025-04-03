@@ -45,6 +45,7 @@ export const addPerson = async (newPerson: IPerson): Promise<IPerson> => {
  *
  * @param {IPersonUpdate} updateDataObject - The new information to be persisted.
  * @returns {Promise<IPerson>} A promise that resolves to an {@link IPerson} object representing the updated document.
+ * @throws - {@link NotFoundError}
  */
 export const updatePerson = async (
   updateDataObject: IPersonUpdate
@@ -98,6 +99,7 @@ export const updatePerson = async (
  *
  * @param {string} username - The username of the user.
  * @returns {Promise<IPerson>} A promise that resolves to an {@link IPerson} object.
+ * @throws - {@link NotFoundError}
  */
 export const getPersonByUsername = async (
   username: string
