@@ -1,3 +1,7 @@
+/**
+ * Inter-service routes.
+ * @module src/routes/interServiceRoutes
+ */
 import { Request, Response, Router } from "express";
 import passport from "passport";
 import { httpCodes } from "resources/codes/responseStatusCodes";
