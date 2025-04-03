@@ -75,7 +75,7 @@ export const getBookById = async (id: number): Promise<Book | null> => {
  *
  * @param {Book} newBook - A {@link Book} object containing the information of the new book.
  * @returns {Promise<Book>} A promise that resolves to a {@link Book} object.
- * @throws - {@link ValidationError}
+ * @throws - ValidationError
  */
 export const addBook = async (newBook: Book): Promise<Book> => {
   try {

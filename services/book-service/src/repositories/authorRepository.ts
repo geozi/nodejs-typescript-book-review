@@ -36,7 +36,7 @@ export const getAuthorById = async (id: number): Promise<Author | null> => {
  *
  * @param {Author} newAuthor - An {@link Author} object containing the information of the new author.
  * @returns {Promise<Author>} A promise that resolves to an {@link Author} object.
- * @throws - {@link ValidationError}
+ * @throws - ValidationError
  */
 export const addAuthor = async (newAuthor: Author): Promise<Author> => {
   try {

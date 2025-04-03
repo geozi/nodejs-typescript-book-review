@@ -58,7 +58,7 @@ export const getEditionsByBook = async (book: Book): Promise<Edition[]> => {
  *
  * @param {Edition} newEdition - An {@link Edition} object containing the information of a new book edition.
  * @returns {Promise<Edition>} A promise that resolves to an {@link Edition} object.
- * @throws - {@link ValidationError}
+ * @throws - ValidationError
  */
 export const addEdition = async (newEdition: Edition): Promise<Edition> => {
   try {
