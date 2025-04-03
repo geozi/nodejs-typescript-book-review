@@ -3,11 +3,8 @@
  * @module src/resources/enum/Genre
  */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { EnumMember } from "typescript";
-
 /**
- * Contains {@link EnumMember} corresponding to book genres.
+ * Contains enums corresponding to book genres.
  *
  * @readonly
  * @enum
