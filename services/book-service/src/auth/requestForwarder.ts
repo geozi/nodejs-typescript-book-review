@@ -4,16 +4,24 @@ import { NextFunction, Request, Response } from "express";
 import { appLogger } from "logs/loggerConfigs";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { httpCodes } from "resources/codes/responseStatusCodes";
+import { RoleType } from "resources/enum/RoleType";
 
-export const forwardToUserAccountService = async (
+export const forwardToAccountService = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
+    let url = "http://localhost:3000/api/inter-service/";
+    if (req.body.role && req.body.role === RoleType.Admin) {
+      url += "admin";
+    } else {
+      url += "user";
+    }
+
     const response = await axios({
-      method: req.method,
-      url: "http://localhost:3000/api/inter-service/user",
+      method: "GET",
+      url: url,
       headers: req.headers,
       data: req.body,
       params: req.query,
@@ -28,7 +36,7 @@ export const forwardToUserAccountService = async (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     appLogger.error(
-      `Request forwarder: ${forwardToUserAccountService.name} -> ServerError thrown`
+      `Request forwarder: ${forwardToAccountService.name} -> ServerError thrown`
     );
 
     throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
