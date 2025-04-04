@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ServerError } from "errors/serverErrorClass";
 import { NextFunction, Request, Response } from "express";
 import { appLogger } from "logs/loggerConfigs";
@@ -22,18 +22,25 @@ export const forwardToAccountService = async (
     const response = await axios({
       method: "GET",
       url: url,
-      headers: req.headers,
-      params: req.query,
+      headers: { Authorization: req.header("Authorization") },
     });
 
-    if (response.status === httpCodes.OK) {
-      next();
-    } else {
-      res.status(response.status).json(response.data);
+    if (response.status !== httpCodes.OK) {
+      res.status(response.status).json(response.statusText);
       return;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    next();
   } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      const { status, statusText } = error.response;
+
+      appLogger.error(
+        `Request forwarder: ${forwardToAccountService.name} -> ${error.name} detected`
+      );
+
+      res.status(status).json(statusText);
+      return;
+    }
     appLogger.error(
       `Request forwarder: ${forwardToAccountService.name} -> ServerError thrown`
     );

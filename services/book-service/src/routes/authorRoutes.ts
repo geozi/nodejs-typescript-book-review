@@ -22,7 +22,7 @@ authorRouter.get(
 );
 authorRouter.post(
   "/",
-  (req: Request, _res: Response, next: NextFunction) => {
+  async (req: Request, _res: Response, next: NextFunction) => {
     req.body.role = RoleType.Admin;
     next();
   },

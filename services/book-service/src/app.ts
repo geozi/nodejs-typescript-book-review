@@ -1,3 +1,4 @@
+import cors from "cors";
 import { AppDataSource } from "db/dataSource";
 import express from "express";
 import { catchJSONerror } from "middleware/catchers/jsonErrorCatcher";
@@ -18,6 +19,7 @@ async function main() {
   }
 }
 
+app.use(cors());
 app.use(express.json());
 app.use(catchJSONerror);
 
