@@ -1,3 +1,4 @@
+import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
 import { catchJSONerror } from "middleware/catchers/jsonErrorCatcher";
@@ -25,6 +26,7 @@ async function connectToDb() {
   }
 }
 
+app.use(cors({ origin: "http://localhost:3001" }));
 app.use(express.json());
 app.use(catchJSONerror);
 

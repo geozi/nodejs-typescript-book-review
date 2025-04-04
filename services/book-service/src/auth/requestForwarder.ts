@@ -23,7 +23,6 @@ export const forwardToAccountService = async (
       method: "GET",
       url: url,
       headers: req.headers,
-      data: req.body,
       params: req.query,
     });
 
