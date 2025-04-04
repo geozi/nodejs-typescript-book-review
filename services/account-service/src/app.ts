@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 import { redisClient } from "redis/redis.config";
 import { authRouter } from "routes/authRoutes";
+import { interServiceRouter } from "routes/interServiceRoutes";
 import { personRouter } from "routes/personRoutes";
 import { regRouter } from "routes/regRoutes";
 import { userRouter } from "routes/userRoutes";
@@ -30,6 +31,9 @@ app.use(catchJSONerror);
 // Open routes
 app.use("/api/login", authRouter);
 app.use("/api/register", regRouter);
+
+// Inter-service routes
+app.use("/api/inter-service", interServiceRouter);
 
 //Protected routes
 
