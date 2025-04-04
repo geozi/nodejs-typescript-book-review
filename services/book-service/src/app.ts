@@ -1,5 +1,6 @@
 import { AppDataSource } from "db/dataSource";
 import express from "express";
+import { catchJSONerror } from "middleware/catchers/jsonErrorCatcher";
 import "reflect-metadata";
 import { authorRouter } from "routes/authorRoutes";
 import { bookAuthorRouter } from "routes/bookAuthorRoutes";
@@ -18,6 +19,7 @@ async function main() {
 }
 
 app.use(express.json());
+app.use(catchJSONerror);
 
 // Protected routes
 app.use("/api/p/books", bookRouter);
