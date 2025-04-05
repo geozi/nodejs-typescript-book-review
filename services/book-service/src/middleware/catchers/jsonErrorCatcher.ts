@@ -3,6 +3,7 @@
  * @module src/middleware/catchers/jsonErrorCatcher
  */
 import { NextFunction, Request, Response } from "express";
+import { appLogger } from "logs/loggerConfigs";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 
 /**
@@ -21,6 +22,10 @@ export const catchJSONerror = (
   next: NextFunction
 ): void => {
   if (err instanceof SyntaxError && "body" in err) {
+    appLogger.error(
+      `JSON Error catcher: ${catchJSONerror.name} -> ${err.name} detected and caught`
+    );
+
     res.status(400).send({
       error: commonResponseMessages.INVALID_JSON_MESSAGE,
     });
