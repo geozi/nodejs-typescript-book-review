@@ -35,9 +35,11 @@ import { ALPHABETIC_REGEX } from "resources/regexp/validationRegExp";
  * @property {string} LANGUAGE_MIN_LENGTH_MESSAGE - Message sent when the provided book language is too short.
  * @property {string} EDITION_ID_REQUIRED_MESSAGE - Message sent when no edition ID is provided.
  * @property {string} EDITION_ID_INVALID_MESSAGE - Message sent when the provided edition ID is not an integer.
+ * @property {string} EDITION_ID_NEGATIVE_MESSAGE - Message sent when the provided edition ID is a negative integer.
  * @property {string} BOOK_REQUIRED_MESSAGE - Message sent when no book details are provided.
  * @property {string} BOOK_ID_REQUIRED_MESSAGE - Message sent when no book ID is provided.
  * @property {string} BOOK_ID_INVALID_MESSAGE - Message sent when the provided book ID is not an integer.
+ * @property {string} BOOK_ID_NEGATIVE_MESSAGE - Message sent when the provided book ID is a negative integer.
  */
 export const editionFailedValidation = {
   /**
@@ -161,6 +163,12 @@ export const editionFailedValidation = {
   EDITION_ID_INVALID_MESSAGE: "Edition ID must be a number",
 
   /**
+   * Message sent when the provided edition ID is a negative integer.
+   * @type {string}
+   */
+  EDITION_ID_NEGATIVE_MESSAGE: "Edition ID must be a positive integer",
+
+  /**
    * Message sent when no book details are provided.
    * @type {string}
    */
@@ -177,4 +185,10 @@ export const editionFailedValidation = {
    * @type {string}
    */
   BOOK_ID_INVALID_MESSAGE: "Book ID must be an integer",
+
+  /**
+   * Message sent when the provided book ID is a negative integer.
+   * @type {string}
+   */
+  BOOK_ID_NEGATIVE_MESSAGE: "Book ID must be a positive integer",
 };

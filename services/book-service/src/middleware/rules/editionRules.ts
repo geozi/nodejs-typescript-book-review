@@ -73,7 +73,13 @@ export const editionAdditionRules = (): ValidationChain[] => {
       .withMessage(editionFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
       .bail()
       .isInt()
-      .withMessage(editionFailedValidation.BOOK_ID_INVALID_MESSAGE),
+      .withMessage(editionFailedValidation.BOOK_ID_INVALID_MESSAGE)
+      .bail()
+      .custom(async (value) => {
+        if (value < 0) {
+          throw new Error(editionFailedValidation.BOOK_ID_NEGATIVE_MESSAGE);
+        }
+      }),
   ];
 };
 
@@ -88,7 +94,13 @@ export const editionUpdateRules = (): ValidationChain[] => {
       .withMessage(editionFailedValidation.EDITION_ID_REQUIRED_MESSAGE)
       .bail()
       .isInt()
-      .withMessage(editionFailedValidation.EDITION_ID_INVALID_MESSAGE),
+      .withMessage(editionFailedValidation.EDITION_ID_INVALID_MESSAGE)
+      .bail()
+      .custom(async (value) => {
+        if (value < 0) {
+          throw new Error(editionFailedValidation.EDITION_ID_NEGATIVE_MESSAGE);
+        }
+      }),
     check("isbn")
       .optional()
       .isISBN(editionConstants.ISBN_13_LENGTH)
@@ -133,7 +145,13 @@ export const editionUpdateRules = (): ValidationChain[] => {
       .withMessage(editionFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
       .bail()
       .isInt()
-      .withMessage(editionFailedValidation.BOOK_ID_INVALID_MESSAGE),
+      .withMessage(editionFailedValidation.BOOK_ID_INVALID_MESSAGE)
+      .bail()
+      .custom(async (value) => {
+        if (value < 0) {
+          throw new Error(editionFailedValidation.BOOK_ID_NEGATIVE_MESSAGE);
+        }
+      }),
   ];
 };
 
@@ -168,6 +186,12 @@ export const editionRetrievalByBookRules = (): ValidationChain[] => {
       .withMessage(editionFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
       .bail()
       .isInt()
-      .withMessage(editionFailedValidation.BOOK_ID_INVALID_MESSAGE),
+      .withMessage(editionFailedValidation.BOOK_ID_INVALID_MESSAGE)
+      .bail()
+      .custom(async (value) => {
+        if (value < 0) {
+          throw new Error(editionFailedValidation.BOOK_ID_NEGATIVE_MESSAGE);
+        }
+      }),
   ];
 };
