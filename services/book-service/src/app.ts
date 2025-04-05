@@ -1,3 +1,7 @@
+/**
+ * Main.
+ * @module src/app
+ */
 import cors from "cors";
 import { AppDataSource } from "db/dataSource";
 import express from "express";

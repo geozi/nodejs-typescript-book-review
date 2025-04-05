@@ -1,9 +1,13 @@
+/**
+ * Data source configuration.
+ * @module src/db/dataSource
+ */
+import * as dotenv from "dotenv";
+import { Author } from "entities/Author";
+import { Book } from "entities/Book";
+import { Edition } from "entities/Edition";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import * as dotenv from "dotenv";
-import { Book } from "entities/Book";
-import { Author } from "entities/Author";
-import { Edition } from "entities/Edition";
 dotenv.config();
 
 export const AppDataSource = new DataSource({

@@ -1,3 +1,7 @@
+/**
+ * HTTP request forwarder.
+ * @module src/auth/requestForwarder
+ */
 import axios, { AxiosError } from "axios";
 import { ServerError } from "errors/serverErrorClass";
 import { NextFunction, Request, Response } from "express";
@@ -6,11 +10,19 @@ import { commonResponseMessages } from "messages/response/commonResponseMessages
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import { RoleType } from "resources/enum/RoleType";
 
+/**
+ * Forwards HTTP requests to account-service for authorization.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @param {NextFunction} next - Moves program logic to the next step of a middleware path.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const forwardToAccountService = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
     let url = "http://localhost:3000/api/inter-service/";
     if (req.body.role && req.body.role === RoleType.Admin) {
@@ -29,6 +41,7 @@ export const forwardToAccountService = async (
       res.status(response.status).json(response.statusText);
       return;
     }
+
     next();
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
