@@ -10,7 +10,7 @@
     "test": "mocha",
     "test:coverage": "c8 mocha",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'tsx' src/app.ts",
-    "generateDocs": "npx typedoc --name account-service"
+    "generate:docs": "npx typedoc --name account-service"
   },
   "keywords": [
     "microservice",
