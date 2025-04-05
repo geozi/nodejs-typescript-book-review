@@ -24,6 +24,7 @@ import { Author } from "entities/Author";
  * @property {string} LAST_NAME_BELOW_MIN_LENGTH_MESSAGE - Message sent when the provided last name is too short.
  * @property {string} AUTHOR_ID_REQUIRED_MESSAGE - Message sent when no author ID is provided.
  * @property {string} AUTHOR_ID_INVALID_MESSAGE - Message sent when the provided author ID is not an integer.
+ * @property {string} AUTHOR_ID_NEGATIVE_MESSAGE - Message sent when the provided author ID is a negative integer.
  */
 export const authorFailedValidation = {
   /**
@@ -85,4 +86,10 @@ export const authorFailedValidation = {
    * @type {string}
    */
   AUTHOR_ID_INVALID_MESSAGE: "Author ID must be number",
+
+  /**
+   * Message sent when the provided author ID is a negative integer.
+   * @type {string}
+   */
+  AUTHOR_ID_NEGATIVE_MESSAGE: "Author ID must be a positive integer",
 };
