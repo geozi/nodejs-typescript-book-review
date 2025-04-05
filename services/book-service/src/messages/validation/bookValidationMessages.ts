@@ -21,6 +21,7 @@ import { IBookUpdate } from "interfaces/IBookUpdate";
  * @property {string} GENRE_INVALID_MESSAGE - Message sent when the provided genre is not a {@link Genre} enum.
  * @property {string} BOOK_ID_REQUIRED_MESSAGE - Message sent when no book ID is provided.
  * @property {string} BOOK_ID_INVALID_MESSAGE - Message sent when the provided book ID is not an integer.
+ * @property {string} BOOK_ID_NEGATIVE_MESSAGE - Message sent when the provided book ID is a negative integer.
  */
 export const bookFailedValidation = {
   /**
@@ -70,4 +71,10 @@ export const bookFailedValidation = {
    * @type {string}
    */
   BOOK_ID_INVALID_MESSAGE: "Book ID must be a number",
+
+  /**
+   * Message sent when the provided book ID is a negative integer.
+   * @type {string}
+   */
+  BOOK_ID_NEGATIVE_MESSAGE: "Book ID must be a positive integer",
 };

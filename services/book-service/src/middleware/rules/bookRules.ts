@@ -41,7 +41,13 @@ export const bookUpdateRules = (): ValidationChain[] => {
       .withMessage(bookFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
       .bail()
       .isInt()
-      .withMessage(bookFailedValidation.BOOK_ID_INVALID_MESSAGE),
+      .withMessage(bookFailedValidation.BOOK_ID_INVALID_MESSAGE)
+      .bail()
+      .custom(async (value) => {
+        if (value < 0) {
+          throw new Error(bookFailedValidation.BOOK_ID_NEGATIVE_MESSAGE);
+        }
+      }),
     check("title")
       .optional()
       .isLength({ min: bookConstants.TITLE_MIN_LENGTH })
@@ -83,7 +89,13 @@ export const bookRetrievalByIdRules = (): ValidationChain[] => {
       .withMessage(bookFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
       .bail()
       .isInt()
-      .withMessage(bookFailedValidation.BOOK_ID_INVALID_MESSAGE),
+      .withMessage(bookFailedValidation.BOOK_ID_INVALID_MESSAGE)
+      .bail()
+      .custom(async (value) => {
+        if (value < 0) {
+          throw new Error(bookFailedValidation.BOOK_ID_NEGATIVE_MESSAGE);
+        }
+      }),
   ];
 };
 

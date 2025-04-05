@@ -44,6 +44,11 @@ app.use("/api/inter-service", interServiceRouter);
 //Protected routes
 
 app.use(
+  "/api/p/a/users",
+  passport.authenticate("admin-strategy", { session: false }),
+  userRouter
+);
+app.use(
   "/api/p/users",
   passport.authenticate("user-strategy", { session: false }),
   userRouter
