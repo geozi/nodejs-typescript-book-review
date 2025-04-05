@@ -10,19 +10,21 @@ export const interServiceRouter = Router();
 interServiceRouter.get(
   "/admin",
   passport.authenticate("admin-strategy", { session: false }),
-  (req: Request, res: Response) => {
-    if (req.user) {
-      res.status(httpCodes.OK);
+  async (req: Request, res: Response) => {
+    if (!req.user) {
+      res.status(httpCodes.FORBIDDEN).json({});
       return;
     }
+
+    res.status(httpCodes.OK).json({});
   }
 );
 interServiceRouter.get(
   "/user",
   passport.authenticate("user-strategy", { session: false }),
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     if (req.user) {
-      res.status(httpCodes.OK);
+      res.status(httpCodes.OK).json({});
       return;
     }
   }

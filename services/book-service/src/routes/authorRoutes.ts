@@ -1,11 +1,16 @@
+/**
+ * Author routes.
+ * @module src/routes/authorRoutes
+ */
 import { forwardToAccountService } from "auth/requestForwarder";
 import {
   callAuthorAddition,
   callAuthorRetrievalById,
   callAuthorUpdate,
 } from "controllers/authorController";
-import { NextFunction, Request, Response, Router } from "express";
+import { Router } from "express";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
+import { assignRoleType } from "middleware/handlers/roleTypeAssignment";
 import {
   authorAdditionRules,
   authorRetrievalByIdRules,
@@ -16,16 +21,15 @@ import { RoleType } from "resources/enum/RoleType";
 export const authorRouter = Router();
 authorRouter.get(
   "/",
+  assignRoleType(RoleType.Admin),
+  forwardToAccountService,
   ...authorRetrievalByIdRules(),
   catchExpressValidationErrors,
   callAuthorRetrievalById
 );
 authorRouter.post(
   "/",
-  (req: Request, _res: Response, next: NextFunction) => {
-    req.body.role = RoleType.Admin;
-    next();
-  },
+  assignRoleType(RoleType.Admin),
   forwardToAccountService,
   ...authorAdditionRules(),
   catchExpressValidationErrors,
@@ -33,6 +37,8 @@ authorRouter.post(
 );
 authorRouter.put(
   "/",
+  assignRoleType(RoleType.Admin),
+  forwardToAccountService,
   ...authorUpdateRules(),
   catchExpressValidationErrors,
   callAuthorUpdate
