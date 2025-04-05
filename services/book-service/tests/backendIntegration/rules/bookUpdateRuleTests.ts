@@ -5,7 +5,11 @@ import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCa
 import { bookUpdateRules } from "middleware/rules/bookRules";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidBookInputs, validBookInputs } from "tests/testInputs";
+import {
+  invalidBookInputs,
+  invalidCommonInputs,
+  validBookInputs,
+} from "tests/testInputs";
 
 describe("Book update rules integration tests", () => {
   let req: Partial<Request>;
@@ -13,7 +17,7 @@ describe("Book update rules integration tests", () => {
   let next: SinonSpy;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
-  let mockId: string;
+  let mockId: number;
   const bookUpdateArray = [...bookUpdateRules(), catchExpressValidationErrors];
 
   describe("Positive scenarios", () => {
@@ -31,7 +35,7 @@ describe("Book update rules integration tests", () => {
       next = sinon.spy();
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
     });
 
     it("request has valid inputs", async () => {
@@ -71,7 +75,7 @@ describe("Book update rules integration tests", () => {
       next = sinon.spy();
 
       // Mocks
-      mockId = "1";
+      mockId = 1;
 
       req = {
         body: JSON.parse(
@@ -116,6 +120,25 @@ describe("Book update rules integration tests", () => {
       assert.strictEqual(
         jsonSpy.calledWith({
           errors: [{ message: bookFailedValidation.BOOK_ID_INVALID_MESSAGE }],
+        }),
+        true
+      );
+    });
+
+    it("book ID is negative", async () => {
+      req.body.id = invalidCommonInputs.NEGATIVE_ID;
+
+      for (const middleware of bookUpdateArray) {
+        await middleware(req as Request, res as Response, next);
+      }
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          errors: [{ message: bookFailedValidation.BOOK_ID_NEGATIVE_MESSAGE }],
         }),
         true
       );

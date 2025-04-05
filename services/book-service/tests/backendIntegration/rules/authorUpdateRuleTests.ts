@@ -5,7 +5,11 @@ import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCa
 import { authorUpdateRules } from "middleware/rules/authorRules";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidAuthorInputs, validAuthorInputs } from "tests/testInputs";
+import {
+  invalidAuthorInputs,
+  invalidCommonInputs,
+  validAuthorInputs,
+} from "tests/testInputs";
 
 describe("Author update rules integration tests", () => {
   let req: Partial<Request>;
@@ -109,6 +113,27 @@ describe("Author update rules integration tests", () => {
         jsonSpy.calledWith({
           errors: [
             { message: authorFailedValidation.AUTHOR_ID_INVALID_MESSAGE },
+          ],
+        }),
+        true
+      );
+    });
+
+    it("author ID is negative", async () => {
+      req.body.id = invalidCommonInputs.NEGATIVE_ID;
+
+      for (const middleware of authorUpdateArray) {
+        await middleware(req as Request, res as Response, next);
+      }
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          errors: [
+            { message: authorFailedValidation.AUTHOR_ID_NEGATIVE_MESSAGE },
           ],
         }),
         true

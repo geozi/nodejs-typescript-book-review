@@ -5,7 +5,7 @@ import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCa
 import { bookRetrievalByIdRules } from "middleware/rules/bookRules";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidBookInputs } from "tests/testInputs";
+import { invalidBookInputs, invalidCommonInputs } from "tests/testInputs";
 
 describe("Book retrieval by ID rules integration tests", () => {
   let req: Partial<Request>;
@@ -105,6 +105,25 @@ describe("Book retrieval by ID rules integration tests", () => {
       assert.strictEqual(
         jsonSpy.calledWith({
           errors: [{ message: bookFailedValidation.BOOK_ID_INVALID_MESSAGE }],
+        }),
+        true
+      );
+    });
+
+    it("book ID is negative", async () => {
+      req.body.id = invalidCommonInputs.NEGATIVE_ID;
+
+      for (const middleware of bookRetrievalByIdArray) {
+        await middleware(req as Request, res as Response, next);
+      }
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          errors: [{ message: bookFailedValidation.BOOK_ID_NEGATIVE_MESSAGE }],
         }),
         true
       );

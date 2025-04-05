@@ -5,7 +5,11 @@ import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCa
 import { editionUpdateRules } from "middleware/rules/editionRules";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidEditionInputs, validEditionInputs } from "tests/testInputs";
+import {
+  invalidCommonInputs,
+  invalidEditionInputs,
+  validEditionInputs,
+} from "tests/testInputs";
 
 describe("Edition update rules integration tests", () => {
   let req: Partial<Request>;
@@ -122,6 +126,27 @@ describe("Edition update rules integration tests", () => {
         jsonSpy.calledWith({
           errors: [
             { message: editionFailedValidation.EDITION_ID_INVALID_MESSAGE },
+          ],
+        }),
+        true
+      );
+    });
+
+    it("id is negative", async () => {
+      req.body.id = invalidCommonInputs.NEGATIVE_ID;
+
+      for (const middleware of editionUpdateArray) {
+        await middleware(req as Request, res as Response, next);
+      }
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          errors: [
+            { message: editionFailedValidation.EDITION_ID_NEGATIVE_MESSAGE },
           ],
         }),
         true
