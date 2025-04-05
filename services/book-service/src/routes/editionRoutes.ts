@@ -1,3 +1,7 @@
+/**
+ * Edition routes.
+ * @module src/routes/editionRoutes
+ */
 import { forwardToAccountService } from "auth/requestForwarder";
 import {
   callEditionAddition,

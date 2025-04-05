@@ -1,3 +1,7 @@
+/**
+ * BookAuthor routes.
+ * @module src/routes/bookAuthorRoutes
+ */
 import { forwardToAccountService } from "auth/requestForwarder";
 import { callBookAuthorAddition } from "controllers/bookAuthorController";
 import { NextFunction, Request, Response, Router } from "express";

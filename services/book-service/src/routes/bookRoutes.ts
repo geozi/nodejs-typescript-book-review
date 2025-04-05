@@ -1,3 +1,7 @@
+/**
+ * Book routes.
+ * @module src/routes/bookRoutes
+ */
 import { forwardToAccountService } from "auth/requestForwarder";
 import {
   callBookAddition,

@@ -1,3 +1,7 @@
+/**
+ * Author routes.
+ * @module src/routes/authorRoutes
+ */
 import { forwardToAccountService } from "auth/requestForwarder";
 import {
   callAuthorAddition,
