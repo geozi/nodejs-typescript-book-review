@@ -10,6 +10,7 @@ import { IBookUpdate } from "interfaces/IBookUpdate";
 import { appLogger } from "logs/loggerConfigs";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { Genre } from "resources/enum/Genre";
+import { QueryFailedError } from "typeorm";
 
 const bookRepository = AppDataSource.getRepository(Book);
 
@@ -18,6 +19,7 @@ const bookRepository = AppDataSource.getRepository(Book);
  *
  * @param {Genre} genre - A {@link Genre} assigned to books.
  * @returns {Promise<Book[]>} A promise that resolves to an array of {@link Book} objects.
+ * @throws - {@link ServerError}
  */
 export const getBooksByGenre = async (genre: Genre): Promise<Book[]> => {
   try {
@@ -37,6 +39,7 @@ export const getBooksByGenre = async (genre: Genre): Promise<Book[]> => {
  *
  * @param {string} title - The title of a book.
  * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ * @throws - {@link ServerError}
  */
 export const getBookByTitle = async (title: string): Promise<Book | null> => {
   try {
@@ -56,6 +59,7 @@ export const getBookByTitle = async (title: string): Promise<Book | null> => {
  *
  * @param {number} id - The ID of a book.
  * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ * @throws - {@link ServerError}
  */
 export const getBookById = async (id: number): Promise<Book | null> => {
   try {
@@ -75,7 +79,7 @@ export const getBookById = async (id: number): Promise<Book | null> => {
  *
  * @param {Book} newBook - A {@link Book} object containing the information of the new book.
  * @returns {Promise<Book>} A promise that resolves to a {@link Book} object.
- * @throws - ValidationError
+ * @throws - {@link ServerError} | QueryFailedError | ValidationError
  */
 export const addBook = async (newBook: Book): Promise<Book> => {
   try {
@@ -93,7 +97,15 @@ export const addBook = async (newBook: Book): Promise<Book> => {
   } catch (error) {
     if (error instanceof ValidationError) {
       appLogger.error(
-        `Book repository: ${addBook.name} -> ValidationError detected and re-thrown`
+        `Book repository: ${addBook.name} ->ValidationError detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    if (error instanceof QueryFailedError) {
+      appLogger.error(
+        `Book repository: ${addBook.name} -> ${error.name} detected and re-thrown`
       );
 
       throw error;
@@ -111,6 +123,7 @@ export const addBook = async (newBook: Book): Promise<Book> => {
  * @param {number} id - The ID of a book.
  * @param {IBookUpdate} updateObj - An {@link IBookUpdate} object containing the new information to be persisted.
  * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ * @throws - {@link ServerError}
  */
 export const updateBook = async (
   id: number,

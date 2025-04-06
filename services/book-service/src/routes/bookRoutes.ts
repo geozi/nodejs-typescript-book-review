@@ -9,6 +9,7 @@ import {
   callBookRetrievalById,
   callBookRetrievalByTitle,
   callBookUpdate,
+  callFullInfoBookRetrieval,
 } from "controllers/bookController";
 import { Router } from "express";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
@@ -46,6 +47,14 @@ bookRouter.get(
   ...bookRetrievalByIdRules(),
   catchExpressValidationErrors,
   callBookRetrievalById
+);
+bookRouter.get(
+  "/fullInfo",
+  assignRoleType(RoleType.User),
+  forwardToAccountService,
+  ...bookRetrievalByIdRules(),
+  catchExpressValidationErrors,
+  callFullInfoBookRetrieval
 );
 bookRouter.post(
   "/",

@@ -23,6 +23,7 @@ import {
 } from "repositories/bookRepository";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
+import { QueryFailedError } from "typeorm";
 
 /**
  * Handles HTTP requests for book addition.
@@ -53,6 +54,15 @@ export const callBookAddition = async (
       );
 
       res.status(httpCodes.BAD_REQUEST).json(error.constraints);
+      return;
+    }
+
+    if (error instanceof QueryFailedError) {
+      appLogger.error(
+        `Book controller: ${callBookAddition.name} -> ${error.name} detected and caught`
+      );
+
+      res.status(httpCodes.BAD_REQUEST).json({ message: error.message });
       return;
     }
 

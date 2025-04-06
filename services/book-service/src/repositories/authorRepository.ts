@@ -9,6 +9,7 @@ import { ServerError } from "errors/serverErrorClass";
 import { IAuthorUpdate } from "interfaces/IAuthorUpdate";
 import { appLogger } from "logs/loggerConfigs";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { QueryFailedError } from "typeorm";
 
 const authorRepository = AppDataSource.getRepository(Author);
 
@@ -17,6 +18,7 @@ const authorRepository = AppDataSource.getRepository(Author);
  *
  * @param {number} id - The ID of an author.
  * @returns {Promise<Author | null>} A promise that resolves to an {@link Author} object or null.
+ * @throws - {@link ServerError}
  */
 export const getAuthorById = async (id: number): Promise<Author | null> => {
   try {
@@ -36,7 +38,7 @@ export const getAuthorById = async (id: number): Promise<Author | null> => {
  *
  * @param {Author} newAuthor - An {@link Author} object containing the information of the new author.
  * @returns {Promise<Author>} A promise that resolves to an {@link Author} object.
- * @throws - ValidationError
+ * @throws - {@link ServerError} | QueryFailedError | ValidationError
  */
 export const addAuthor = async (newAuthor: Author): Promise<Author> => {
   try {
@@ -60,6 +62,14 @@ export const addAuthor = async (newAuthor: Author): Promise<Author> => {
       throw error;
     }
 
+    if (error instanceof QueryFailedError) {
+      appLogger.error(
+        `Book repository: ${addAuthor.name} -> ${error.name} detected and re-thrown`
+      );
+
+      throw error;
+    }
+
     appLogger.error(
       `Author repository: ${addAuthor.name} -> ServerError thrown`
     );
@@ -74,6 +84,7 @@ export const addAuthor = async (newAuthor: Author): Promise<Author> => {
  * @param {number} id - The ID of an author.
  * @param {IAuthorUpdate} updateObj - An {@link IAuthorUpdate} object containing the new information to be persisted.
  * @returns {Promise<Author | null>} A promise that resolves to an {@link Author} object or null.
+ * @throws - {@link ServerError}
  */
 export const updateAuthor = async (
   id: number,
