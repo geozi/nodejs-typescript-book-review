@@ -10,6 +10,7 @@ import { ServerError } from "errors/serverErrorClass";
 import { IEditionUpdate } from "interfaces/IEditionUpdate";
 import { appLogger } from "logs/loggerConfigs";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { QueryFailedError } from "typeorm";
 
 const editionRepository = AppDataSource.getRepository(Edition);
 
@@ -79,6 +80,14 @@ export const addEdition = async (newEdition: Edition): Promise<Edition> => {
     if (error instanceof ValidationError) {
       appLogger.error(
         `Edition repository: ${addEdition.name} -> ValidationError detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    if (error instanceof QueryFailedError) {
+      appLogger.error(
+        `Edition repository: ${addEdition.name} -> ${error.name} detected and re-thrown`
       );
 
       throw error;
