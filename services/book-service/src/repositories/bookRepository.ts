@@ -10,6 +10,7 @@ import { IBookUpdate } from "interfaces/IBookUpdate";
 import { appLogger } from "logs/loggerConfigs";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { Genre } from "resources/enum/Genre";
+import { QueryFailedError } from "typeorm";
 
 const bookRepository = AppDataSource.getRepository(Book);
 
@@ -75,7 +76,7 @@ export const getBookById = async (id: number): Promise<Book | null> => {
  *
  * @param {Book} newBook - A {@link Book} object containing the information of the new book.
  * @returns {Promise<Book>} A promise that resolves to a {@link Book} object.
- * @throws - ValidationError
+ * @throws - {@link ServerError} | QueryFailedError | ValidationError
  */
 export const addBook = async (newBook: Book): Promise<Book> => {
   try {
@@ -93,7 +94,15 @@ export const addBook = async (newBook: Book): Promise<Book> => {
   } catch (error) {
     if (error instanceof ValidationError) {
       appLogger.error(
-        `Book repository: ${addBook.name} -> ValidationError detected and re-thrown`
+        `Book repository: ${addBook.name} ->ValidationError detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    if (error instanceof QueryFailedError) {
+      appLogger.error(
+        `Book repository: ${addBook.name} -> ${error.name} detected and re-thrown`
       );
 
       throw error;
