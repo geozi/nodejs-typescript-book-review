@@ -1,7 +1,9 @@
 import assert from "assert";
-import { callBookRetrievalById } from "controllers/bookController";
+import { callFullInfoBookRetrieval } from "controllers/bookController";
 import { AppDataSource } from "db/dataSource";
+import { Author } from "entities/Author";
 import { Book } from "entities/Book";
+import { Edition } from "entities/Edition";
 import { Request, Response } from "express";
 import { bookControllerResponseMessages } from "messages/response/bookControllerResponseMessages";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
@@ -10,13 +12,13 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validBookInputs } from "tests/testInputs";
 
-describe("Book retrieval by ID integration tests", () => {
+describe("Full info book retrieval integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
-  let findOneByStub: SinonStub;
+  let findOneStub: SinonStub;
   let mockBook: Book;
   let mockId: number;
 
@@ -26,10 +28,7 @@ describe("Book retrieval by ID integration tests", () => {
       sinon.restore();
 
       // Stubs and spies
-      findOneByStub = sinon.stub(
-        AppDataSource.getRepository(Book),
-        "findOneBy"
-      );
+      findOneStub = sinon.stub(AppDataSource.getRepository(Book), "findOne");
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -41,10 +40,14 @@ describe("Book retrieval by ID integration tests", () => {
       mockBook = new Book();
       mockBook.id = mockId;
       mockBook.title = validBookInputs.title;
+      mockBook.title = validBookInputs.title;
+      mockBook.genre = validBookInputs.genre;
+      mockBook.authors = [new Author()];
+      mockBook.editions = [new Edition()];
     });
 
     it("ok (200)", async () => {
-      findOneByStub.resolves(mockBook);
+      findOneStub.resolves(mockBook);
 
       req = {
         body: JSON.parse(
@@ -54,7 +57,7 @@ describe("Book retrieval by ID integration tests", () => {
         ),
       };
 
-      await callBookRetrievalById(req as Request, res as Response);
+      await callFullInfoBookRetrieval(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -84,15 +87,7 @@ describe("Book retrieval by ID integration tests", () => {
       sinon.restore();
 
       // Stubs and spies
-      findOneByStub = sinon.stub(
-        AppDataSource.getRepository(Book),
-        "findOneBy"
-      );
-      res = {
-        status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
-        json: sinon.spy(),
-      };
-
+      findOneStub = sinon.stub(AppDataSource.getRepository(Book), "findOne");
       res = {
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
@@ -103,6 +98,10 @@ describe("Book retrieval by ID integration tests", () => {
       mockBook = new Book();
       mockBook.id = mockId;
       mockBook.title = validBookInputs.title;
+      mockBook.title = validBookInputs.title;
+      mockBook.genre = validBookInputs.genre;
+      mockBook.authors = [new Author()];
+      mockBook.editions = [new Edition()];
 
       req = {
         body: JSON.parse(
@@ -114,9 +113,9 @@ describe("Book retrieval by ID integration tests", () => {
     });
 
     it("server error (500)", async () => {
-      findOneByStub.rejects();
+      findOneStub.rejects();
 
-      await callBookRetrievalById(req as Request, res as Response);
+      await callFullInfoBookRetrieval(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -134,9 +133,9 @@ describe("Book retrieval by ID integration tests", () => {
     });
 
     it("not found (404)", async () => {
-      findOneByStub.resolves(null);
+      findOneStub.resolves(null);
 
-      await callBookRetrievalById(req as Request, res as Response);
+      await callFullInfoBookRetrieval(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;

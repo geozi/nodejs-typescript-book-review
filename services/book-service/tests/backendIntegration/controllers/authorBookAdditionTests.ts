@@ -23,8 +23,8 @@ describe("AuthorBook addition integration tests", () => {
   let bookSaveStub: SinonStub;
   let authorFindOneByStub: SinonStub;
   let authorSaveStub: SinonStub;
-  let mockBookId: string;
-  let mockAuthorId: string;
+  let mockBookId: number;
+  let mockAuthorId: number;
   let mockBook: Book;
   let mockAuthor: Author;
 
@@ -51,8 +51,8 @@ describe("AuthorBook addition integration tests", () => {
       };
 
       // Mocks
-      mockBookId = "1";
-      mockAuthorId = "1";
+      mockBookId = 1;
+      mockAuthorId = 1;
       mockBook = new Book();
       mockBook.id = Number(mockBookId).valueOf();
       mockBook.title = validBookInputs.title;
@@ -123,8 +123,8 @@ describe("AuthorBook addition integration tests", () => {
       };
 
       // Mocks
-      mockBookId = "1";
-      mockAuthorId = "1";
+      mockBookId = 1;
+      mockAuthorId = 1;
       mockBook = new Book();
       mockBook.id = Number(mockBookId).valueOf();
       mockBook.title = validBookInputs.title;
