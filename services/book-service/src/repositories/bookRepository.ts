@@ -19,6 +19,7 @@ const bookRepository = AppDataSource.getRepository(Book);
  *
  * @param {Genre} genre - A {@link Genre} assigned to books.
  * @returns {Promise<Book[]>} A promise that resolves to an array of {@link Book} objects.
+ * @throws - {@link ServerError}
  */
 export const getBooksByGenre = async (genre: Genre): Promise<Book[]> => {
   try {
@@ -38,6 +39,7 @@ export const getBooksByGenre = async (genre: Genre): Promise<Book[]> => {
  *
  * @param {string} title - The title of a book.
  * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ * @throws - {@link ServerError}
  */
 export const getBookByTitle = async (title: string): Promise<Book | null> => {
   try {
@@ -57,6 +59,7 @@ export const getBookByTitle = async (title: string): Promise<Book | null> => {
  *
  * @param {number} id - The ID of a book.
  * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ * @throws - {@link ServerError}
  */
 export const getBookById = async (id: number): Promise<Book | null> => {
   try {
@@ -120,6 +123,7 @@ export const addBook = async (newBook: Book): Promise<Book> => {
  * @param {number} id - The ID of a book.
  * @param {IBookUpdate} updateObj - An {@link IBookUpdate} object containing the new information to be persisted.
  * @returns {Promise<Book | null>} A promise that resolves to a {@link Book} object or null.
+ * @throws - {@link ServerError}
  */
 export const updateBook = async (
   id: number,
