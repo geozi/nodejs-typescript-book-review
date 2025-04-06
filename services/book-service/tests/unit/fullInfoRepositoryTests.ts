@@ -3,11 +3,12 @@ import { AppDataSource } from "db/dataSource";
 import { Author } from "entities/Author";
 import { Book } from "entities/Book";
 import { Edition } from "entities/Edition";
+import { ServerError } from "errors/serverErrorClass";
 import { getFullInfoBookById } from "repositories/fullInfoRepository";
 import sinon, { SinonStub } from "sinon";
 import { validBookInputs } from "tests/testInputs";
 
-describe.only("Full info repository unit tests", () => {
+describe("Full info repository unit tests", () => {
   let findOneStub: SinonStub;
   let mockId: number;
   let mockBook: Book;
@@ -37,6 +38,24 @@ describe.only("Full info repository unit tests", () => {
 
       assert.notStrictEqual(retrievedBook, null);
       assert(retrievedBook instanceof Book);
+    });
+
+    it("Promise resolves to null", async () => {
+      findOneStub.resolves(null);
+
+      const retrievedBook = await getFullInfoBookById(mockId);
+
+      assert.strictEqual(retrievedBook, null);
+    });
+
+    it("Promise rejects -> ServerError", async () => {
+      findOneStub.rejects();
+
+      try {
+        await getFullInfoBookById(mockId);
+      } catch (error) {
+        assert(error instanceof ServerError);
+      }
     });
   });
 });
