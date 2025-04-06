@@ -20,12 +20,10 @@ const bookRepository = AppDataSource.getRepository(Book);
  */
 export const getFullInfoBookById = async (id: number) => {
   try {
-    const book = await bookRepository
-      .createQueryBuilder("book")
-      .leftJoinAndSelect("book.authors", "author")
-      .leftJoinAndSelect("book.editions", "edition")
-      .where("book.id = :id", { id: id })
-      .getOne();
+    const book = await bookRepository.findOne({
+      where: { id: id },
+      relations: ["authors", "editions"],
+    });
 
     return book;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
