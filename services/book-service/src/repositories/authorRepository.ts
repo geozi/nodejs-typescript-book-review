@@ -17,6 +17,7 @@ const authorRepository = AppDataSource.getRepository(Author);
  *
  * @param {number} id - The ID of an author.
  * @returns {Promise<Author | null>} A promise that resolves to an {@link Author} object or null.
+ * @throws - {@link ServerError}
  */
 export const getAuthorById = async (id: number): Promise<Author | null> => {
   try {
@@ -36,7 +37,7 @@ export const getAuthorById = async (id: number): Promise<Author | null> => {
  *
  * @param {Author} newAuthor - An {@link Author} object containing the information of the new author.
  * @returns {Promise<Author>} A promise that resolves to an {@link Author} object.
- * @throws - ValidationError
+ * @throws - {@link ServerError} | QueryFailedError | ValidationError
  */
 export const addAuthor = async (newAuthor: Author): Promise<Author> => {
   try {
@@ -74,6 +75,7 @@ export const addAuthor = async (newAuthor: Author): Promise<Author> => {
  * @param {number} id - The ID of an author.
  * @param {IAuthorUpdate} updateObj - An {@link IAuthorUpdate} object containing the new information to be persisted.
  * @returns {Promise<Author | null>} A promise that resolves to an {@link Author} object or null.
+ * @throws - {@link ServerError}
  */
 export const updateAuthor = async (
   id: number,
