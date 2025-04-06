@@ -18,6 +18,7 @@ import {
   getBookById,
   getBookByTitle,
   getBooksByGenre,
+  getFullInfoBookById,
   updateBook,
 } from "repositories/bookRepository";
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
@@ -223,6 +224,47 @@ export const callBookRetrievalByGenre = async (
     if (error instanceof ServerError || error instanceof NotFoundError) {
       appLogger.error(
         `Book controller: ${callBookRetrievalByGenre.name} -> ${error.name} detected and caught`
+      );
+
+      res.status(error.httpCode).json({ message: error.message });
+      return;
+    }
+  }
+};
+
+/**
+ * Handles HTTP requests for full info book retrieval.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ * @throws - {@link NotFoundError}
+ */
+export const callFullInfoBookRetrieval = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.body;
+
+    const retrievedFullInfoBook = await getFullInfoBookById(id);
+    if (retrievedFullInfoBook === null) {
+      throw new NotFoundError(
+        bookControllerResponseMessages.BOOK_NOT_FOUND_MESSAGE
+      );
+    }
+
+    res
+      .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
+      .status(httpCodes.OK)
+      .json({
+        message: bookControllerResponseMessages.BOOK_RETRIEVED_MESSAGE,
+        data: retrievedFullInfoBook,
+      });
+  } catch (error) {
+    if (error instanceof ServerError || error instanceof NotFoundError) {
+      appLogger.error(
+        `Book controller: ${callFullInfoBookRetrieval.name} -> ${error.name} detected and caught`
       );
 
       res.status(error.httpCode).json({ message: error.message });
