@@ -9,6 +9,7 @@ import { ServerError } from "errors/serverErrorClass";
 import { IAuthorUpdate } from "interfaces/IAuthorUpdate";
 import { appLogger } from "logs/loggerConfigs";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { QueryFailedError } from "typeorm";
 
 const authorRepository = AppDataSource.getRepository(Author);
 
@@ -56,6 +57,14 @@ export const addAuthor = async (newAuthor: Author): Promise<Author> => {
     if (error instanceof ValidationError) {
       appLogger.error(
         `Author repository: ${addAuthor.name} -> ValidationError detected and re-thrown`
+      );
+
+      throw error;
+    }
+
+    if (error instanceof QueryFailedError) {
+      appLogger.error(
+        `Book repository: ${addAuthor.name} -> ${error.name} detected and re-thrown`
       );
 
       throw error;
