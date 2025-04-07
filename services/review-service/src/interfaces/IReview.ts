@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 
 export interface IReview extends Document {
-  title: string;
+  subject: string;
   description: string;
   book: {
     id: number;

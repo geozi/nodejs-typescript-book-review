@@ -5,16 +5,16 @@ import { reviewConstants } from "resources/constants/reviewConstants";
 
 const reviewSchema = new Schema<IReview>(
   {
-    title: {
+    subject: {
       type: String,
-      required: [true, reviewFailedValidation.TITLE_REQUIRED_MESSAGE],
+      required: [true, reviewFailedValidation.SUBJECT_REQUIRED_MESSAGE],
       minLength: [
-        reviewConstants.TITLE_MIN_LENGTH,
-        reviewFailedValidation.TITLE_BELOW_MIN_LENGTH_MESSAGE,
+        reviewConstants.SUBJECT_MIN_LENGTH,
+        reviewFailedValidation.SUBJECT_BELOW_MIN_LENGTH_MESSAGE,
       ],
       maxLength: [
-        reviewConstants.TITLE_MAX_LENGTH,
-        reviewFailedValidation.TITLE_ABOVE_MAX_LENGTH_MESSAGE,
+        reviewConstants.SUBJECT_MAX_LENGTH,
+        reviewFailedValidation.SUBJECT_ABOVE_MAX_LENGTH_MESSAGE,
       ],
       trim: true,
     },
