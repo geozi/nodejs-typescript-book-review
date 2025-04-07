@@ -1,4 +1,4 @@
-import { IReview } from "interfaces/IReview";
+import { IReview } from "interfaces/documents/IReview";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { Schema, model } from "mongoose";
 import { reviewConstants } from "resources/constants/reviewConstants";
