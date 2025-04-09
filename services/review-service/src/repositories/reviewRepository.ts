@@ -96,7 +96,7 @@ export const getReviewById = async (id: Types.ObjectId) => {
 
 export const getReviewsByBook = async (book: IBook) => {
   try {
-    const retrievedReviews = await Review.find({ book: book });
+    const retrievedReviews = await Review.find({ "book.id": book });
     if (retrievedReviews.length === 0) {
       throw new NotFoundError(reviewResponseMessages.REVIEW_S_NOT_FOUND);
     }
