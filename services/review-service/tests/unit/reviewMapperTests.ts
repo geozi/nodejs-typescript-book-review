@@ -1,11 +1,16 @@
 import assert from "assert";
 import { BSONError } from "bson";
 import { Request } from "express";
-import { reqBodyToReview, reqBodyToReviewUpdate } from "mappers/reviewMapper";
+import {
+  reqBodyToId,
+  reqBodyToReview,
+  reqBodyToReviewUpdate,
+} from "mappers/reviewMapper";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
+import { Types } from "mongoose";
 import { invalidReviewInputs, validReviewInputs } from "tests/testInputs";
 
-describe.only("Review mapper unit tests", () => {
+describe("Review mapper unit tests", () => {
   let req: Partial<Request>;
   let mockId: string;
 
@@ -187,6 +192,67 @@ describe.only("Review mapper unit tests", () => {
 
         try {
           reqBodyToReviewUpdate(req as Request);
+        } catch (error) {
+          assert.strictEqual(BSONError.isBSONError(error), true);
+        }
+      });
+    });
+  });
+
+  describe(`${reqBodyToId.name}`, () => {
+    describe("Positive scenario", () => {
+      beforeEach(() => {
+        // Mocks
+        mockId = "67f6813b01931bccda945c30";
+
+        req = {
+          body: JSON.parse(JSON.stringify({ id: mockId })),
+        };
+      });
+
+      it("request has a valid review ID", () => {
+        const id = reqBodyToId(req as Request);
+
+        assert(id instanceof Types.ObjectId);
+        assert.strictEqual(id.toString(), mockId);
+      });
+    });
+
+    describe("Negative scenarios", () => {
+      beforeEach(() => {
+        // Mocks
+        mockId = "67f6813b01931bccda945c30";
+
+        req = {
+          body: JSON.parse(JSON.stringify({ id: mockId })),
+        };
+      });
+
+      it("review ID is undefined -> TypeError", () => {
+        req.body.id = undefined;
+
+        try {
+          reqBodyToId(req as Request);
+        } catch (error) {
+          assert(error instanceof TypeError);
+        }
+      });
+
+      it("review ID is an integer -> TypeError", () => {
+        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID_INTEGER;
+
+        try {
+          reqBodyToId(req as Request);
+        } catch (error) {
+          assert(error instanceof TypeError);
+        }
+      });
+
+      it("review ID is an invalid string -> BSONError", () => {
+        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID_STRING;
+
+        try {
+          reqBodyToId(req as Request);
         } catch (error) {
           assert.strictEqual(BSONError.isBSONError(error), true);
         }
