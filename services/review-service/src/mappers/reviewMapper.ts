@@ -7,6 +7,10 @@ import { reviewFailedValidation } from "messages/validation/reviewValidationMess
 import { Review } from "models/Review";
 import { Types } from "mongoose";
 
+function isString(value: unknown): boolean {
+  return typeof value === "string";
+}
+
 export const reqBodyToReview = (req: Request) => {
   const { subject, description, book } = req.body;
   const bookToReview: IBook = {
@@ -25,7 +29,7 @@ export const reqBodyToReview = (req: Request) => {
 export const reqBodyToReviewUpdate = (req: Request) => {
   try {
     const { id, subject, description, book } = req.body;
-    if (!id || Number.isInteger(id)) {
+    if (!id || !isString(id)) {
       throw TypeError(reviewFailedValidation.REVIEW_ID_INVALID_MESSAGE);
     }
 
@@ -68,7 +72,7 @@ export const reqBodyToBook = (req: Request) => {
 export const reqBodyToId = (req: Request) => {
   try {
     const { id } = req.body;
-    if (!id || Number.isInteger(id)) {
+    if (!id || !isString(id)) {
       throw new TypeError(reviewFailedValidation.REVIEW_ID_INVALID_MESSAGE);
     }
 
