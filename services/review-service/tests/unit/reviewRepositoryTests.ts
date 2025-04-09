@@ -2,21 +2,25 @@ import assert from "assert";
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { IReview } from "interfaces/documents/IReview";
+import { IBook } from "interfaces/secondary/IBook";
 import { IReviewUpdate } from "interfaces/secondary/IReviewUpdate";
 import { Review } from "models/Review";
 import { Error, Types } from "mongoose";
 import {
   addReview,
   getReviewById,
+  getReviewsByBook,
   updateReview,
 } from "repositories/reviewRepository";
 import sinon, { SinonStub } from "sinon";
 
-describe.only("Review repository unit tests", () => {
+describe("Review repository unit tests", () => {
   let mockReview: IReview;
   let functionStub: SinonStub;
   let mockId: Types.ObjectId;
   let mockUpdateObject: IReviewUpdate;
+  let mockBook: IBook;
+  let mockReviews: IReview[];
 
   describe(`${getReviewById.name}`, () => {
     beforeEach(() => {
@@ -32,7 +36,7 @@ describe.only("Review repository unit tests", () => {
       mockReview._id = mockId;
     });
 
-    it("Promise resolves to Review object", async () => {
+    it("Promise resolves to IReview object", async () => {
       functionStub.resolves(mockReview);
 
       const updatedReview = await getReviewById(mockId);
@@ -74,7 +78,7 @@ describe.only("Review repository unit tests", () => {
       mockReview = new Review();
     });
 
-    it("Promise resolves to Review object", async () => {
+    it("Promise resolves to IReview object", async () => {
       functionStub.resolves(mockReview);
 
       const savedReview = await addReview(mockReview);
@@ -120,7 +124,7 @@ describe.only("Review repository unit tests", () => {
       mockReview._id = mockId;
     });
 
-    it("Promise resolves to Review object", async () => {
+    it("Promise resolves to IReview object", async () => {
       functionStub.resolves(mockReview);
 
       const updatedReview = await updateReview(mockUpdateObject);
@@ -144,6 +148,50 @@ describe.only("Review repository unit tests", () => {
 
       try {
         await updateReview(mockUpdateObject);
+      } catch (error) {
+        assert(error instanceof ServerError);
+      }
+    });
+  });
+
+  describe(`${getReviewsByBook.name}`, () => {
+    beforeEach(() => {
+      // Reset stubs, spies, and mocks
+      sinon.restore();
+
+      // Stubs
+      functionStub = sinon.stub(Review, "find");
+
+      // Mocks
+      mockBook = {
+        id: 1,
+      };
+      mockReviews = [new Review(), new Review()];
+    });
+
+    it("Promise resolves to IReview[]", async () => {
+      functionStub.resolves(mockReviews);
+
+      const retrievedReviews = await getReviewsByBook(mockBook);
+
+      assert.strictEqual(retrievedReviews.length, 2);
+    });
+
+    it("Promise resolves to an empty array -> NotFoundError", async () => {
+      functionStub.resolves([]);
+
+      try {
+        await getReviewsByBook(mockBook);
+      } catch (error) {
+        assert(error instanceof NotFoundError);
+      }
+    });
+
+    it("Promise rejects -> ServerError", async () => {
+      functionStub.rejects();
+
+      try {
+        await getReviewsByBook(mockBook);
       } catch (error) {
         assert(error instanceof ServerError);
       }
