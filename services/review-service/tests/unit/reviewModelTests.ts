@@ -149,5 +149,43 @@ describe("Review model tests", () => {
         reviewFailedValidation.DESCRIPTION_ABOVE_MAX_LENGTH_MESSAGE
       );
     });
+
+    it("book.id is undefined", () => {
+      validationError.errors = {
+        "book.id": new Error.ValidatorError({
+          message: reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE,
+          path: "book.id",
+          value: "",
+        }),
+      };
+
+      validateSyncStub.returns(validationError);
+      const mongooseErrors = newReview.validateSync();
+
+      assert.notStrictEqual(mongooseErrors, undefined);
+      assert.strictEqual(
+        mongooseErrors?.errors["book.id"].message,
+        reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE
+      );
+    });
+
+    it("book.id is negative", () => {
+      validationError.errors = {
+        "book.id": new Error.ValidatorError({
+          message: reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE,
+          path: "book.id",
+          value: invalidReviewInputs.NEGATIVE_BOOK_ID,
+        }),
+      };
+
+      validateSyncStub.returns(validationError);
+      const mongooseErrors = newReview.validateSync();
+
+      assert.notStrictEqual(mongooseErrors, undefined);
+      assert.strictEqual(
+        mongooseErrors?.errors["book.id"].message,
+        reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE
+      );
+    });
   });
 });

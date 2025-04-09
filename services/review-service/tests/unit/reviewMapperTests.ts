@@ -4,7 +4,7 @@ import { reqBodyToReview } from "mappers/reviewMapper";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { invalidReviewInputs, validReviewInputs } from "tests/testInputs";
 
-describe.only("Review mapper unit tests", () => {
+describe("Review mapper unit tests", () => {
   let req: Partial<Request>;
 
   describe(`${reqBodyToReview.name}`, () => {
@@ -99,6 +99,30 @@ describe.only("Review mapper unit tests", () => {
         assert.strictEqual(
           mongooseErrors?.errors.description.message,
           reviewFailedValidation.DESCRIPTION_ABOVE_MAX_LENGTH_MESSAGE
+        );
+      });
+
+      it("book.id is undefined", () => {
+        req.body.book.id = undefined;
+
+        const newReview = reqBodyToReview(req as Request);
+        const mongooseErrors = newReview.validateSync();
+
+        assert.strictEqual(
+          mongooseErrors?.errors["book.id"].message,
+          reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE
+        );
+      });
+
+      it("book.id is negative", () => {
+        req.body.book.id = invalidReviewInputs.NEGATIVE_BOOK_ID;
+
+        const newReview = reqBodyToReview(req as Request);
+        const mongooseErrors = newReview.validateSync();
+
+        assert.strictEqual(
+          mongooseErrors?.errors["book.id"].message,
+          reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE
         );
       });
     });
