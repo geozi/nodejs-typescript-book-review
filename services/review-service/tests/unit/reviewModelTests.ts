@@ -1,5 +1,5 @@
 import assert from "assert";
-import { IReview } from "interfaces/IReview";
+import { IReview } from "interfaces/documents/IReview";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { Review } from "models/Review";
 import { Error } from "mongoose";
