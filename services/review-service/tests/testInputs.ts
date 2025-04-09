@@ -12,5 +12,6 @@ export const invalidReviewInputs = {
   DESCRIPTION_TOO_SHORT: "Short!",
   DESCRIPTION_TOO_LONG: `This description is far too verbose and excessive, stretching on and on past the three hundred character limit that has been imposed for validation purposes. It seems to have no regard for constraints, and thus should undoubtedly fail validation criteria due to its sheer length and disregard for brevity.`,
   NEGATIVE_BOOK_ID: -1,
-  INVALID_REVIEW_ID: "1",
+  INVALID_REVIEW_ID_STRING: "1",
+  INVALID_REVIEW_ID_INTEGER: 1,
 };

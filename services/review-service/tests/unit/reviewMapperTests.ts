@@ -172,8 +172,18 @@ describe.only("Review mapper unit tests", () => {
         }
       });
 
+      it("review ID is an integer -> TypeError", () => {
+        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID_INTEGER;
+
+        try {
+          reqBodyToReviewUpdate(req as Request);
+        } catch (error) {
+          assert(error instanceof TypeError);
+        }
+      });
+
       it("review ID is an invalid string -> BSONError", () => {
-        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID;
+        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID_STRING;
 
         try {
           reqBodyToReviewUpdate(req as Request);
