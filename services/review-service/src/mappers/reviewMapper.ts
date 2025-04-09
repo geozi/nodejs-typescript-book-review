@@ -41,7 +41,7 @@ export const reqBodyToReviewUpdate = (req: Request) => {
 
     return reviewToUpdate;
   } catch (error) {
-    if (error instanceof BSONError) {
+    if (BSONError.isBSONError(error)) {
       appLogger.error(
         `Review mapper: ${reqBodyToReviewUpdate.name} -> ${error.name} thrown`
       );
@@ -74,7 +74,7 @@ export const reqBodyToId = (req: Request) => {
 
     return new Types.ObjectId(id);
   } catch (error) {
-    if (error instanceof BSONError) {
+    if (BSONError.isBSONError(error)) {
       appLogger.error(
         `Review mapper: ${reqBodyToId.name} -> ${error.name} thrown`
       );
