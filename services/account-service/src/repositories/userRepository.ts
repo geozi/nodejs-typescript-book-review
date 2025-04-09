@@ -33,7 +33,7 @@ export const getUserByUsername = async (username: string): Promise<IUser> => {
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(
-        `User repository: ${getUserByUsername.name} -> ${error.name} detected and re-thrown`
+        `User repository: ${getUserByUsername.name} -> ${error.name} thrown`
       );
 
       throw error;
@@ -105,7 +105,7 @@ export const updateUser = async (
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(
-        `User repository: ${updateUser.name} -> ${error.name} detected and re-thrown`
+        `User repository: ${updateUser.name} -> ${error.name} thrown`
       );
 
       throw error;
