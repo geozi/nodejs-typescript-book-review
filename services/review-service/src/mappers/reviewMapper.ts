@@ -1,6 +1,9 @@
+import { BSONError } from "bson";
 import { Request } from "express";
 import { IBook } from "interfaces/secondary/IBook";
 import { IReviewUpdate } from "interfaces/secondary/IReviewUpdate";
+import { appLogger } from "logs/loggerConfig";
+import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { Review } from "models/Review";
 import { Types } from "mongoose";
 
@@ -20,19 +23,38 @@ export const reqBodyToReview = (req: Request) => {
 };
 
 export const reqBodyToReviewUpdate = (req: Request) => {
-  const { id, subject, description, book } = req.body;
+  try {
+    const { id, subject, description, book } = req.body;
+    if (!id || Number.isInteger(id)) {
+      throw TypeError(reviewFailedValidation.REVIEW_ID_INVALID_MESSAGE);
+    }
 
-  const reviewToUpdate: IReviewUpdate = {
-    id: new Types.ObjectId(id),
-    subject: subject,
-    description: description,
-  };
+    const reviewToUpdate: IReviewUpdate = {
+      id: new Types.ObjectId(id),
+      subject: subject,
+      description: description,
+    };
 
-  if (book && book.id) {
-    reviewToUpdate.book = book;
+    if (book && book.id) {
+      reviewToUpdate.book = book;
+    }
+
+    return reviewToUpdate;
+  } catch (error) {
+    if (error instanceof BSONError) {
+      appLogger.error(
+        `Review mapper: ${reqBodyToReviewUpdate.name} -> ${error.name} thrown`
+      );
+
+      throw error;
+    }
+
+    appLogger.error(
+      `Review mapper: ${reqBodyToReviewUpdate.name} -> TypeError thrown`
+    );
+
+    throw error;
   }
-
-  return reviewToUpdate;
 };
 
 export const reqBodyToBook = (req: Request) => {
@@ -44,7 +66,24 @@ export const reqBodyToBook = (req: Request) => {
 };
 
 export const reqBodyToId = (req: Request) => {
-  const { id } = req.body;
+  try {
+    const { id } = req.body;
+    if (!id || Number.isInteger(id)) {
+      throw new TypeError(reviewFailedValidation.REVIEW_ID_INVALID_MESSAGE);
+    }
 
-  return new Types.ObjectId(id);
+    return new Types.ObjectId(id);
+  } catch (error) {
+    if (error instanceof BSONError) {
+      appLogger.error(
+        `Review mapper: ${reqBodyToId.name} -> ${error.name} thrown`
+      );
+
+      throw error;
+    }
+
+    appLogger.error(`Review mapper: ${reqBodyToId.name} -> TypeError thrown`);
+
+    throw error;
+  }
 };

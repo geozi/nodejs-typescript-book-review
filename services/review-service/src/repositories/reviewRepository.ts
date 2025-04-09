@@ -55,7 +55,7 @@ export const updateReview = async (updateDataObject: IReviewUpdate) => {
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(
-        `Review repository: ${updateReview.name} -> ${error.name} detected and re-thrown`
+        `Review repository: ${updateReview.name} -> ${error.name} thrown`
       );
 
       throw error;
@@ -80,7 +80,7 @@ export const getReviewById = async (id: Types.ObjectId) => {
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(
-        `Review repository: ${getReviewById.name} -> ${error.name} detected and re-thrown`
+        `Review repository: ${getReviewById.name} -> ${error.name} thrown`
       );
 
       throw error;
@@ -105,7 +105,7 @@ export const getReviewsByBook = async (book: IBook) => {
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(
-        `Review repository: ${getReviewsByBook.name} -> ${error.name} detected and re-thrown`
+        `Review repository: ${getReviewsByBook.name} -> ${error.name} thrown`
       );
 
       throw error;
