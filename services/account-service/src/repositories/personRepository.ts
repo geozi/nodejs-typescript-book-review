@@ -80,7 +80,7 @@ export const updatePerson = async (
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(
-        `Person repository: ${updatePerson.name} -> ${error.name} detected and re-thrown`
+        `Person repository: ${updatePerson.name} -> ${error.name} thrown`
       );
 
       throw error;
@@ -117,7 +117,7 @@ export const getPersonByUsername = async (
   } catch (error) {
     if (error instanceof NotFoundError) {
       appLogger.error(
-        `Person repository: ${getPersonByUsername.name} -> ${error.name} detected and re-thrown`
+        `Person repository: ${getPersonByUsername.name} -> ${error.name} thrown`
       );
 
       throw error;
