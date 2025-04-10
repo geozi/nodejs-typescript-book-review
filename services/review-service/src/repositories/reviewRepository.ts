@@ -9,7 +9,7 @@ import { reviewResponseMessages } from "messages/response/reviewResponseMessages
 import { Review } from "models/Review";
 import { Error, Types } from "mongoose";
 
-export const addReview = async (newReview: IReview) => {
+export const addReview = async (newReview: IReview): Promise<IReview> => {
   try {
     const savedReview = await newReview.save();
 
@@ -31,7 +31,9 @@ export const addReview = async (newReview: IReview) => {
   }
 };
 
-export const updateReview = async (updateDataObject: IReviewUpdate) => {
+export const updateReview = async (
+  updateDataObject: IReviewUpdate
+): Promise<IReview> => {
   try {
     const { id, subject, description, book } = { ...updateDataObject };
 
@@ -69,7 +71,7 @@ export const updateReview = async (updateDataObject: IReviewUpdate) => {
   }
 };
 
-export const getReviewById = async (id: Types.ObjectId) => {
+export const getReviewById = async (id: Types.ObjectId): Promise<IReview> => {
   try {
     const retrievedReview = await Review.findById(id);
     if (retrievedReview === null) {
@@ -94,7 +96,7 @@ export const getReviewById = async (id: Types.ObjectId) => {
   }
 };
 
-export const getReviewsByBook = async (book: IBook) => {
+export const getReviewsByBook = async (book: IBook): Promise<IReview[]> => {
   try {
     const retrievedReviews = await Review.find({ "book.id": book });
     if (retrievedReviews.length === 0) {
