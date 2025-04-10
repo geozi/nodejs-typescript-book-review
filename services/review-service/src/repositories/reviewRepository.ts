@@ -122,6 +122,33 @@ export const getReviewsByBook = async (book: IBook): Promise<IReview[]> => {
   }
 };
 
+export const getReviewsByUsername = async (
+  username: string
+): Promise<IReview[]> => {
+  try {
+    const retrievedReviews = await Review.find({ username: username });
+    if (retrievedReviews.length === 0) {
+      throw new NotFoundError(reviewResponseMessages.REVIEW_S_NOT_FOUND);
+    }
+
+    return retrievedReviews;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      appLogger.error(
+        `Review repository: ${getReviewsByUsername.name} -> ${error.name} thrown`
+      );
+
+      throw error;
+    }
+
+    appLogger.error(
+      `Review repository: ${getReviewsByUsername.name} -> ServerError thrown`
+    );
+
+    throw new ServerError(commonResponseMessages.SERVER_ERROR_MESSAGE);
+  }
+};
+
 export const getReviewByCompositeIndex = async (
   compositeIndex: ICompositeIndex
 ): Promise<IReview> => {
