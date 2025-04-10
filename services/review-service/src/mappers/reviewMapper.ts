@@ -2,6 +2,8 @@ import { BSONError } from "bson";
 import { Request } from "express";
 import { IReview } from "interfaces/documents/IReview";
 import { IBook } from "interfaces/secondary/IBook";
+import { ICompositeIndex } from "interfaces/secondary/ICompositeIndex";
+import { IRequest } from "interfaces/secondary/IRequest";
 import { IReviewUpdate } from "interfaces/secondary/IReviewUpdate";
 import { appLogger } from "logs/loggerConfig";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
@@ -12,8 +14,9 @@ function isString(value: unknown): boolean {
   return typeof value === "string";
 }
 
-export const reqBodyToReview = (req: Request): IReview => {
+export const reqBodyToReview = (req: IRequest): IReview => {
   const { subject, description, book } = req.body;
+  const user = req.user;
   const bookToReview: IBook = {
     id: book.id,
   };
@@ -22,6 +25,7 @@ export const reqBodyToReview = (req: Request): IReview => {
     subject: subject,
     description: description,
     book: bookToReview,
+    username: user.username,
   });
 
   return newReview;
@@ -91,4 +95,20 @@ export const reqBodyToId = (req: Request): Types.ObjectId => {
 
     throw error;
   }
+};
+
+export const reqBodyToICompositeIndex = (req: IRequest): ICompositeIndex => {
+  const { title } = req.body;
+  const user = req.user;
+
+  const compositeIndex: ICompositeIndex = {
+    title: title,
+    username: user.username,
+  };
+
+  return compositeIndex;
+};
+
+export const recastReqToIReq = (req: Request): IRequest => {
+  return req as IRequest;
 };
