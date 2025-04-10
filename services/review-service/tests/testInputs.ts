@@ -4,6 +4,7 @@ export const validReviewInputs = {
   book: {
     id: 1,
   },
+  username: "newUser",
 };
 
 export const invalidReviewInputs = {

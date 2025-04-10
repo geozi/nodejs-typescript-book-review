@@ -187,5 +187,24 @@ describe("Review model tests", () => {
         reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE
       );
     });
+
+    it("username is undefined", () => {
+      validationError.errors = {
+        username: new Error.ValidatorError({
+          message: reviewFailedValidation.USERNAME_REQUIRED_MESSAGE,
+          path: "username",
+          value: "",
+        }),
+      };
+
+      validateSyncStub.returns(validationError);
+      const mongooseErrors = newReview.validateSync();
+
+      assert.notStrictEqual(mongooseErrors, undefined);
+      assert.strictEqual(
+        mongooseErrors?.errors.username.message,
+        reviewFailedValidation.USERNAME_REQUIRED_MESSAGE
+      );
+    });
   });
 });
