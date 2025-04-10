@@ -83,3 +83,40 @@ export const reviewUpdateRules = (): ValidationChain[] => {
       }),
   ];
 };
+
+export const reviewRetrievalByIdRules = (): ValidationChain[] => {
+  return [
+    check("id")
+      .notEmpty()
+      .withMessage(reviewFailedValidation.REVIEW_ID_REQUIRED_MESSAGE)
+      .bail()
+      .isMongoId()
+      .withMessage(reviewFailedValidation.REVIEW_ID_INVALID_MESSAGE)
+      .bail(),
+  ];
+};
+
+export const reviewRetrievalByBookRules = (): ValidationChain[] => {
+  return [
+    check("book")
+      .notEmpty()
+      .withMessage(reviewFailedValidation.BOOK_REQUIRED_MESSAGE)
+      .bail(),
+    check("book.id")
+      .if(body("book").exists())
+      .notEmpty()
+      .withMessage(reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
+      .bail()
+      .custom(async (value) => {
+        if (typeof value !== "number") {
+          throw new Error(reviewFailedValidation.BOOK_ID_INVALID_MESSAGE);
+        }
+      })
+      .bail()
+      .custom(async (value) => {
+        if (value < 0) {
+          throw new Error(reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE);
+        }
+      }),
+  ];
+};
