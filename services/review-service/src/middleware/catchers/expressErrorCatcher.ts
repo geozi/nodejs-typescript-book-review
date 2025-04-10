@@ -7,7 +7,7 @@ export const catchExpressValidationErrors = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   const expressErrors = validationResult(req);
   if (!expressErrors.isEmpty()) {
     const errorMessage = expressErrors.array().map((err) => ({

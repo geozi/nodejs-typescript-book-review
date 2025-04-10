@@ -1,5 +1,6 @@
 import { BSONError } from "bson";
 import { Request } from "express";
+import { IReview } from "interfaces/documents/IReview";
 import { IBook } from "interfaces/secondary/IBook";
 import { IReviewUpdate } from "interfaces/secondary/IReviewUpdate";
 import { appLogger } from "logs/loggerConfig";
@@ -11,7 +12,7 @@ function isString(value: unknown): boolean {
   return typeof value === "string";
 }
 
-export const reqBodyToReview = (req: Request) => {
+export const reqBodyToReview = (req: Request): IReview => {
   const { subject, description, book } = req.body;
   const bookToReview: IBook = {
     id: book.id,
@@ -26,7 +27,7 @@ export const reqBodyToReview = (req: Request) => {
   return newReview;
 };
 
-export const reqBodyToReviewUpdate = (req: Request) => {
+export const reqBodyToReviewUpdate = (req: Request): IReviewUpdate => {
   try {
     const { id, subject, description, book } = req.body;
     if (!id || !isString(id)) {
@@ -61,7 +62,7 @@ export const reqBodyToReviewUpdate = (req: Request) => {
   }
 };
 
-export const reqBodyToBook = (req: Request) => {
+export const reqBodyToBook = (req: Request): IBook => {
   const { book } = req.body;
 
   const bookForRetrieval: IBook = { id: book.id };
@@ -69,7 +70,7 @@ export const reqBodyToBook = (req: Request) => {
   return bookForRetrieval;
 };
 
-export const reqBodyToId = (req: Request) => {
+export const reqBodyToId = (req: Request): Types.ObjectId => {
   try {
     const { id } = req.body;
     if (!id || !isString(id)) {
