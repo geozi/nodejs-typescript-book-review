@@ -29,8 +29,11 @@ export const reviewAdditionRules = (): ValidationChain[] => {
       .notEmpty()
       .withMessage(reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE)
       .bail()
-      .isInt()
-      .withMessage(reviewFailedValidation.BOOK_ID_INVALID_MESSAGE)
+      .custom(async (value) => {
+        if (typeof value !== "number") {
+          throw new Error(reviewFailedValidation.BOOK_ID_INVALID_MESSAGE);
+        }
+      })
       .bail()
       .custom(async (value) => {
         if (value < 0) {
