@@ -1,6 +1,7 @@
 import { IReview } from "interfaces/documents/IReview";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { Schema, model } from "mongoose";
+import mongooseUniqueValidator from "mongoose-unique-validator";
 import { reviewConstants } from "resources/constants/reviewConstants";
 
 const reviewSchema = new Schema<IReview>(
@@ -43,11 +44,22 @@ const reviewSchema = new Schema<IReview>(
         },
       },
     },
+    username: {
+      type: String,
+      required: [true, reviewFailedValidation.USERNAME_REQUIRED_MESSAGE],
+      trim: true,
+    },
   },
   {
     collection: "reviews",
     timestamps: true,
   }
 );
+
+reviewSchema.index({ title: 1, username: 1 }, { unique: true });
+reviewSchema.plugin(mongooseUniqueValidator, {
+  message: "{PATH} already exists in the database",
+  type: "UniqueConstraintError",
+});
 
 export const Review = model<IReview>("Review", reviewSchema);

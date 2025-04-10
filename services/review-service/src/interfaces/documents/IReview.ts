@@ -6,4 +6,5 @@ export interface IReview extends Document {
   book: {
     id: number;
   };
+  username: string;
 }

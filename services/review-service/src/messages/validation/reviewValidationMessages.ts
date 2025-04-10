@@ -11,6 +11,7 @@ export const reviewFailedValidation = {
   BOOK_ID_REQUIRED_MESSAGE: "Book ID is a required field",
   BOOK_ID_INVALID_MESSAGE: "Book ID must be an integer",
   BOOK_ID_NEGATIVE_MESSAGE: "Book ID must be a positive integer",
+  USERNAME_REQUIRED_MESSAGE: "Username is a required field",
   REVIEW_ID_REQUIRED_MESSAGE: "Review ID is a required field",
   REVIEW_ID_INVALID_MESSAGE: `Review ID must be a 24-character hex string`,
 };
