@@ -120,3 +120,19 @@ export const reviewRetrievalByBookRules = (): ValidationChain[] => {
       }),
   ];
 };
+
+export const reviewRetrievalByCompositeIndexRules = (): ValidationChain[] => {
+  return [
+    check("subject")
+      .notEmpty()
+      .withMessage(reviewFailedValidation.SUBJECT_REQUIRED_MESSAGE)
+      .bail()
+      .isLength({ min: reviewConstants.SUBJECT_MIN_LENGTH })
+      .withMessage(reviewFailedValidation.SUBJECT_BELOW_MIN_LENGTH_MESSAGE)
+      .isLength({ max: reviewConstants.SUBJECT_MAX_LENGTH })
+      .withMessage(reviewFailedValidation.SUBJECT_ABOVE_MAX_LENGTH_MESSAGE),
+    check("username")
+      .notEmpty()
+      .withMessage(reviewFailedValidation.USERNAME_REQUIRED_MESSAGE),
+  ];
+};
