@@ -39,7 +39,14 @@ describe("Review update rules integration tests", () => {
 
     it("request has valid inputs", async () => {
       req = {
-        body: JSON.parse(JSON.stringify({ id: mockId, ...validReviewInputs })),
+        body: JSON.parse(
+          JSON.stringify({
+            id: mockId,
+            subject: validReviewInputs.subject,
+            description: validReviewInputs.description,
+            book: validReviewInputs.book,
+          })
+        ),
       };
 
       for (const middleware of reviewUpdateArray) {
@@ -72,7 +79,14 @@ describe("Review update rules integration tests", () => {
       mockId = "67f7e82aee79cbf984fdb26a";
 
       req = {
-        body: JSON.parse(JSON.stringify({ id: mockId, ...validReviewInputs })),
+        body: JSON.parse(
+          JSON.stringify({
+            id: mockId,
+            subject: validReviewInputs.subject,
+            description: validReviewInputs.description,
+            book: validReviewInputs.book,
+          })
+        ),
       };
     });
 
