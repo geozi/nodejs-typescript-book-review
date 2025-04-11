@@ -10,17 +10,20 @@ import {
   addReview,
   getReviewById,
   getReviewsByBook,
+  getReviewsByUsername,
   updateReview,
 } from "repositories/reviewRepository";
 import sinon, { SinonStub } from "sinon";
+import { validReviewInputs } from "tests/testInputs";
 
-describe("Review repository unit tests", () => {
+describe.only("Review repository unit tests", () => {
   let mockReview: IReview;
   let functionStub: SinonStub;
   let mockId: Types.ObjectId;
   let mockUpdateObject: IReviewUpdate;
   let mockBook: IBook;
   let mockReviews: IReview[];
+  let mockUsername: string;
 
   describe(`${getReviewById.name}`, () => {
     beforeEach(() => {
@@ -192,6 +195,51 @@ describe("Review repository unit tests", () => {
 
       try {
         await getReviewsByBook(mockBook);
+      } catch (error) {
+        assert(error instanceof ServerError);
+      }
+    });
+  });
+
+  describe(`${getReviewsByUsername.name}`, () => {
+    beforeEach(() => {
+      // Reset stubs, spies, and mocks
+      sinon.restore();
+
+      // Stubs
+      functionStub = sinon.stub(Review, "find");
+
+      // Mocks
+      mockBook = {
+        id: 1,
+      };
+      mockReviews = [new Review(), new Review()];
+      mockUsername = validReviewInputs.username;
+    });
+
+    it("Promise resolves to IReview[]", async () => {
+      functionStub.resolves(mockReviews);
+
+      const retrievedReviews = await getReviewsByUsername(mockUsername);
+
+      assert.strictEqual(retrievedReviews.length, 2);
+    });
+
+    it("Promise resolves to [] -> NotFoundError", async () => {
+      functionStub.resolves([]);
+
+      try {
+        await getReviewsByUsername(mockUsername);
+      } catch (error) {
+        assert(error instanceof NotFoundError);
+      }
+    });
+
+    it("Promise rejects -> ServerError", async () => {
+      functionStub.rejects();
+
+      try {
+        await getReviewsByUsername(mockUsername);
       } catch (error) {
         assert(error instanceof ServerError);
       }
