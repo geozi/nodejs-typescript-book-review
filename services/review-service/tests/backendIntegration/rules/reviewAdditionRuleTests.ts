@@ -34,7 +34,15 @@ describe("Review addition rules integration tests", () => {
     });
 
     it("request has valid inputs", async () => {
-      req = { body: JSON.parse(JSON.stringify(validReviewInputs)) };
+      req = {
+        body: JSON.parse(
+          JSON.stringify({
+            subject: validReviewInputs.subject,
+            description: validReviewInputs.description,
+            book: validReviewInputs.book,
+          })
+        ),
+      };
 
       for (const middleware of reviewAdditionArray) {
         await middleware(req as Request, res as Response, next);
@@ -62,7 +70,15 @@ describe("Review addition rules integration tests", () => {
       };
       next = sinon.spy();
 
-      req = { body: JSON.parse(JSON.stringify(validReviewInputs)) };
+      req = {
+        body: JSON.parse(
+          JSON.stringify({
+            subject: validReviewInputs.subject,
+            description: validReviewInputs.description,
+            book: validReviewInputs.book,
+          })
+        ),
+      };
     });
 
     it("subject is undefined", async () => {
