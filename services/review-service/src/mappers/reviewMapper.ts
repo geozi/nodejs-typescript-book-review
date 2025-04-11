@@ -98,10 +98,10 @@ export const reqBodyToId = (req: Request): Types.ObjectId => {
 };
 
 export const reqBodyToICompositeIndex = (req: IRequest): ICompositeIndex => {
-  const { title, username } = req.body;
+  const { subject, username } = req.body;
 
   const compositeIndex: ICompositeIndex = {
-    subject: title,
+    subject: subject,
     username: username,
   };
 
