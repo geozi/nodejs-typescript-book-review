@@ -51,7 +51,7 @@ export const updateReview = async (
     });
 
     if (updatedReview === null) {
-      throw new NotFoundError(reviewResponseMessages.REVIEW_NOT_FOUND);
+      throw new NotFoundError(reviewResponseMessages.REVIEW_NOT_FOUND_MESSAGE);
     }
 
     return updatedReview;
@@ -76,7 +76,7 @@ export const getReviewById = async (id: Types.ObjectId): Promise<IReview> => {
   try {
     const retrievedReview = await Review.findById(id);
     if (retrievedReview === null) {
-      throw new NotFoundError(reviewResponseMessages.REVIEW_NOT_FOUND);
+      throw new NotFoundError(reviewResponseMessages.REVIEW_NOT_FOUND_MESSAGE);
     }
 
     return retrievedReview;
@@ -101,7 +101,9 @@ export const getReviewsByBook = async (book: IBook): Promise<IReview[]> => {
   try {
     const retrievedReviews = await Review.find({ "book.id": book });
     if (retrievedReviews.length === 0) {
-      throw new NotFoundError(reviewResponseMessages.REVIEW_S_NOT_FOUND);
+      throw new NotFoundError(
+        reviewResponseMessages.REVIEW_S_NOT_FOUND_MESSAGE
+      );
     }
 
     return retrievedReviews;
@@ -128,7 +130,9 @@ export const getReviewsByUsername = async (
   try {
     const retrievedReviews = await Review.find({ username: username });
     if (retrievedReviews.length === 0) {
-      throw new NotFoundError(reviewResponseMessages.REVIEW_S_NOT_FOUND);
+      throw new NotFoundError(
+        reviewResponseMessages.REVIEW_S_NOT_FOUND_MESSAGE
+      );
     }
 
     return retrievedReviews;
@@ -155,7 +159,7 @@ export const getReviewByCompositeIndex = async (
   try {
     const retrievedReview = await Review.findOne(compositeIndex);
     if (retrievedReview === null) {
-      throw new NotFoundError(reviewResponseMessages.REVIEW_NOT_FOUND);
+      throw new NotFoundError(reviewResponseMessages.REVIEW_NOT_FOUND_MESSAGE);
     }
 
     return retrievedReview;
