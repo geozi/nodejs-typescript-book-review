@@ -7,7 +7,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidReviewInputs, validReviewInputs } from "tests/testInputs";
 
-describe("Review update rules integration tests", () => {
+describe("Review update rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -19,7 +19,7 @@ describe("Review update rules integration tests", () => {
     catchExpressValidationErrors,
   ];
 
-  describe("Positive scenarios", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
       // Reset stubs, mocks, and spies.
       sinon.restore();

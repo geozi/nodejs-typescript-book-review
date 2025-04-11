@@ -19,7 +19,7 @@ describe("Review retrieval by ID rules: integration tests", () => {
     catchExpressValidationErrors,
   ];
 
-  describe("Positive scenarios", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
       // Reset stubs, mocks, and spies.
       sinon.restore();
