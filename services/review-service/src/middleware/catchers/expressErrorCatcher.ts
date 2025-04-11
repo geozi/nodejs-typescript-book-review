@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { appLogger } from "logs/loggerConfig";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
 export const catchExpressValidationErrors = async (
@@ -18,7 +19,12 @@ export const catchExpressValidationErrors = async (
       `${catchExpressValidationErrors.name} -> Express validation errors detected and caught`
     );
 
-    res.status(httpCodes.BAD_REQUEST).json({ errors: errorMessage });
+    res
+      .status(httpCodes.BAD_REQUEST)
+      .json({
+        message: commonResponseMessages.BAD_REQUEST_MESSAGE,
+        errors: errorMessage,
+      });
     return;
   }
 
