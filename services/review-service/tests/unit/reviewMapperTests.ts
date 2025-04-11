@@ -4,6 +4,7 @@ import { Request } from "express";
 import { IRequest } from "interfaces/secondary/IRequest";
 import { IUser } from "interfaces/secondary/IUser";
 import {
+  reqBodyToICompositeIndex,
   reqBodyToId,
   reqBodyToReview,
   reqBodyToReviewUpdate,
@@ -23,6 +24,8 @@ describe("Review mapper unit tests", () => {
   let validateSyncStub: SinonStub;
   let mockId: string;
   let mockUser: IUser;
+  let mockSubject: string;
+  let mockUsername: string;
   let validationError: Error.ValidationError;
 
   describe(`${reqBodyToReview.name}`, () => {
@@ -387,6 +390,22 @@ describe("Review mapper unit tests", () => {
         } catch (error) {
           assert.strictEqual(BSONError.isBSONError(error), true);
         }
+      });
+    });
+  });
+
+  describe(`${reqBodyToICompositeIndex.name}`, () => {
+    describe("Positive scenario", () => {
+      beforeEach(() => {
+        // Mocks
+        mockSubject = validReviewInputs.subject;
+        mockUsername = validReviewInputs.username;
+
+        req = {
+          body: JSON.parse(
+            JSON.stringify({ subject: mockSubject, username: mockUsername })
+          ),
+        };
       });
     });
   });
