@@ -1,5 +1,6 @@
 import assert from "assert";
 import { Request, Response } from "express";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import { reviewRetrievalByIdRules } from "middleware/rules/reviewRules";
@@ -89,6 +90,7 @@ describe("Review retrieval by ID rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             { message: reviewFailedValidation.REVIEW_ID_REQUIRED_MESSAGE },
           ],
@@ -110,6 +112,7 @@ describe("Review retrieval by ID rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             { message: reviewFailedValidation.REVIEW_ID_INVALID_MESSAGE },
           ],
@@ -131,6 +134,7 @@ describe("Review retrieval by ID rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             { message: reviewFailedValidation.REVIEW_ID_INVALID_MESSAGE },
           ],

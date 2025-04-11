@@ -1,5 +1,6 @@
 import assert from "assert";
 import { Request, Response } from "express";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import { reviewAdditionRules } from "middleware/rules/reviewRules";
@@ -94,6 +95,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             { message: reviewFailedValidation.SUBJECT_REQUIRED_MESSAGE },
           ],
@@ -115,6 +117,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.SUBJECT_BELOW_MIN_LENGTH_MESSAGE,
@@ -138,6 +141,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.SUBJECT_ABOVE_MAX_LENGTH_MESSAGE,
@@ -161,6 +165,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.DESCRIPTION_REQUIRED_MESSAGE,
@@ -184,6 +189,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message:
@@ -208,6 +214,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message:
@@ -232,6 +239,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.BOOK_REQUIRED_MESSAGE,
@@ -255,6 +263,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE,
@@ -278,6 +287,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE,
@@ -301,6 +311,7 @@ describe("Review addition rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.BOOK_ID_INVALID_MESSAGE,

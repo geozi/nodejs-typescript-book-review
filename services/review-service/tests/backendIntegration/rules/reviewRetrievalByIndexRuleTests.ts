@@ -1,5 +1,6 @@
 import assert from "assert";
 import { Request, Response } from "express";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import { reviewRetrievalByCompositeIndexRules } from "middleware/rules/reviewRules";
@@ -96,6 +97,7 @@ describe("Review retrieval by index rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             { message: reviewFailedValidation.SUBJECT_REQUIRED_MESSAGE },
           ],
@@ -117,6 +119,7 @@ describe("Review retrieval by index rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.SUBJECT_BELOW_MIN_LENGTH_MESSAGE,
@@ -140,6 +143,7 @@ describe("Review retrieval by index rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.SUBJECT_ABOVE_MAX_LENGTH_MESSAGE,
@@ -163,6 +167,7 @@ describe("Review retrieval by index rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.USERNAME_REQUIRED_MESSAGE,

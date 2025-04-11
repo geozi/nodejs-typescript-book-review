@@ -1,6 +1,7 @@
 import assert from "assert";
 import { Request, Response } from "express";
 import { IBook } from "interfaces/secondary/IBook";
+import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import { reviewRetrievalByBookRules } from "middleware/rules/reviewRules";
@@ -97,6 +98,7 @@ describe("Review retrieval by book rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.BOOK_REQUIRED_MESSAGE,
@@ -120,6 +122,7 @@ describe("Review retrieval by book rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE,
@@ -143,6 +146,7 @@ describe("Review retrieval by book rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE,
@@ -166,6 +170,7 @@ describe("Review retrieval by book rules: integration tests", () => {
       assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
       assert.strictEqual(
         jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
           errors: [
             {
               message: reviewFailedValidation.BOOK_ID_INVALID_MESSAGE,
