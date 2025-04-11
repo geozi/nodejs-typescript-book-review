@@ -1,4 +1,4 @@
 export interface ICompositeIndex {
-  title: string;
+  subject: string;
   username: string;
 }
