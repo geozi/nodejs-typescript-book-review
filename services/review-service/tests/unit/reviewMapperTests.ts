@@ -1,29 +1,58 @@
 import assert from "assert";
 import { BSONError } from "bson";
 import { Request } from "express";
+import { IRequest } from "interfaces/secondary/IRequest";
+import { IUser } from "interfaces/secondary/IUser";
 import {
   reqBodyToId,
   reqBodyToReview,
   reqBodyToReviewUpdate,
 } from "mappers/reviewMapper";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
-import { Types } from "mongoose";
-import { invalidReviewInputs, validReviewInputs } from "tests/testInputs";
+import { Review } from "models/Review";
+import { Error, Types } from "mongoose";
+import sinon, { SinonStub } from "sinon";
+import {
+  invalidReviewInputs,
+  validReviewInputs,
+  validUserInput,
+} from "tests/testInputs";
 
 describe("Review mapper unit tests", () => {
-  let req: Partial<Request>;
+  let req: Partial<IRequest>;
+  let validateSyncStub: SinonStub;
   let mockId: string;
+  let mockUser: IUser;
+  let validationError: Error.ValidationError;
 
   describe(`${reqBodyToReview.name}`, () => {
     describe("Positive scenario", () => {
       beforeEach(() => {
+        // Reset stubs, spies, and mocks
+        sinon.restore();
+
+        // Stubs
+        validateSyncStub = sinon.stub(Review.prototype, "validateSync");
+
+        // Mocks
+        mockUser = JSON.parse(JSON.stringify(validUserInput));
+
         req = {
-          body: JSON.parse(JSON.stringify(validReviewInputs)),
+          body: JSON.parse(
+            JSON.stringify({
+              subject: validReviewInputs.subject,
+              description: validReviewInputs.description,
+              book: validReviewInputs.book,
+            })
+          ),
+          user: mockUser,
         };
       });
 
       it("request has valid inputs", () => {
-        const newReview = reqBodyToReview(req as Request);
+        validateSyncStub.returns(undefined);
+
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(mongooseErrors, undefined);
@@ -32,15 +61,42 @@ describe("Review mapper unit tests", () => {
 
     describe("Negative scenarios", () => {
       beforeEach(() => {
+        // Reset stubs, spies, and mocks
+        sinon.restore();
+
+        // Stubs
+        validateSyncStub = sinon.stub(Review.prototype, "validateSync");
+
+        // Mocks
+        mockUser = JSON.parse(JSON.stringify(validUserInput));
+
         req = {
-          body: JSON.parse(JSON.stringify(validReviewInputs)),
+          body: JSON.parse(
+            JSON.stringify({
+              subject: validReviewInputs.subject,
+              description: validReviewInputs.description,
+              book: validReviewInputs.book,
+            })
+          ),
+          user: mockUser,
         };
+
+        validationError = new Error.ValidationError();
       });
 
       it("subject is undefined", () => {
+        validationError.errors = {
+          subject: new Error.ValidatorError({
+            message: reviewFailedValidation.SUBJECT_REQUIRED_MESSAGE,
+            path: "subject",
+            value: "",
+          }),
+        };
+
+        validateSyncStub.returns(validationError);
         req.body.subject = undefined;
 
-        const newReview = reqBodyToReview(req as Request);
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -50,9 +106,18 @@ describe("Review mapper unit tests", () => {
       });
 
       it("subject is too short", () => {
+        validationError.errors = {
+          subject: new Error.ValidatorError({
+            message: reviewFailedValidation.SUBJECT_BELOW_MIN_LENGTH_MESSAGE,
+            path: "subject",
+            value: invalidReviewInputs.SUBJECT_TOO_SHORT,
+          }),
+        };
+
+        validateSyncStub.returns(validationError);
         req.body.subject = invalidReviewInputs.SUBJECT_TOO_SHORT;
 
-        const newReview = reqBodyToReview(req as Request);
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -62,9 +127,18 @@ describe("Review mapper unit tests", () => {
       });
 
       it("subject is too long", () => {
+        validationError.errors = {
+          subject: new Error.ValidatorError({
+            message: reviewFailedValidation.SUBJECT_ABOVE_MAX_LENGTH_MESSAGE,
+            path: "subject",
+            value: invalidReviewInputs.SUBJECT_TOO_LONG,
+          }),
+        };
+
+        validateSyncStub.returns(validationError);
         req.body.subject = invalidReviewInputs.SUBJECT_TOO_LONG;
 
-        const newReview = reqBodyToReview(req as Request);
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -74,9 +148,18 @@ describe("Review mapper unit tests", () => {
       });
 
       it("description is undefined", () => {
+        validationError.errors = {
+          description: new Error.ValidatorError({
+            message: reviewFailedValidation.DESCRIPTION_REQUIRED_MESSAGE,
+            path: "description",
+            value: "",
+          }),
+        };
+
+        validateSyncStub.returns(validationError);
         req.body.description = undefined;
 
-        const newReview = reqBodyToReview(req as Request);
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -86,9 +169,19 @@ describe("Review mapper unit tests", () => {
       });
 
       it("description is too short", () => {
+        validationError.errors = {
+          description: new Error.ValidatorError({
+            message:
+              reviewFailedValidation.DESCRIPTION_BELOW_MIN_LENGTH_MESSAGE,
+            path: "description",
+            value: invalidReviewInputs.DESCRIPTION_TOO_SHORT,
+          }),
+        };
+
+        validateSyncStub.returns(validationError);
         req.body.description = invalidReviewInputs.DESCRIPTION_TOO_SHORT;
 
-        const newReview = reqBodyToReview(req as Request);
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -98,9 +191,19 @@ describe("Review mapper unit tests", () => {
       });
 
       it("description is too long", () => {
+        validationError.errors = {
+          description: new Error.ValidatorError({
+            message:
+              reviewFailedValidation.DESCRIPTION_ABOVE_MAX_LENGTH_MESSAGE,
+            path: "description",
+            value: invalidReviewInputs.DESCRIPTION_TOO_LONG,
+          }),
+        };
+
+        validateSyncStub.returns(validationError);
         req.body.description = invalidReviewInputs.DESCRIPTION_TOO_LONG;
 
-        const newReview = reqBodyToReview(req as Request);
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -110,9 +213,18 @@ describe("Review mapper unit tests", () => {
       });
 
       it("book.id is undefined", () => {
+        validationError.errors = {
+          "book.id": new Error.ValidatorError({
+            message: reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE,
+            path: "book.id",
+            value: "",
+          }),
+        };
+
+        validateSyncStub.returns(validationError);
         req.body.book.id = undefined;
 
-        const newReview = reqBodyToReview(req as Request);
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -122,9 +234,18 @@ describe("Review mapper unit tests", () => {
       });
 
       it("book.id is negative", () => {
+        validationError.errors = {
+          "book.id": new Error.ValidatorError({
+            message: reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE,
+            path: "book.id",
+            value: invalidReviewInputs.NEGATIVE_BOOK_ID,
+          }),
+        };
+
+        validateSyncStub.returns(validationError);
         req.body.book.id = invalidReviewInputs.NEGATIVE_BOOK_ID;
 
-        const newReview = reqBodyToReview(req as Request);
+        const newReview = reqBodyToReview(req as IRequest);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -143,7 +264,12 @@ describe("Review mapper unit tests", () => {
 
         req = {
           body: JSON.parse(
-            JSON.stringify({ id: mockId, ...validReviewInputs })
+            JSON.stringify({
+              id: mockId,
+              subject: validReviewInputs.subject,
+              description: validReviewInputs.description,
+              book: validReviewInputs.book,
+            })
           ),
         };
       });
@@ -162,7 +288,12 @@ describe("Review mapper unit tests", () => {
 
         req = {
           body: JSON.parse(
-            JSON.stringify({ id: mockId, ...validReviewInputs })
+            JSON.stringify({
+              id: mockId,
+              subject: validReviewInputs.subject,
+              description: validReviewInputs.description,
+              book: validReviewInputs.book,
+            })
           ),
         };
       });

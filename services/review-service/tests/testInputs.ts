@@ -1,3 +1,5 @@
+import { RoleType } from "resources/enum/RoleType";
+
 export const validReviewInputs = {
   subject: "This is a valid review",
   description: "The book was a great read, ideal for relaxing times.",
@@ -16,4 +18,11 @@ export const invalidReviewInputs = {
   INVALID_BOOK_ID: "a",
   INVALID_REVIEW_ID_STRING: "1",
   INVALID_REVIEW_ID_INTEGER: 1,
+};
+
+export const validUserInput = {
+  username: "newUser",
+  email: "random@mail.com",
+  password: "5W]L8t1m4@PcTTO",
+  role: RoleType.User,
 };
