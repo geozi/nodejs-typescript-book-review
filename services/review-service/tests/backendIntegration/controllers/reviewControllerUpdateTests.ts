@@ -1,26 +1,24 @@
 import assert from "assert";
-import { callReviewAddition } from "controllers/reviewController";
-import { Response } from "express";
+import { callReviewUpdate } from "controllers/reviewController";
+import { Request, Response } from "express";
 import { IReview } from "interfaces/documents/IReview";
-import { IRequest } from "interfaces/secondary/IRequest";
-import { IUser } from "interfaces/secondary/IUser";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { reviewResponseMessages } from "messages/response/reviewResponseMessages";
 import { Review } from "models/Review";
-import { Error } from "mongoose";
+import { Types } from "mongoose";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { validReviewInputs, validUserInput } from "tests/testInputs";
+import { validReviewInputs } from "tests/testInputs";
 
-describe("Review addition integration tests", () => {
-  let req: Partial<IRequest>;
+describe("Review update integration tests", () => {
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
   let setHeaderStub: SinonStub;
   let functionStub: SinonStub;
+  let mockId: string;
   let mockReview: IReview;
-  let mockUser: IUser;
 
   describe("Positive scenario", () => {
     beforeEach(() => {
@@ -28,7 +26,7 @@ describe("Review addition integration tests", () => {
       sinon.restore();
 
       // Stubs and spies
-      functionStub = sinon.stub(Review.prototype, "save");
+      functionStub = sinon.stub(Review, "findByIdAndUpdate");
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => {
@@ -38,39 +36,40 @@ describe("Review addition integration tests", () => {
       };
 
       // Mocks
+      mockId = "67fa2c37f6f701428800f127";
       mockReview = new Review({
+        _id: new Types.ObjectId(mockId),
         subject: validReviewInputs.subject,
         description: validReviewInputs.description,
         book: validReviewInputs.book,
       });
-      mockUser = validUserInput;
     });
 
-    it("created (201)", async () => {
+    it("ok (200)", async () => {
       functionStub.resolves(mockReview);
 
       req = {
         body: JSON.parse(
           JSON.stringify({
+            id: mockId,
             subject: validReviewInputs.subject,
             description: validReviewInputs.description,
             book: validReviewInputs.book,
           })
         ),
-        user: mockUser,
       };
 
-      await callReviewAddition(req as IRequest, res as Response);
+      await callReviewUpdate(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
       setHeaderStub = res.setHeader as SinonStub;
 
       assert.strictEqual(setHeaderStub.called, true);
-      assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
+      assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: reviewResponseMessages.REVIEW_CREATED_MESSAGE,
+          message: reviewResponseMessages.REVIEW_UPDATE_MESSAGE,
           data: mockReview,
         }),
         true
@@ -84,7 +83,7 @@ describe("Review addition integration tests", () => {
       sinon.restore();
 
       // Stubs and spies
-      functionStub = sinon.stub(Review.prototype, "save");
+      functionStub = sinon.stub(Review, "findByIdAndUpdate");
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -93,24 +92,24 @@ describe("Review addition integration tests", () => {
       };
 
       // Mocks
-      mockUser = validUserInput;
+      mockId = "67fa2c37f6f701428800f127";
 
       req = {
         body: JSON.parse(
           JSON.stringify({
+            id: mockId,
             subject: validReviewInputs.subject,
             description: validReviewInputs.description,
             book: validReviewInputs.book,
           })
         ),
-        user: mockUser,
       };
     });
 
     it("server error (500)", async () => {
       functionStub.rejects();
 
-      await callReviewAddition(req as IRequest, res as Response);
+      await callReviewUpdate(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -127,19 +126,18 @@ describe("Review addition integration tests", () => {
       );
     });
 
-    it("validation error (400)", async () => {
-      functionStub.rejects(new Error.ValidationError());
+    it("not found (404)", async () => {
+      functionStub.resolves(null);
 
-      await callReviewAddition(req as IRequest, res as Response);
+      await callReviewUpdate(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
+      assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
-          errors: "Validation failed",
+          message: reviewResponseMessages.REVIEW_NOT_FOUND_MESSAGE,
         }),
         true
       );
