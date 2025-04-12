@@ -12,7 +12,8 @@ describe("Author mapper unit tests", () => {
 
   describe(`${reqBodyToAuthor.name}`, () => {
     describe("Positive scenario", () => {
-      it("request has valid inputs", () => {
+      beforeEach(() => {
+        // HTTP requests
         req = {
           body: JSON.parse(
             JSON.stringify({
@@ -21,7 +22,9 @@ describe("Author mapper unit tests", () => {
             })
           ),
         };
+      });
 
+      it("request has valid inputs", () => {
         const newAuthor = reqBodyToAuthor(req as Request);
         const errors = validateSync(newAuthor);
 
@@ -33,6 +36,7 @@ describe("Author mapper unit tests", () => {
     });
 
     describe("Negative scenarios", () => {
+      // HTTP requests
       beforeEach(() => {
         req = {
           body: JSON.parse(
@@ -131,8 +135,10 @@ describe("Author mapper unit tests", () => {
   describe(`${reqBodyToAuthorUpdate.name}`, () => {
     describe("Positive scenarios", () => {
       beforeEach(() => {
+        // Mocks
         mockId = 1;
 
+        // HTTP requests
         req = {
           body: JSON.parse(
             JSON.stringify({
