@@ -165,7 +165,7 @@ describe("Author repository unit tests", () => {
       }
     });
 
-    it("Promise rejects in findOneBy", async () => {
+    it("Promise rejects in findOneBy -> ServerError", async () => {
       mockUpdateResult.affected = 1;
       updateStub.resolves(mockUpdateResult);
       findOneByStub.rejects();
