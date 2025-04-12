@@ -24,7 +24,7 @@ describe("Author repository unit tests", () => {
 
   describe(`${getAuthorById.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -69,7 +69,7 @@ describe("Author repository unit tests", () => {
 
   describe(`${addAuthor.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -114,7 +114,7 @@ describe("Author repository unit tests", () => {
 
   describe(`${updateAuthor.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
