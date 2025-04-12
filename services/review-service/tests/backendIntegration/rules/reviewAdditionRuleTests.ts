@@ -21,7 +21,7 @@ describe("Review addition rules: integration tests", () => {
 
   describe("Positive scenario", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies.
       sinon.restore();
 
       // Stubs and spies
@@ -32,9 +32,8 @@ describe("Review addition rules: integration tests", () => {
         json: sinon.spy(),
       };
       next = sinon.spy();
-    });
 
-    it("request has valid inputs", async () => {
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -44,7 +43,9 @@ describe("Review addition rules: integration tests", () => {
           })
         ),
       };
+    });
 
+    it("request has valid inputs", async () => {
       for (const middleware of reviewAdditionArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -59,7 +60,7 @@ describe("Review addition rules: integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies.
       sinon.restore();
 
       // Stubs and spies
@@ -71,6 +72,7 @@ describe("Review addition rules: integration tests", () => {
       };
       next = sinon.spy();
 
+      // HTTP requests
       req = {
         body: JSON.parse(
           JSON.stringify({

@@ -24,7 +24,7 @@ describe("Review retrieval by book rules: integration tests", () => {
 
   describe("Positive scenario", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies.
       sinon.restore();
 
       // Stubs and spies
@@ -41,13 +41,14 @@ describe("Review retrieval by book rules: integration tests", () => {
       mockBook = {
         id: mockId,
       };
-    });
 
-    it("request has valid inputs", async () => {
+      // HTTP request
       req = {
         body: JSON.parse(JSON.stringify({ book: mockBook })),
       };
+    });
 
+    it("request has valid inputs", async () => {
       for (const middleware of reviewRetrievalArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -62,7 +63,7 @@ describe("Review retrieval by book rules: integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies.
       sinon.restore();
 
       // Stubs and spies
@@ -80,6 +81,7 @@ describe("Review retrieval by book rules: integration tests", () => {
         id: mockId,
       };
 
+      // HTTP requests
       req = {
         body: JSON.parse(JSON.stringify({ book: mockBook })),
       };

@@ -22,7 +22,7 @@ describe("Review retrieval by ID rules: integration tests", () => {
 
   describe("Positive scenario", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies.
       sinon.restore();
 
       // Stubs and spies
@@ -36,13 +36,14 @@ describe("Review retrieval by ID rules: integration tests", () => {
 
       // Mocks
       mockId = "67f7e82aee79cbf984fdb26a";
-    });
 
-    it("request has valid inputs", async () => {
+      // HTTP request
       req = {
         body: JSON.parse(JSON.stringify({ id: mockId })),
       };
+    });
 
+    it("request has valid inputs", async () => {
       for (const middleware of reviewRetrievalArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -57,7 +58,7 @@ describe("Review retrieval by ID rules: integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies.
       sinon.restore();
 
       // Stubs and spies
@@ -72,6 +73,7 @@ describe("Review retrieval by ID rules: integration tests", () => {
       // Mocks
       mockId = "67f7e82aee79cbf984fdb26a";
 
+      // HTTP request
       req = {
         body: JSON.parse(JSON.stringify({ id: mockId })),
       };
