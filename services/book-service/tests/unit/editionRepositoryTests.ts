@@ -30,7 +30,7 @@ describe("Edition repository unit tests", () => {
 
   describe(`${getEditionByISBN.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -84,14 +84,13 @@ describe("Edition repository unit tests", () => {
 
   describe(`${getEditionsByBook.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
       findByStub = sinon.stub(AppDataSource.getRepository(Edition), "findBy");
 
       // Mocks
-
       mockBook = new Book();
     });
 
@@ -128,7 +127,7 @@ describe("Edition repository unit tests", () => {
 
   describe(`${addEdition.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -180,7 +179,7 @@ describe("Edition repository unit tests", () => {
 
   describe(`${updateEdition.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs

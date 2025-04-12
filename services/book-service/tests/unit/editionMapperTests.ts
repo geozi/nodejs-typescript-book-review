@@ -21,7 +21,7 @@ describe("Edition mapper unit tests", () => {
   describe(`${reqBodyToEdition.name}`, () => {
     describe("Positive scenario", () => {
       beforeEach(() => {
-        // Restore stubs, spies, and mocks
+        // Restore stubs
         sinon.restore();
 
         // Stubs
@@ -34,11 +34,8 @@ describe("Edition mapper unit tests", () => {
         mockId = 1;
         mockBook = new Book();
         mockBook.id = mockId;
-      });
 
-      it("request has valid inputs", async () => {
-        bookFindOneStub.resolves(mockBook);
-
+        // HTTP request
         req = {
           body: JSON.parse(
             JSON.stringify({
@@ -54,6 +51,10 @@ describe("Edition mapper unit tests", () => {
             })
           ),
         };
+      });
+
+      it("request has valid inputs", async () => {
+        bookFindOneStub.resolves(mockBook);
 
         const newEdition = await reqBodyToEdition(req as Request);
         const errors = validateSync(newEdition);
@@ -81,7 +82,7 @@ describe("Edition mapper unit tests", () => {
 
     describe("Negative scenarios", () => {
       beforeEach(() => {
-        // Restore stubs, spies, and mocks
+        // Restore stubs
         sinon.restore();
 
         // Stubs
@@ -95,6 +96,7 @@ describe("Edition mapper unit tests", () => {
         mockBook = new Book();
         mockBook.id = mockId;
 
+        // HTTP request
         req = {
           body: JSON.parse(
             JSON.stringify({
@@ -237,8 +239,10 @@ describe("Edition mapper unit tests", () => {
   describe(`${reqBodyToEditionUpdate.name}`, () => {
     describe("Positive scenarios", () => {
       beforeEach(() => {
+        // Mocks
         mockId = 1;
 
+        // HTTP request
         req = {
           body: JSON.parse(
             JSON.stringify({

@@ -7,7 +7,7 @@ import { bookFailedValidation } from "messages/validation/bookValidationMessages
 import { Genre } from "resources/enum/Genre";
 import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
-describe.only("Book mapper unit tests", () => {
+describe("Book mapper unit tests", () => {
   let req: Partial<Request>;
   let mockId: number;
 

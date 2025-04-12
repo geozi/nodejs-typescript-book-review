@@ -36,12 +36,13 @@ describe("Book repository unit tests", () => {
 
   describe(`${getBooksByGenre.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
       findByStub = sinon.stub(AppDataSource.getRepository(Book), "findBy");
 
+      // Mocks
       mockGenre = Genre.FICTION;
     });
 
@@ -78,7 +79,7 @@ describe("Book repository unit tests", () => {
 
   describe(`${getBookByTitle.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -122,7 +123,7 @@ describe("Book repository unit tests", () => {
 
   describe(`${getBookById.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -167,7 +168,7 @@ describe("Book repository unit tests", () => {
 
   describe(`${addBook.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -214,7 +215,7 @@ describe("Book repository unit tests", () => {
 
   describe(`${updateBook.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -278,8 +279,11 @@ describe("Book repository unit tests", () => {
 
   describe(`${getFullInfoBookById.name}`, () => {
     beforeEach(() => {
-      // Reset stubs and mocks
+      // Reset stubs
       sinon.restore();
+
+      // Stubs
+      findOneStub = sinon.stub(AppDataSource.getRepository(Book), "findOne");
 
       // Mocks
       mockId = 1;
@@ -289,9 +293,6 @@ describe("Book repository unit tests", () => {
       mockBook.genre = validBookInputs.genre;
       mockBook.authors = [new Author()];
       mockBook.editions = [new Edition()];
-
-      // Stubs
-      findOneStub = sinon.stub(AppDataSource.getRepository(Book), "findOne");
     });
 
     it("Promise resolves to Book", async () => {
