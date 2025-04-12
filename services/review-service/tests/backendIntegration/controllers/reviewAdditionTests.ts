@@ -24,7 +24,7 @@ describe("Review addition integration tests", () => {
 
   describe("Positive scenario", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -44,11 +44,8 @@ describe("Review addition integration tests", () => {
         book: validReviewInputs.book,
       });
       mockUser = validUserInput;
-    });
 
-    it("created (201)", async () => {
-      functionStub.resolves(mockReview);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -59,6 +56,10 @@ describe("Review addition integration tests", () => {
         ),
         user: mockUser,
       };
+    });
+
+    it("response code 201", async () => {
+      functionStub.resolves(mockReview);
 
       await callReviewAddition(req as IRequest, res as Response);
 
@@ -95,6 +96,7 @@ describe("Review addition integration tests", () => {
       // Mocks
       mockUser = validUserInput;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -107,7 +109,7 @@ describe("Review addition integration tests", () => {
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       functionStub.rejects();
 
       await callReviewAddition(req as IRequest, res as Response);
@@ -127,7 +129,7 @@ describe("Review addition integration tests", () => {
       );
     });
 
-    it("validation error (400)", async () => {
+    it("response code 400", async () => {
       functionStub.rejects(new Error.ValidationError());
 
       await callReviewAddition(req as IRequest, res as Response);

@@ -22,7 +22,7 @@ describe("Review update integration tests", () => {
 
   describe("Positive scenario", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -43,11 +43,8 @@ describe("Review update integration tests", () => {
         description: validReviewInputs.description,
         book: validReviewInputs.book,
       });
-    });
 
-    it("ok (200)", async () => {
-      functionStub.resolves(mockReview);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -58,6 +55,10 @@ describe("Review update integration tests", () => {
           })
         ),
       };
+    });
+
+    it("response code 200", async () => {
+      functionStub.resolves(mockReview);
 
       await callReviewUpdate(req as Request, res as Response);
 
@@ -94,6 +95,7 @@ describe("Review update integration tests", () => {
       // Mocks
       mockId = "67fa2c37f6f701428800f127";
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -106,7 +108,7 @@ describe("Review update integration tests", () => {
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       functionStub.rejects();
 
       await callReviewUpdate(req as Request, res as Response);
@@ -126,7 +128,7 @@ describe("Review update integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       functionStub.resolves(null);
 
       await callReviewUpdate(req as Request, res as Response);
