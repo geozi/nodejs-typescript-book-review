@@ -7,13 +7,14 @@ import { bookFailedValidation } from "messages/validation/bookValidationMessages
 import { Genre } from "resources/enum/Genre";
 import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
-describe("Book mapper unit tests", () => {
+describe.only("Book mapper unit tests", () => {
   let req: Partial<Request>;
   let mockId: number;
 
   describe(`${reqBodyToBook.name}`, () => {
     describe("Positive scenario", () => {
-      it("request has valid inputs", () => {
+      beforeEach(() => {
+        // HTTP request
         req = {
           body: JSON.parse(
             JSON.stringify({
@@ -22,7 +23,9 @@ describe("Book mapper unit tests", () => {
             })
           ),
         };
+      });
 
+      it("request has valid inputs", () => {
         const newBook = reqBodyToBook(req as Request);
         const errors = validateSync(newBook);
 
@@ -35,6 +38,7 @@ describe("Book mapper unit tests", () => {
 
     describe("Negative scenarios", () => {
       beforeEach(() => {
+        // HTTP request
         req = {
           body: JSON.parse(
             JSON.stringify({
@@ -117,8 +121,10 @@ describe("Book mapper unit tests", () => {
   describe(`${reqBodyToBookUpdate.name}`, () => {
     describe("Positive scenarios", () => {
       beforeEach(() => {
+        // Mocks
         mockId = 1;
 
+        // HTTP requests
         req = {
           body: JSON.parse(
             JSON.stringify({
