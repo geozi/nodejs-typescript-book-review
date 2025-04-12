@@ -24,7 +24,7 @@ describe("Author entity integration tests", () => {
   });
 
   beforeEach(() => {
-    // Reset stubs, spies, and mocks
+    // Reset stubs and spies
     sinon.restore();
 
     // Stubs and spies
@@ -35,9 +35,8 @@ describe("Author entity integration tests", () => {
       }) as unknown as SinonStub,
       json: sinon.spy(),
     };
-  });
 
-  it("new author added (201)", async () => {
+    // HTTP request
     req = {
       body: JSON.parse(
         JSON.stringify({
@@ -46,7 +45,9 @@ describe("Author entity integration tests", () => {
         })
       ),
     };
+  });
 
+  it("new author added (201)", async () => {
     await callAuthorAddition(req as Request, res as Response);
 
     statusStub = res.status as SinonStub;
