@@ -7,7 +7,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
-describe("Book addition rules integration tests", () => {
+describe("Book addition rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -20,7 +20,7 @@ describe("Book addition rules integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -31,9 +31,8 @@ describe("Book addition rules integration tests", () => {
         json: sinon.spy(),
       };
       next = sinon.spy();
-    });
 
-    it("request has valid inputs", async () => {
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -42,7 +41,9 @@ describe("Book addition rules integration tests", () => {
           })
         ),
       };
+    });
 
+    it("request has valid inputs", async () => {
       for (const middleware of bookAdditionArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -57,7 +58,7 @@ describe("Book addition rules integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -69,6 +70,7 @@ describe("Book addition rules integration tests", () => {
       };
       next = sinon.spy();
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({

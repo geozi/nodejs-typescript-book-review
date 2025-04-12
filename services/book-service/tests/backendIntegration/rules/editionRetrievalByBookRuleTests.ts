@@ -7,7 +7,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidEditionInputs } from "tests/testInputs";
 
-describe("Edition retrieval by book rules integration tests", () => {
+describe("Edition retrieval by book rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -21,7 +21,7 @@ describe("Edition retrieval by book rules integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -35,9 +35,8 @@ describe("Edition retrieval by book rules integration tests", () => {
 
       // Mocks
       mockId = 1;
-    });
 
-    it("edition has a valid bookId", async () => {
+      // HTTP requests
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -47,7 +46,9 @@ describe("Edition retrieval by book rules integration tests", () => {
           })
         ),
       };
+    });
 
+    it("edition has a valid bookId", async () => {
       for (const middleware of editionRetrievalArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -62,7 +63,7 @@ describe("Edition retrieval by book rules integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -77,6 +78,7 @@ describe("Edition retrieval by book rules integration tests", () => {
       // Mocks
       mockId = 1;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({

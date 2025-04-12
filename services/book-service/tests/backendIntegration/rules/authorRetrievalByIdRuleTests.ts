@@ -7,7 +7,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidAuthorInputs, invalidCommonInputs } from "tests/testInputs";
 
-describe("Author retrieval by ID rules integration tests", () => {
+describe("Author retrieval by ID rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -20,7 +20,7 @@ describe("Author retrieval by ID rules integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -31,11 +31,12 @@ describe("Author retrieval by ID rules integration tests", () => {
         json: sinon.spy(),
       };
       next = sinon.spy();
+
+      // HTTP request
+      req = { body: JSON.parse(JSON.stringify({ id: 1 })) };
     });
 
     it("request has valid author ID", async () => {
-      req = { body: JSON.parse(JSON.stringify({ id: 1 })) };
-
       for (const middleware of authorRetrievalByIdArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -50,7 +51,7 @@ describe("Author retrieval by ID rules integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -62,6 +63,7 @@ describe("Author retrieval by ID rules integration tests", () => {
       };
       next = sinon.spy();
 
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify({})) };
     });
 

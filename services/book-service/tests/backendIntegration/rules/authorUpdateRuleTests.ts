@@ -11,7 +11,7 @@ import {
   validAuthorInputs,
 } from "tests/testInputs";
 
-describe("Author update rules integration tests", () => {
+describe("Author update rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -24,7 +24,7 @@ describe("Author update rules integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -35,15 +35,16 @@ describe("Author update rules integration tests", () => {
         json: sinon.spy(),
       };
       next = sinon.spy();
-    });
 
-    it("request has valid inputs", async () => {
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({ id: 1, firstName: validAuthorInputs.firstName })
         ),
       };
+    });
 
+    it("request has valid inputs", async () => {
       for (const middleware of authorUpdateArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -58,7 +59,7 @@ describe("Author update rules integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -70,6 +71,7 @@ describe("Author update rules integration tests", () => {
       };
       next = sinon.spy();
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({ id: 1, firstName: validAuthorInputs.firstName })

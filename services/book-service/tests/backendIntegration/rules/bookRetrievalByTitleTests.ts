@@ -7,7 +7,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidBookInputs, validBookInputs } from "tests/testInputs";
 
-describe("Book retrieval by title integration tests", () => {
+describe("Book retrieval by title rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -20,7 +20,7 @@ describe("Book retrieval by title integration tests", () => {
 
   describe("Positive scenarios", async () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -31,13 +31,14 @@ describe("Book retrieval by title integration tests", () => {
         json: sinon.spy(),
       };
       next = sinon.spy();
-    });
 
-    it("request has a valid title", async () => {
+      // HTTP request
       req = {
         body: JSON.parse(JSON.stringify({ title: validBookInputs.title })),
       };
+    });
 
+    it("request has a valid title", async () => {
       for (const middleware of bookRetrievalByTitleArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -52,7 +53,7 @@ describe("Book retrieval by title integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -64,6 +65,7 @@ describe("Book retrieval by title integration tests", () => {
       };
       next = sinon.spy();
 
+      // HTTP request
       req = {
         body: JSON.parse(JSON.stringify({ title: validBookInputs.title })),
       };

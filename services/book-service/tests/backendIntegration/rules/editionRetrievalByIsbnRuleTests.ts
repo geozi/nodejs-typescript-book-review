@@ -7,7 +7,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidEditionInputs, validEditionInputs } from "tests/testInputs";
 
-describe("Edition retrieval by ISBN integration tests", () => {
+describe("Edition retrieval by ISBN rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -20,7 +20,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -31,9 +31,8 @@ describe("Edition retrieval by ISBN integration tests", () => {
         json: sinon.spy(),
       };
       next = sinon.spy();
-    });
 
-    it("request has a valid ISBN", async () => {
+      // HTTP Request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -41,7 +40,9 @@ describe("Edition retrieval by ISBN integration tests", () => {
           })
         ),
       };
+    });
 
+    it("request has a valid ISBN", async () => {
       for (const middleware of editionRetrievalArray) {
         await middleware(req as Request, res as Response, next);
       }
@@ -56,7 +57,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, mocks, and spies.
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -68,6 +69,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
       };
       next = sinon.spy();
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
