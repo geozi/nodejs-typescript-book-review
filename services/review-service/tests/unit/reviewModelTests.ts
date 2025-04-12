@@ -8,36 +8,45 @@ import { invalidReviewInputs, validReviewInputs } from "tests/testInputs";
 
 describe("Review model tests", () => {
   let validateSyncStub: SinonStub;
-  let newReview: IReview;
+  let mockReview: IReview;
+  let mockValidationError: Error.ValidationError;
 
   describe("Successful validation", () => {
     beforeEach(() => {
+      // Reset stubs
       sinon.restore();
-      newReview = new Review(validReviewInputs);
+
+      // Stubs
       validateSyncStub = sinon.stub(Review.prototype, "validateSync");
+
+      // Mocks
+      mockReview = new Review(validReviewInputs);
     });
 
     it("model has valid inputs", () => {
       validateSyncStub.returns(undefined);
 
-      const mongooseErrors = newReview.validateSync();
+      const mongooseErrors = mockReview.validateSync();
 
       assert.strictEqual(mongooseErrors, undefined);
     });
   });
 
   describe("Failed validation", () => {
-    let validationError: Error.ValidationError;
-
     beforeEach(() => {
+      // Reset stubs
       sinon.restore();
-      newReview = new Review();
-      validationError = new Error.ValidationError();
+
+      // Stubs
       validateSyncStub = sinon.stub(Review.prototype, "validateSync");
+
+      // Mocks
+      mockReview = new Review();
+      mockValidationError = new Error.ValidationError();
     });
 
     it("subject is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         subject: new Error.ValidatorError({
           message: reviewFailedValidation.SUBJECT_REQUIRED_MESSAGE,
           path: "subject",
@@ -45,8 +54,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -56,7 +65,7 @@ describe("Review model tests", () => {
     });
 
     it("subject is too short", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         subject: new Error.ValidatorError({
           message: reviewFailedValidation.SUBJECT_BELOW_MIN_LENGTH_MESSAGE,
           path: "subject",
@@ -64,8 +73,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -75,7 +84,7 @@ describe("Review model tests", () => {
     });
 
     it("subject is too long", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         subject: new Error.ValidatorError({
           message: reviewFailedValidation.SUBJECT_ABOVE_MAX_LENGTH_MESSAGE,
           path: "subject",
@@ -83,8 +92,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -94,7 +103,7 @@ describe("Review model tests", () => {
     });
 
     it("description is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         description: new Error.ValidatorError({
           message: reviewFailedValidation.DESCRIPTION_REQUIRED_MESSAGE,
           path: "description",
@@ -102,8 +111,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -113,7 +122,7 @@ describe("Review model tests", () => {
     });
 
     it("description is too short", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         description: new Error.ValidatorError({
           message: reviewFailedValidation.DESCRIPTION_BELOW_MIN_LENGTH_MESSAGE,
           path: "description",
@@ -121,8 +130,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -132,7 +141,7 @@ describe("Review model tests", () => {
     });
 
     it("description is too long", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         description: new Error.ValidatorError({
           message: reviewFailedValidation.DESCRIPTION_ABOVE_MAX_LENGTH_MESSAGE,
           path: "description",
@@ -140,8 +149,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -151,7 +160,7 @@ describe("Review model tests", () => {
     });
 
     it("book.id is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         "book.id": new Error.ValidatorError({
           message: reviewFailedValidation.BOOK_ID_REQUIRED_MESSAGE,
           path: "book.id",
@@ -159,8 +168,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -170,7 +179,7 @@ describe("Review model tests", () => {
     });
 
     it("book.id is negative", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         "book.id": new Error.ValidatorError({
           message: reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE,
           path: "book.id",
@@ -178,8 +187,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -189,7 +198,7 @@ describe("Review model tests", () => {
     });
 
     it("username is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         username: new Error.ValidatorError({
           message: reviewFailedValidation.USERNAME_REQUIRED_MESSAGE,
           path: "username",
@@ -197,8 +206,8 @@ describe("Review model tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newReview.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockReview.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
