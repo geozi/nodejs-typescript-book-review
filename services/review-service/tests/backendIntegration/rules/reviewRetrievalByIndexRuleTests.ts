@@ -78,7 +78,7 @@ describe("Review retrieval by index rules: integration tests", () => {
       mockSubject = validReviewInputs.subject;
       mockUsername = validReviewInputs.username;
 
-      // HTTP requests
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({ subject: mockSubject, username: mockUsername })

@@ -37,7 +37,7 @@ describe("Review update rules: integration tests", () => {
       // Mocks
       mockId = "67f7e82aee79cbf984fdb26a";
 
-      // HTTP requests
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -80,7 +80,7 @@ describe("Review update rules: integration tests", () => {
       // Mocks
       mockId = "67f7e82aee79cbf984fdb26a";
 
-      // HTTP requests
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({

@@ -72,7 +72,7 @@ describe("Review addition rules: integration tests", () => {
       };
       next = sinon.spy();
 
-      // HTTP requests
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({

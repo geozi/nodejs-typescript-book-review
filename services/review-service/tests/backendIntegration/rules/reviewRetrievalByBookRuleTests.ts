@@ -81,7 +81,7 @@ describe("Review retrieval by book rules: integration tests", () => {
         id: mockId,
       };
 
-      // HTTP requests
+      // HTTP request
       req = {
         body: JSON.parse(JSON.stringify({ book: mockBook })),
       };
