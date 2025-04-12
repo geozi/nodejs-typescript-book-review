@@ -31,7 +31,7 @@ describe("Review repository unit tests", () => {
 
   describe(`${getReviewById.name}`, () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -75,7 +75,7 @@ describe("Review repository unit tests", () => {
 
   describe(`${addReview.name}`, () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -116,7 +116,7 @@ describe("Review repository unit tests", () => {
 
   describe(`${updateReview.name}`, () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -163,7 +163,7 @@ describe("Review repository unit tests", () => {
 
   describe(`${getReviewsByBook.name}`, () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -207,7 +207,7 @@ describe("Review repository unit tests", () => {
 
   describe(`${getReviewsByUsername.name}`, () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
@@ -252,7 +252,7 @@ describe("Review repository unit tests", () => {
 
   describe(`${getReviewByCompositeIndex.name}`, () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs
       sinon.restore();
 
       // Stubs
