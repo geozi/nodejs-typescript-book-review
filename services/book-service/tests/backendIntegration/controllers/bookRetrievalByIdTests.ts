@@ -22,7 +22,7 @@ describe("Book retrieval by ID integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -41,11 +41,8 @@ describe("Book retrieval by ID integration tests", () => {
       mockBook = new Book();
       mockBook.id = mockId;
       mockBook.title = validBookInputs.title;
-    });
 
-    it("ok (200)", async () => {
-      findOneByStub.resolves(mockBook);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -53,6 +50,10 @@ describe("Book retrieval by ID integration tests", () => {
           })
         ),
       };
+    });
+
+    it("response code 200", async () => {
+      findOneByStub.resolves(mockBook);
 
       await callBookRetrievalById(req as Request, res as Response);
 
@@ -80,7 +81,7 @@ describe("Book retrieval by ID integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -93,17 +94,13 @@ describe("Book retrieval by ID integration tests", () => {
         json: sinon.spy(),
       };
 
-      res = {
-        status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
-        json: sinon.spy(),
-      };
-
       // Mocks
       mockId = 1;
       mockBook = new Book();
       mockBook.id = mockId;
       mockBook.title = validBookInputs.title;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -113,7 +110,7 @@ describe("Book retrieval by ID integration tests", () => {
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       findOneByStub.rejects();
 
       await callBookRetrievalById(req as Request, res as Response);
@@ -133,7 +130,7 @@ describe("Book retrieval by ID integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       findOneByStub.resolves(null);
 
       await callBookRetrievalById(req as Request, res as Response);

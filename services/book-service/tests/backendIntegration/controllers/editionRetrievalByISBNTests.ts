@@ -21,7 +21,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -38,11 +38,8 @@ describe("Edition retrieval by ISBN integration tests", () => {
       // Mocks
       mockEdition = new Edition();
       mockEdition.isbn = validEditionInputs.isbn;
-    });
 
-    it("ok (200)", async () => {
-      findOneByStub.resolves(mockEdition);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -50,6 +47,10 @@ describe("Edition retrieval by ISBN integration tests", () => {
           })
         ),
       };
+    });
+
+    it("response code 200", async () => {
+      findOneByStub.resolves(mockEdition);
 
       await callEditionRetrievalByISBN(req as Request, res as Response);
 
@@ -77,7 +78,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -94,6 +95,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
       mockEdition = new Edition();
       mockEdition.isbn = validEditionInputs.isbn;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -103,7 +105,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       findOneByStub.rejects();
 
       await callEditionRetrievalByISBN(req as Request, res as Response);
@@ -123,7 +125,7 @@ describe("Edition retrieval by ISBN integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       findOneByStub.resolves(null);
 
       await callEditionRetrievalByISBN(req as Request, res as Response);

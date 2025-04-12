@@ -24,7 +24,7 @@ describe("Book retrieval by genre integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -41,11 +41,8 @@ describe("Book retrieval by genre integration tests", () => {
       mockBook2 = new Book();
       mockBook2.genre = Genre.FICTION;
       mockBooks = [mockBook1, mockBook2];
-    });
 
-    it("ok (200)", async () => {
-      findByStub.resolves(mockBooks);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -53,6 +50,10 @@ describe("Book retrieval by genre integration tests", () => {
           })
         ),
       };
+    });
+
+    it("response code 200", async () => {
+      findByStub.resolves(mockBooks);
 
       await callBookRetrievalByGenre(req as Request, res as Response);
 
@@ -80,7 +81,7 @@ describe("Book retrieval by genre integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -96,6 +97,7 @@ describe("Book retrieval by genre integration tests", () => {
       mockBook2.genre = Genre.FICTION;
       mockBooks = [mockBook1, mockBook2];
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -105,7 +107,7 @@ describe("Book retrieval by genre integration tests", () => {
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       findByStub.rejects();
 
       await callBookRetrievalByGenre(req as Request, res as Response);
@@ -125,7 +127,7 @@ describe("Book retrieval by genre integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       findByStub.resolves([]);
 
       await callBookRetrievalByGenre(req as Request, res as Response);

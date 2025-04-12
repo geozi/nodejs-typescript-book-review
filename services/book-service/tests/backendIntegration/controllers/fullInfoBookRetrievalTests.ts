@@ -24,7 +24,7 @@ describe("Full info book retrieval integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -44,11 +44,8 @@ describe("Full info book retrieval integration tests", () => {
       mockBook.genre = validBookInputs.genre;
       mockBook.authors = [new Author()];
       mockBook.editions = [new Edition()];
-    });
 
-    it("ok (200)", async () => {
-      findOneStub.resolves(mockBook);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -56,6 +53,10 @@ describe("Full info book retrieval integration tests", () => {
           })
         ),
       };
+    });
+
+    it("response code 200", async () => {
+      findOneStub.resolves(mockBook);
 
       await callFullInfoBookRetrieval(req as Request, res as Response);
 
@@ -83,7 +84,7 @@ describe("Full info book retrieval integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -103,6 +104,7 @@ describe("Full info book retrieval integration tests", () => {
       mockBook.authors = [new Author()];
       mockBook.editions = [new Edition()];
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -112,7 +114,7 @@ describe("Full info book retrieval integration tests", () => {
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       findOneStub.rejects();
 
       await callFullInfoBookRetrieval(req as Request, res as Response);
@@ -132,7 +134,7 @@ describe("Full info book retrieval integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       findOneStub.resolves(null);
 
       await callFullInfoBookRetrieval(req as Request, res as Response);

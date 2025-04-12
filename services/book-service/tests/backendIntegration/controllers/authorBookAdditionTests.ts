@@ -30,7 +30,7 @@ describe("AuthorBook addition integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -62,6 +62,7 @@ describe("AuthorBook addition integration tests", () => {
       mockAuthor.firstName = validAuthorInputs.firstName;
       mockAuthor.lastName = validAuthorInputs.lastName;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -72,7 +73,7 @@ describe("AuthorBook addition integration tests", () => {
       };
     });
 
-    it("created (201)", async () => {
+    it("response code 201", async () => {
       bookFindOneByStub.resolves(mockBook);
       authorFindOneByStub.resolves(mockAuthor);
       bookSaveStub.resolves(mockBook);
@@ -103,7 +104,7 @@ describe("AuthorBook addition integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -134,6 +135,7 @@ describe("AuthorBook addition integration tests", () => {
       mockAuthor.firstName = validAuthorInputs.firstName;
       mockAuthor.lastName = validAuthorInputs.lastName;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -144,7 +146,7 @@ describe("AuthorBook addition integration tests", () => {
       };
     });
 
-    it("server error (500) -> findOneBy (bookId) rejects", async () => {
+    it("response code 500 -> findOneBy (bookId) rejects", async () => {
       bookFindOneByStub.rejects();
 
       await callBookAuthorAddition(req as Request, res as Response);
@@ -164,7 +166,7 @@ describe("AuthorBook addition integration tests", () => {
       );
     });
 
-    it("server error (500) -> findOneBy (authorId) rejects", async () => {
+    it("response code 500 -> findOneBy (authorId) rejects", async () => {
       bookFindOneByStub.resolves(mockBook);
       authorFindOneByStub.rejects();
 
@@ -185,7 +187,7 @@ describe("AuthorBook addition integration tests", () => {
       );
     });
 
-    it("server error (500) -> save (book) rejects", async () => {
+    it("response code 500 -> save (book) rejects", async () => {
       bookFindOneByStub.resolves(mockBook);
       authorFindOneByStub.resolves(mockAuthor);
       bookSaveStub.rejects();
@@ -207,7 +209,7 @@ describe("AuthorBook addition integration tests", () => {
       );
     });
 
-    it("server error (500) -> save (author) rejects", async () => {
+    it("response code 500 -> save (author) rejects", async () => {
       bookFindOneByStub.resolves(mockBook);
       authorFindOneByStub.resolves(mockAuthor);
       bookSaveStub.resolves(mockBook);
@@ -230,7 +232,7 @@ describe("AuthorBook addition integration tests", () => {
       );
     });
 
-    it("not found (404) -> findOneBy (bookId) returns null", async () => {
+    it("response code 404 -> findOneBy (bookId) returns null", async () => {
       bookFindOneByStub.resolves(null);
 
       await callBookAuthorAddition(req as Request, res as Response);
@@ -247,7 +249,7 @@ describe("AuthorBook addition integration tests", () => {
       );
     });
 
-    it("not found (404) -> findOneBy (authorId) returns null", async () => {
+    it("response code 404 -> findOneBy (authorId) returns null", async () => {
       bookFindOneByStub.resolves(mockBook);
       authorFindOneByStub.resolves(null);
 

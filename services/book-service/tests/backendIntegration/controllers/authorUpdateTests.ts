@@ -25,7 +25,7 @@ describe("Author update integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -50,12 +50,8 @@ describe("Author update integration tests", () => {
       mockAuthor = new Author();
       mockAuthor.id = Number(mockId).valueOf();
       mockAuthor.firstName = validAuthorInputs.firstName;
-    });
 
-    it("ok (200)", async () => {
-      updateFuncStub.resolves(mockUpdateResult);
-      findOneByStub.resolves(mockAuthor);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -64,6 +60,11 @@ describe("Author update integration tests", () => {
           })
         ),
       };
+    });
+
+    it("response code 200", async () => {
+      updateFuncStub.resolves(mockUpdateResult);
+      findOneByStub.resolves(mockAuthor);
 
       await callAuthorUpdate(req as Request, res as Response);
 
@@ -91,7 +92,7 @@ describe("Author update integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -111,6 +112,7 @@ describe("Author update integration tests", () => {
       // Mocks
       mockUpdateResult = new UpdateResult();
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -121,7 +123,7 @@ describe("Author update integration tests", () => {
       };
     });
 
-    it("server error (500) -> update rejects", async () => {
+    it("response code 500 -> update rejects", async () => {
       updateFuncStub.rejects();
 
       await callAuthorUpdate(req as Request, res as Response);
@@ -141,7 +143,7 @@ describe("Author update integration tests", () => {
       );
     });
 
-    it("server error(500) -> findOneBy rejects", async () => {
+    it("response code 500 -> findOneBy rejects", async () => {
       mockUpdateResult.affected = 1;
       updateFuncStub.resolves(mockUpdateResult);
       findOneByStub.rejects();
@@ -163,7 +165,7 @@ describe("Author update integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       mockUpdateResult.affected = 0;
       updateFuncStub.resolves(mockUpdateResult);
 

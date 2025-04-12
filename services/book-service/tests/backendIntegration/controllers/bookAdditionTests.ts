@@ -23,7 +23,7 @@ describe("Book addition integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -38,17 +38,18 @@ describe("Book addition integration tests", () => {
       mockBook = new Book();
       mockBook.title = validBookInputs.title;
       mockBook.genre = Genre.FICTION;
-    });
 
-    it("created (201)", async () => {
-      savedStub.resolves(mockBook);
-
+      // HTTP request
       req = {
         body: {
           title: validBookInputs.title,
           genre: validBookInputs.genre.toString(),
         },
       };
+    });
+
+    it("response code 201", async () => {
+      savedStub.resolves(mockBook);
 
       await callBookAddition(req as Request, res as Response);
 
@@ -76,7 +77,7 @@ describe("Book addition integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -86,6 +87,7 @@ describe("Book addition integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: {
           title: validBookInputs.title,
@@ -94,7 +96,7 @@ describe("Book addition integration tests", () => {
       };
     });
 
-    it("validation error (400)", async () => {
+    it("response code 400", async () => {
       req.body.title = invalidBookInputs.TITLE_TOO_LONG;
 
       await callBookAddition(req as Request, res as Response);
@@ -111,7 +113,7 @@ describe("Book addition integration tests", () => {
       );
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       savedStub.rejects();
 
       await callBookAddition(req as Request, res as Response);

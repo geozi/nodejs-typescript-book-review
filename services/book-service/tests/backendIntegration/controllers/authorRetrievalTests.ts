@@ -21,7 +21,7 @@ describe("Author retrieval integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -39,11 +39,8 @@ describe("Author retrieval integration tests", () => {
       mockId = 1;
       mockAuthor = new Author();
       mockAuthor.id = mockId;
-    });
 
-    it("ok (200)", async () => {
-      findOneByStub.resolves(mockAuthor);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -51,6 +48,10 @@ describe("Author retrieval integration tests", () => {
           })
         ),
       };
+    });
+
+    it("response code 200", async () => {
+      findOneByStub.resolves(mockAuthor);
 
       await callAuthorRetrievalById(req as Request, res as Response);
 
@@ -78,7 +79,7 @@ describe("Author retrieval integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -96,6 +97,7 @@ describe("Author retrieval integration tests", () => {
       mockAuthor = new Author();
       mockAuthor.id = mockId;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -105,7 +107,7 @@ describe("Author retrieval integration tests", () => {
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       findOneByStub.rejects();
 
       await callAuthorRetrievalById(req as Request, res as Response);
@@ -125,7 +127,7 @@ describe("Author retrieval integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       findOneByStub.resolves(null);
 
       await callAuthorRetrievalById(req as Request, res as Response);

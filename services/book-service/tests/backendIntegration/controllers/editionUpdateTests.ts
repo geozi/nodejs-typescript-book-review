@@ -29,7 +29,7 @@ describe("Edition update integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -54,12 +54,8 @@ describe("Edition update integration tests", () => {
       mockEdition = new Edition();
       mockEdition.id = mockId;
       mockEdition.pageCount = validEditionInputs.page_count;
-    });
 
-    it("ok (200)", async () => {
-      editionUpdateFuncStub.resolves(mockUpdateResult);
-      editionFindOneByStub.resolves(mockEdition);
-
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -68,6 +64,11 @@ describe("Edition update integration tests", () => {
           })
         ),
       };
+    });
+
+    it("response code 200", async () => {
+      editionUpdateFuncStub.resolves(mockUpdateResult);
+      editionFindOneByStub.resolves(mockEdition);
 
       await callEditionUpdate(req as Request, res as Response);
 
@@ -95,7 +96,7 @@ describe("Edition update integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -122,6 +123,7 @@ describe("Edition update integration tests", () => {
       mockBook = new Book();
       mockBook.id = mockId;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -135,7 +137,7 @@ describe("Edition update integration tests", () => {
       };
     });
 
-    it("server error (500) -> findOneBy (book) rejects", async () => {
+    it("response code 500 -> findOneBy (book) rejects", async () => {
       bookFindOneByStub.rejects();
 
       await callEditionUpdate(req as Request, res as Response);
@@ -155,7 +157,7 @@ describe("Edition update integration tests", () => {
       );
     });
 
-    it("server error (500) -> update (edition) rejects", async () => {
+    it("response code 500 -> update (edition) rejects", async () => {
       bookFindOneByStub.resolves(mockBook);
       editionUpdateFuncStub.rejects();
 
@@ -176,7 +178,7 @@ describe("Edition update integration tests", () => {
       );
     });
 
-    it("server error (500) -> findOneBy (edition) rejects", async () => {
+    it("response code 500 -> findOneBy (edition) rejects", async () => {
       bookFindOneByStub.resolves(mockBook);
       mockUpdateResult.affected = 1;
       editionUpdateFuncStub.resolves(mockUpdateResult);
@@ -199,7 +201,7 @@ describe("Edition update integration tests", () => {
       );
     });
 
-    it("not found (404) -> findOneBy (book) returns null", async () => {
+    it("response code 404 -> findOneBy (book) returns null", async () => {
       bookFindOneByStub.resolves(null);
 
       await callEditionUpdate(req as Request, res as Response);
@@ -216,7 +218,7 @@ describe("Edition update integration tests", () => {
       );
     });
 
-    it("not found (404) -> update (edition) returns 0", async () => {
+    it("response code 404 -> update (edition) returns 0", async () => {
       bookFindOneByStub.resolves(mockBook);
       mockUpdateResult.affected = 0;
       editionUpdateFuncStub.resolves(mockUpdateResult);

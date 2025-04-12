@@ -28,7 +28,7 @@ describe("Edition addition integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -48,7 +48,19 @@ describe("Edition addition integration tests", () => {
 
       // Mocks
       mockId = 1;
+      mockBook = new Book();
+      mockEdition = new Edition();
+      mockEdition.isbn = validEditionInputs.isbn;
+      mockEdition.publicationDate = new Date(
+        validEditionInputs.publication_date
+      );
+      mockEdition.publisher = validEditionInputs.publisher;
+      mockEdition.pageCount = validEditionInputs.page_count;
+      mockEdition.bookFormat = BookFormat.HARDCOVER;
+      mockEdition.bookLanguage = validEditionInputs.book_language;
+      mockEdition.book = mockBook;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -64,22 +76,9 @@ describe("Edition addition integration tests", () => {
           })
         ),
       };
-
-      // Mocks
-      mockBook = new Book();
-      mockEdition = new Edition();
-      mockEdition.isbn = validEditionInputs.isbn;
-      mockEdition.publicationDate = new Date(
-        validEditionInputs.publication_date
-      );
-      mockEdition.publisher = validEditionInputs.publisher;
-      mockEdition.pageCount = validEditionInputs.page_count;
-      mockEdition.bookFormat = BookFormat.HARDCOVER;
-      mockEdition.bookLanguage = validEditionInputs.book_language;
-      mockEdition.book = mockBook;
     });
 
-    it("created (201)", async () => {
+    it("response code 201", async () => {
       bookFindOneByStub.resolves(mockBook);
       editionSaveStub.resolves(mockEdition);
 
@@ -109,7 +108,7 @@ describe("Edition addition integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -131,6 +130,7 @@ describe("Edition addition integration tests", () => {
       mockBook = new Book();
       mockBook.id = mockId;
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -148,7 +148,7 @@ describe("Edition addition integration tests", () => {
       };
     });
 
-    it("validation error (500)", async () => {
+    it("response code 400", async () => {
       bookFindOneByStub.resolves(mockBook);
 
       req.body.isbn = invalidEditionInputs.INVALID_ISBN;
@@ -167,7 +167,7 @@ describe("Edition addition integration tests", () => {
       );
     });
 
-    it("server error (500) -> findOneBy (book) rejects", async () => {
+    it("response code 500 -> findOneBy (book) rejects", async () => {
       bookFindOneByStub.rejects();
 
       await callEditionAddition(req as Request, res as Response);
@@ -187,7 +187,7 @@ describe("Edition addition integration tests", () => {
       );
     });
 
-    it("server error (500) -> save (edition) rejects", async () => {
+    it("response code 500 -> save (edition) rejects", async () => {
       bookFindOneByStub.resolves(mockBook);
       editionSaveStub.rejects();
 
@@ -208,7 +208,7 @@ describe("Edition addition integration tests", () => {
       );
     });
 
-    it("not found (404) -> findOneBy (book) returns null", async () => {
+    it("response code 404 -> findOneBy (book) returns null", async () => {
       bookFindOneByStub.resolves(null);
 
       await callEditionAddition(req as Request, res as Response);

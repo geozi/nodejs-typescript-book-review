@@ -22,7 +22,7 @@ describe("Author addition integration tests", () => {
 
   describe("Positive scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -33,6 +33,12 @@ describe("Author addition integration tests", () => {
         json: sinon.spy(),
       };
 
+      // Mocks
+      mockAuthor = new Author();
+      mockAuthor.firstName = validAuthorInputs.firstName;
+      mockAuthor.lastName = validAuthorInputs.lastName;
+
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -41,14 +47,9 @@ describe("Author addition integration tests", () => {
           })
         ),
       };
-
-      // Mocks
-      mockAuthor = new Author();
-      mockAuthor.firstName = validAuthorInputs.firstName;
-      mockAuthor.lastName = validAuthorInputs.lastName;
     });
 
-    it("created (201)", async () => {
+    it("response code 201", async () => {
       saveStub.resolves(mockAuthor);
 
       await callAuthorAddition(req as Request, res as Response);
@@ -77,7 +78,7 @@ describe("Author addition integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
-      // Reset stubs, spies, and mocks
+      // Reset stubs and spies
       sinon.restore();
 
       // Stubs and spies
@@ -87,6 +88,7 @@ describe("Author addition integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -97,7 +99,7 @@ describe("Author addition integration tests", () => {
       };
     });
 
-    it("validation error (400)", async () => {
+    it("response code 400", async () => {
       req.body.firstName = invalidAuthorInputs.NAME_TOO_SHORT;
 
       await callAuthorAddition(req as Request, res as Response);
@@ -114,7 +116,7 @@ describe("Author addition integration tests", () => {
       );
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       saveStub.rejects();
 
       await callAuthorAddition(req as Request, res as Response);
