@@ -2,8 +2,9 @@
  * JSON payload error catcher.
  * @module src/middleware/catchers/jsonErrorCatcher
  */
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
+import { httpCodes } from "resources/codes/responseStatusCodes";
 
 /**
  * Handles JSON payload errors.
@@ -21,7 +22,7 @@ export const catchJSONerror = (
   next: NextFunction
 ): void => {
   if (err instanceof SyntaxError && "body" in err) {
-    res.status(400).send({
+    res.status(httpCodes.BAD_REQUEST).send({
       message: commonResponseMessages.BAD_REQUEST_MESSAGE,
       error: commonResponseMessages.INVALID_JSON_MESSAGE,
     });
