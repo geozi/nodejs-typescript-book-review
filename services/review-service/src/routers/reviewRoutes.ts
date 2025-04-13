@@ -1,4 +1,4 @@
-import { forwardToAccountService } from "auth/accountForwarder";
+import { forwardToAccountService } from "auth/requestForwarder";
 import {
   callReviewAddition,
   callReviewRetrievalByBook,
