@@ -30,7 +30,14 @@ describe("User login integration tests", () => {
 
   describe("Login success", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
+      findOneStub = sinon.stub(User, "findOne");
+      bcryptCompareStub = sinon.stub(bcrypt, "compare");
+      jwtSignStub = sinon.stub(jwt, "sign");
+      redisSetStub = sinon.stub(redisClient, "hSet");
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => {
@@ -39,15 +46,11 @@ describe("User login integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify(mockCredentials)) };
-
-      findOneStub = sinon.stub(User, "findOne");
-      bcryptCompareStub = sinon.stub(bcrypt, "compare");
-      jwtSignStub = sinon.stub(jwt, "sign");
-      redisSetStub = sinon.stub(redisClient, "hSet");
     });
 
-    it("request has valid inputs", async () => {
+    it("response code 200", async () => {
       findOneStub.resolves(mockUser);
       bcryptCompareStub.resolves(true);
       redisSetStub.resolves("OK");
@@ -73,7 +76,14 @@ describe("User login integration tests", () => {
 
   describe("Login failure", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
+      findOneStub = sinon.stub(User, "findOne");
+      bcryptCompareStub = sinon.stub(bcrypt, "compare");
+      jwtSignStub = sinon.stub(jwt, "sign");
+      redisSetStub = sinon.stub(redisClient, "hSet");
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -81,15 +91,11 @@ describe("User login integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify(mockCredentials)) };
-
-      findOneStub = sinon.stub(User, "findOne");
-      bcryptCompareStub = sinon.stub(bcrypt, "compare");
-      jwtSignStub = sinon.stub(jwt, "sign");
-      redisSetStub = sinon.stub(redisClient, "hSet");
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       findOneStub.rejects();
 
       await loginUser(req as Request, res as Response);
@@ -109,7 +115,7 @@ describe("User login integration tests", () => {
       );
     });
 
-    it("not found -> unauthorized (401)", async () => {
+    it("not found -> response code 401", async () => {
       findOneStub.resolves(null);
 
       await loginUser(req as Request, res as Response);
@@ -126,7 +132,7 @@ describe("User login integration tests", () => {
       );
     });
 
-    it("password does not match -> unauthorized (401)", async () => {
+    it("password does not match -> response code 401", async () => {
       findOneStub.resolves(mockUser);
       bcryptCompareStub.resolves(false);
 
@@ -144,7 +150,7 @@ describe("User login integration tests", () => {
       );
     });
 
-    it("ErrorReply (500)", async () => {
+    it("ErrorReply -> response code 500", async () => {
       findOneStub.resolves(mockUser);
       bcryptCompareStub.resolves(true);
       redisSetStub.rejects(
@@ -168,7 +174,7 @@ describe("User login integration tests", () => {
       );
     });
 
-    it("AbortError (500)", async () => {
+    it("AbortError -> response code 500", async () => {
       findOneStub.resolves(mockUser);
       bcryptCompareStub.resolves(true);
       redisSetStub.rejects(new AbortError());

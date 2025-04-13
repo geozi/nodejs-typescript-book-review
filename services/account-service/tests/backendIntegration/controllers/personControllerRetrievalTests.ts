@@ -27,9 +27,13 @@ describe("Person info retrieval integration tests", () => {
     username: mockUser.username,
   });
 
-  describe("Positive scenario(s)", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
+      findOneStub = sinon.stub(Person, "findOne");
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => {
@@ -38,6 +42,7 @@ describe("Person info retrieval integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -50,10 +55,9 @@ describe("Person info retrieval integration tests", () => {
         ),
         user: mockUser,
       };
-      findOneStub = sinon.stub(Person, "findOne");
     });
 
-    it("request has valid inputs", async () => {
+    it("response code 200", async () => {
       findOneStub.resolves(mockPerson);
       await retrievePersonInfo(req as IRequest, res as Response);
 
@@ -76,7 +80,11 @@ describe("Person info retrieval integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
+      findOneStub = sinon.stub(Person, "findOne");
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -84,6 +92,7 @@ describe("Person info retrieval integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -96,10 +105,9 @@ describe("Person info retrieval integration tests", () => {
         ),
         user: mockUser,
       };
-      findOneStub = sinon.stub(Person, "findOne");
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       findOneStub.rejects();
       await retrievePersonInfo(req as IRequest, res as Response);
 
@@ -118,7 +126,7 @@ describe("Person info retrieval integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       findOneStub.resolves(null);
       await retrievePersonInfo(req as IRequest, res as Response);
 

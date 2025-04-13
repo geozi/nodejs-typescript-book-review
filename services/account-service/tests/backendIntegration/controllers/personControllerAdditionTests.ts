@@ -21,9 +21,12 @@ describe("Personal info addition integration tests", () => {
   const mockPerson = new Person(validPersonInput);
   const mockUser = new User(validUserInput);
 
-  describe("Positive scenarios", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       functionStub = sinon.stub(Person.prototype, "save");
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -33,13 +36,14 @@ describe("Personal info addition integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(JSON.stringify(validPersonInput)),
         user: mockUser,
       };
     });
 
-    it("created (201)", async () => {
+    it("response code 201", async () => {
       functionStub.resolves(mockPerson);
 
       await callPersonAddition(req as IRequest, res as Response);
@@ -62,7 +66,10 @@ describe("Personal info addition integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       functionStub = sinon.stub(Person.prototype, "save");
       res = {
         status: sinon.stub().callsFake(() => {
@@ -71,13 +78,14 @@ describe("Personal info addition integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(JSON.stringify(validPersonInput)),
         user: mockUser,
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       functionStub.rejects();
 
       await callPersonAddition(req as IRequest, res as Response);
@@ -97,7 +105,7 @@ describe("Personal info addition integration tests", () => {
       );
     });
 
-    it("Error.ValidationError (400)", async () => {
+    it("response code 400", async () => {
       functionStub.rejects(new Error.ValidationError());
 
       await callPersonAddition(req as IRequest, res as Response);

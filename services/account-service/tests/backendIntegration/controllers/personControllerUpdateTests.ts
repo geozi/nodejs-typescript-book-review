@@ -20,9 +20,12 @@ describe("Person update integration tests", () => {
   const mockPerson = new Person(validPersonInput);
   const mockUser = new User(validUserInput);
 
-  describe("Positive scenario(s)", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       functionStub = sinon.stub(Person, "findByIdAndUpdate");
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
@@ -32,6 +35,7 @@ describe("Person update integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -47,7 +51,7 @@ describe("Person update integration tests", () => {
       };
     });
 
-    it("ok (200)", async () => {
+    it("response code 200", async () => {
       functionStub.resolves(mockPerson);
 
       await callPersonUpdate(req as IRequest, res as Response);
@@ -70,7 +74,10 @@ describe("Person update integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       functionStub = sinon.stub(Person, "findByIdAndUpdate");
       res = {
         status: sinon.stub().callsFake(() => {
@@ -79,6 +86,7 @@ describe("Person update integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -94,7 +102,7 @@ describe("Person update integration tests", () => {
       };
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       functionStub.rejects();
 
       await callPersonUpdate(req as IRequest, res as Response);
@@ -114,7 +122,7 @@ describe("Person update integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       functionStub.resolves(null);
 
       await callPersonUpdate(req as IRequest, res as Response);

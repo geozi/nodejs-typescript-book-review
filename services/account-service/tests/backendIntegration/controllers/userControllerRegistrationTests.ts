@@ -20,9 +20,14 @@ describe("User registration integration tests", () => {
   let bcryptHashStub: SinonStub;
   const mockUser = new User(validUserInput);
 
-  describe("Positive scenarios", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
+      userSaveStub = sinon.stub(User.prototype, "save");
+      bcryptHashStub = sinon.stub(bcrypt, "hash");
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => {
@@ -31,12 +36,11 @@ describe("User registration integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify(validUserInput)) };
-      userSaveStub = sinon.stub(User.prototype, "save");
-      bcryptHashStub = sinon.stub(bcrypt, "hash");
     });
 
-    it("created (201)", async () => {
+    it("response code 201", async () => {
       bcryptHashStub.resolves("hashed_password");
       userSaveStub.resolves(mockUser);
 
@@ -60,8 +64,12 @@ describe("User registration integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
 
+      // Stubs and spies
+      bcryptHashStub = sinon.stub(bcrypt, "hash");
+      userSaveStub = sinon.stub(User.prototype, "save");
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -69,12 +77,11 @@ describe("User registration integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify(validUserInput)) };
-      bcryptHashStub = sinon.stub(bcrypt, "hash");
-      userSaveStub = sinon.stub(User.prototype, "save");
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       bcryptHashStub.resolves("hashed_password");
       userSaveStub.rejects();
 
@@ -95,7 +102,7 @@ describe("User registration integration tests", () => {
       );
     });
 
-    it("Error.ValidationError (400)", async () => {
+    it("response code 400", async () => {
       bcryptHashStub.resolves("hashed_password");
       userSaveStub.rejects(new Error.ValidationError());
 

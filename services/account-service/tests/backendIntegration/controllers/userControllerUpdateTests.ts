@@ -28,9 +28,15 @@ describe("User update integration tests", () => {
     role: validUserInput.role,
   });
 
-  describe("Positive scenario(s)", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
+      redisSetStub = sinon.stub(redisClient, "hSet");
+      bcryptHashStub = sinon.stub(bcrypt, "hash");
+      userFindByIdAndUpdateStub = sinon.stub(User, "findByIdAndUpdate");
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => {
@@ -39,6 +45,7 @@ describe("User update integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -49,13 +56,9 @@ describe("User update integration tests", () => {
         ),
         user: mockUser,
       };
-
-      redisSetStub = sinon.stub(redisClient, "hSet");
-      bcryptHashStub = sinon.stub(bcrypt, "hash");
-      userFindByIdAndUpdateStub = sinon.stub(User, "findByIdAndUpdate");
     });
 
-    it("ok (200)", async () => {
+    it("response code 200", async () => {
       redisSetStub.resolves("OK");
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.resolves(mockUser);
@@ -80,7 +83,13 @@ describe("User update integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
+      redisSetStub = sinon.stub(redisClient, "hSet");
+      bcryptHashStub = sinon.stub(bcrypt, "hash");
+      userFindByIdAndUpdateStub = sinon.stub(User, "findByIdAndUpdate");
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
@@ -88,6 +97,7 @@ describe("User update integration tests", () => {
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -98,13 +108,9 @@ describe("User update integration tests", () => {
         ),
         user: mockUser,
       };
-
-      redisSetStub = sinon.stub(redisClient, "hSet");
-      bcryptHashStub = sinon.stub(bcrypt, "hash");
-      userFindByIdAndUpdateStub = sinon.stub(User, "findByIdAndUpdate");
     });
 
-    it("server error (500)", async () => {
+    it("response code 500", async () => {
       redisSetStub.resolves("OK");
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.rejects();
@@ -126,7 +132,7 @@ describe("User update integration tests", () => {
       );
     });
 
-    it("not found (404)", async () => {
+    it("response code 404", async () => {
       redisSetStub.resolves("OK");
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.resolves(null);
@@ -145,7 +151,7 @@ describe("User update integration tests", () => {
       );
     });
 
-    it("ErrorReply (500)", async () => {
+    it("ErrorReply -> response code 500", async () => {
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.resolves(mockUser);
       redisSetStub.rejects(
@@ -169,7 +175,7 @@ describe("User update integration tests", () => {
       );
     });
 
-    it("AbortError (500)", async () => {
+    it("AbortError -> response code 500", async () => {
       bcryptHashStub.resolves("hashed_password");
       userFindByIdAndUpdateStub.resolves(mockUser);
       redisSetStub.rejects(new AbortError());
