@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/mocha": "^10.0.10",
     "@types/mongoose-unique-validator": "^1.0.9",
@@ -39,6 +40,7 @@
   "dependencies": {
     "axios": "^1.8.4",
     "bson": "^6.10.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
