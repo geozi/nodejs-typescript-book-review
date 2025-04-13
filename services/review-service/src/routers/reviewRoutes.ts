@@ -1,3 +1,7 @@
+/**
+ * Review routes.
+ * @module src/routes/reviewRoutes
+ */
 import { forwardToAccountService } from "auth/requestForwarder";
 import {
   callReviewAddition,
