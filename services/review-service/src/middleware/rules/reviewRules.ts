@@ -1,6 +1,6 @@
 /**
  * Express validation rules for review requests.
- * @module @module src/middleware/rules/reviewRules
+ * @module src/middleware/rules/reviewRules
  */
 import { body, check, ValidationChain } from "express-validator";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
