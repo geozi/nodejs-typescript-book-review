@@ -9,7 +9,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidUserInputs, validUserInput } from "tests/testInputs";
 
-describe("User update rules integration tests", () => {
+describe("User update rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -18,17 +18,21 @@ describe("User update rules integration tests", () => {
   const mockUser = new User(validUserInput);
   const updateRulesArray = [...userUpdateRules(), catchExpressValidationErrors];
 
-  describe("Positive scenario(s)", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
         json: sinon.spy(),
       };
-
       next = sinon.spy();
+
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -57,16 +61,19 @@ describe("User update rules integration tests", () => {
   describe("Negative scenarios", () => {
     describe("bad requests (400)", () => {
       beforeEach(() => {
+        // Reset stubs and spies
         sinon.restore();
 
+        // Stubs and spies
         res = {
           status: sinon.stub().callsFake(() => {
             return res;
           }) as unknown as SinonStub,
           json: sinon.spy(),
         };
-
         next = sinon.spy();
+
+        // HTTP request
         req = {
           body: JSON.parse(
             JSON.stringify({

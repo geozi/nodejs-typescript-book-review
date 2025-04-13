@@ -16,7 +16,7 @@ import {
   validUserInput,
 } from "tests/testInputs";
 
-describe("Person update rules integration tests", () => {
+describe("Person update rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -29,17 +29,21 @@ describe("Person update rules integration tests", () => {
     catchExpressValidationErrors,
   ];
 
-  describe("Positive scenario(s)", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
         json: sinon.spy(),
       };
-
       next = sinon.spy();
+
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({
@@ -71,15 +75,19 @@ describe("Person update rules integration tests", () => {
   describe("Negative scenarios", () => {
     describe("bad requests (400)", () => {
       beforeEach(() => {
+        // Reset stubs and spies
         sinon.restore();
+
+        // Stubs and spies
         res = {
           status: sinon.stub().callsFake(() => {
             return res;
           }) as unknown as SinonStub,
           json: sinon.spy(),
         };
-
         next = sinon.spy();
+
+        // HTTP request
         req = {
           body: JSON.parse(
             JSON.stringify({

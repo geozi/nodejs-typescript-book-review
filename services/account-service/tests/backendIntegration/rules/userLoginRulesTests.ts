@@ -8,7 +8,7 @@ import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import { invalidUserInputs, validUserInput } from "tests/testInputs";
 
-describe("User login rules integration tests", () => {
+describe("User login rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -20,17 +20,21 @@ describe("User login rules integration tests", () => {
   };
   const loginRulesArray = [...userLoginRules(), catchExpressValidationErrors];
 
-  describe("Positive scenarios", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
         json: sinon.spy(),
       };
-
       next = sinon.spy();
+
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify(mockCredentials)) };
     });
 
@@ -49,15 +53,19 @@ describe("User login rules integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
         json: sinon.spy(),
       };
-
       next = sinon.spy();
+
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify(mockCredentials)) };
     });
 

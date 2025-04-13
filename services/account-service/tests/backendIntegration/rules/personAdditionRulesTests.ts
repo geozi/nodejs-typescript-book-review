@@ -13,7 +13,7 @@ import {
   validPersonInput,
 } from "tests/testInputs";
 
-describe("Personal info addition rules integration tests", () => {
+describe("Personal info addition rules: integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -24,17 +24,21 @@ describe("Personal info addition rules integration tests", () => {
     catchExpressValidationErrors,
   ];
 
-  describe("Positive scenarios", () => {
+  describe("Positive scenario", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
         json: sinon.spy(),
       };
-
       next = sinon.spy();
+
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify(validPersonInput)) };
     });
 
@@ -53,15 +57,19 @@ describe("Personal info addition rules integration tests", () => {
 
   describe("Negative scenarios", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       res = {
         status: sinon.stub().callsFake(() => {
           return res;
         }) as unknown as SinonStub,
         json: sinon.spy(),
       };
-
       next = sinon.spy();
+
+      // HTTP request
       req = { body: JSON.parse(JSON.stringify(validPersonInput)) };
     });
 
