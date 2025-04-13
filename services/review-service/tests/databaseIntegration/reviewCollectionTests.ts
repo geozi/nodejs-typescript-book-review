@@ -11,7 +11,7 @@ import sinon, { SinonStub } from "sinon";
 import { validReviewInputs, validUserInput } from "tests/testInputs";
 dotenv.config();
 
-describe.skip("Review collection integration tests", () => {
+describe("Review collection integration tests", () => {
   let req: Partial<IRequest>;
   let res: Partial<Response>;
   let setHeaderStub: SinonStub;
