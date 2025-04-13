@@ -28,7 +28,10 @@ describe("User collection integration tests", () => {
   });
 
   beforeEach(() => {
+    // Reset stubs and spies
     sinon.restore();
+
+    // Stubs and spies
     res = {
       setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
       status: sinon.stub().callsFake(() => {
@@ -36,9 +39,8 @@ describe("User collection integration tests", () => {
       }) as unknown as SinonStub,
       json: sinon.spy(),
     };
-  });
 
-  it("new user registered (201)", async () => {
+    // HTTP request
     req = {
       body: {
         username: validUserInput.username,
@@ -47,7 +49,9 @@ describe("User collection integration tests", () => {
         role: validUserInput.role.toString(),
       },
     };
+  });
 
+  it("new user registered (201)", async () => {
     await callUserRegistration(req as Request, res as Response);
 
     statusStub = res.status as SinonStub;

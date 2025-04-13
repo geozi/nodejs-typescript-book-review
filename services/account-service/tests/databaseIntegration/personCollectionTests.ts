@@ -28,7 +28,10 @@ describe("Person collection integration tests", () => {
   });
 
   beforeEach(() => {
+    // Reset stubs and spies
     sinon.restore();
+
+    // Stubs and spies
     res = {
       setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
       status: sinon.stub().callsFake(() => {
@@ -37,6 +40,7 @@ describe("Person collection integration tests", () => {
       json: sinon.spy(),
     };
 
+    // HTTP request
     req = {
       body: {
         firstName: validPersonInput.firstName,
