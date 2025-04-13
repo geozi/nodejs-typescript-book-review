@@ -1,3 +1,7 @@
+/**
+ * Review controller.
+ * @module src/controllers/reviewController
+ */
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
@@ -24,6 +28,12 @@ import {
 import { apiVersionNumbers } from "resources/codes/apiVersionNumbers";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
+/**
+ * Handles HTTP requests for review addition.
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callReviewAddition = async (
   req: Request,
   res: Response
@@ -64,6 +74,12 @@ export const callReviewAddition = async (
   }
 };
 
+/**
+ * Handles HTTP requests for review update.
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callReviewUpdate = async (
   req: Request,
   res: Response
@@ -91,6 +107,12 @@ export const callReviewUpdate = async (
   }
 };
 
+/**
+ * Handles HTTP requests for review retrieval by ID.
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callReviewRetrievalById = async (
   req: Request,
   res: Response
@@ -118,6 +140,12 @@ export const callReviewRetrievalById = async (
   }
 };
 
+/**
+ * Handles HTTP requests for review retrieval by book.
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callReviewRetrievalByBook = async (
   req: Request,
   res: Response
@@ -145,6 +173,12 @@ export const callReviewRetrievalByBook = async (
   }
 };
 
+/**
+ * Handles HTTP requests for review retrieval by username.
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callReviewRetrievalByUsername = async (
   req: Request,
   res: Response
@@ -173,6 +207,12 @@ export const callReviewRetrievalByUsername = async (
   }
 };
 
+/**
+ * Handles HTTP requests for review retrieval by composite index.
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
 export const callReviewRetrievalByIndex = async (
   req: Request,
   res: Response
