@@ -17,13 +17,17 @@ describe("User controller retrieval unit tests", () => {
 
   describe("Positive scenario(s)", () => {
     beforeEach(() => {
+      // Reset stubs and spies
       sinon.restore();
+
+      // Stubs and spies
       res = {
         setHeader: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         status: sinon.stub().callsFake(() => res) as unknown as SinonStub,
         json: sinon.spy(),
       };
 
+      // HTTP request
       req = {
         body: JSON.parse(
           JSON.stringify({

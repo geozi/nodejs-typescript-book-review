@@ -8,40 +8,46 @@ import sinon, { SinonStub } from "sinon";
 import { invalidPersonInputs, validPersonInput } from "tests/testInputs";
 
 describe("Person model unit tests", () => {
-  let newPerson: IPerson;
+  let mockPerson: IPerson;
+  let mockValidationError: Error.ValidationError;
+  let validateSyncStub: SinonStub;
 
   describe("Successful validation", () => {
     beforeEach(() => {
+      // Restore stubs
       sinon.restore();
-      newPerson = new Person(validPersonInput);
+
+      // Stubs
+      validateSyncStub = sinon.stub(Person.prototype, "validateSync");
+
+      // Mocks
+      mockPerson = new Person(validPersonInput);
     });
 
     it("has valid inputs", () => {
-      sinon.replace(
-        Person.prototype,
-        "validateSync",
-        sinon.stub().returns(undefined)
-      );
+      validateSyncStub.returns(undefined);
 
-      const mongooseErrors = newPerson.validateSync();
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.strictEqual(mongooseErrors, undefined);
     });
   });
 
   describe("Failed validation", () => {
-    let validationError: Error.ValidationError;
-    let validateSyncStub: SinonStub;
-
     beforeEach(() => {
+      // Reset stubs
       sinon.restore();
-      newPerson = new Person();
-      validationError = new Error.ValidationError();
+
+      // Stubs
       validateSyncStub = sinon.stub(Person.prototype, "validateSync");
+
+      // Mocks
+      mockValidationError = new Error.ValidationError();
+      mockPerson = new Person();
     });
 
     it("firstName is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         firstName: new Error.ValidatorError({
           message: personFailedValidation.FIRST_NAME_REQUIRED_MESSAGE,
           path: "firstName",
@@ -49,8 +55,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -60,7 +66,7 @@ describe("Person model unit tests", () => {
     });
 
     it("firstName is too short", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         firstName: new Error.ValidatorError({
           message: personFailedValidation.FIRST_NAME_BELOW_MIN_LENGTH_MESSAGE,
           path: "firstName",
@@ -68,8 +74,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -79,7 +85,7 @@ describe("Person model unit tests", () => {
     });
 
     it("firstName is invalid", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         firstName: new Error.ValidatorError({
           message: personFailedValidation.FIRST_NAME_INVALID_MESSAGE,
           path: "firstName",
@@ -87,8 +93,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -98,7 +104,7 @@ describe("Person model unit tests", () => {
     });
 
     it("lastName is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         lastName: new Error.ValidatorError({
           message: personFailedValidation.LAST_NAME_REQUIRED_MESSAGE,
           path: "lastName",
@@ -106,8 +112,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -117,7 +123,7 @@ describe("Person model unit tests", () => {
     });
 
     it("lastName is too short", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         lastName: new Error.ValidatorError({
           message: personFailedValidation.LAST_NAME_BELOW_MIN_LENGTH_MESSAGE,
           path: "lastName",
@@ -125,8 +131,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -136,7 +142,7 @@ describe("Person model unit tests", () => {
     });
 
     it("lastName is invalid", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         lastName: new Error.ValidatorError({
           message: personFailedValidation.LAST_NAME_INVALID_MESSAGE,
           path: "lastName",
@@ -144,8 +150,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -155,7 +161,7 @@ describe("Person model unit tests", () => {
     });
 
     it("ssn is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         ssn: new Error.ValidatorError({
           message: personFailedValidation.SSN_REQUIRED_MESSAGE,
           path: "ssn",
@@ -163,8 +169,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -175,7 +181,7 @@ describe("Person model unit tests", () => {
 
     invalidPersonInputs.INVALID_SSN_CASES.forEach(([testName, invalidSSN]) => {
       it(testName, () => {
-        validationError.errors = {
+        mockValidationError.errors = {
           ssn: new Error.ValidatorError({
             message: personFailedValidation.SSN_INVALID_MESSAGE,
             path: "ssn",
@@ -183,8 +189,8 @@ describe("Person model unit tests", () => {
           }),
         };
 
-        validateSyncStub.returns(validationError);
-        const mongooseErrors = newPerson.validateSync();
+        validateSyncStub.returns(mockValidationError);
+        const mongooseErrors = mockPerson.validateSync();
 
         assert.notStrictEqual(mongooseErrors, undefined);
         assert.strictEqual(
@@ -195,7 +201,7 @@ describe("Person model unit tests", () => {
     });
 
     it("phoneNumber is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         phoneNumber: new Error.ValidatorError({
           message: personFailedValidation.PHONE_NUMBER_REQUIRED_MESSAGE,
           path: "phoneNumber",
@@ -203,8 +209,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -216,7 +222,7 @@ describe("Person model unit tests", () => {
     invalidPersonInputs.INVALID_PHONE_NUMBER_CASES.forEach(
       ([testName, invalidPhoneNumber]) => {
         it(testName, () => {
-          validationError.errors = {
+          mockValidationError.errors = {
             phoneNumber: new Error.ValidatorError({
               message: personFailedValidation.PHONE_NUMBER_INVALID_MESSAGE,
               path: "phoneNumber",
@@ -224,8 +230,8 @@ describe("Person model unit tests", () => {
             }),
           };
 
-          validateSyncStub.returns(validationError);
-          const mongooseErrors = newPerson.validateSync();
+          validateSyncStub.returns(mockValidationError);
+          const mongooseErrors = mockPerson.validateSync();
 
           assert.notStrictEqual(mongooseErrors, undefined);
           assert.strictEqual(
@@ -237,7 +243,7 @@ describe("Person model unit tests", () => {
     );
 
     it("address is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         address: new Error.ValidatorError({
           message: personFailedValidation.ADDRESS_REQUIRED_MESSAGE,
           path: "address",
@@ -245,8 +251,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -256,7 +262,7 @@ describe("Person model unit tests", () => {
     });
 
     it("username is undefined", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         username: new Error.ValidatorError({
           message: userFailedValidation.USERNAME_REQUIRED_MESSAGE,
           path: "username",
@@ -264,8 +270,8 @@ describe("Person model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newPerson.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockPerson.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(

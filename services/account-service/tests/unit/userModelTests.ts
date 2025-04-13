@@ -1,46 +1,53 @@
 import assert from "assert";
 import { IUser } from "interfaces/documents/IUser";
 import { userFailedValidation } from "messages/validation/userValidationMessages";
+import { it } from "mocha";
 import { User } from "models/User";
 import { Error } from "mongoose";
 import sinon, { SinonStub } from "sinon";
 import { invalidUserInputs, validUserInput } from "tests/testInputs";
 
 describe("User model unit tests", () => {
-  let newUser: IUser;
+  let mockUser: IUser;
+  let mockValidationError: Error.ValidationError;
+  let validateSyncStub: SinonStub;
 
   describe("Successful validation", () => {
     beforeEach(() => {
+      // Reset stubs
       sinon.restore();
-      newUser = new User(validUserInput);
+
+      // Stubs
+      validateSyncStub = sinon.stub(User.prototype, "validateSync");
+
+      // Mocks
+      mockUser = new User(validUserInput);
     });
 
     it("has valid inputs", () => {
-      sinon.replace(
-        User.prototype,
-        "validateSync",
-        sinon.stub().returns(undefined)
-      );
+      validateSyncStub.returns(undefined);
 
-      const mongooseErrors = newUser.validateSync();
+      const mongooseErrors = mockUser.validateSync();
 
       assert.strictEqual(mongooseErrors, undefined);
     });
   });
 
   describe("Failed validation", () => {
-    let validationError: Error.ValidationError;
-    let validateSyncStub: SinonStub;
-
     beforeEach(() => {
+      // Reset stubs
       sinon.restore();
-      newUser = new User();
-      validationError = new Error.ValidationError();
+
+      // Stubs
       validateSyncStub = sinon.stub(User.prototype, "validateSync");
+
+      // Mocks
+      mockUser = new User();
+      mockValidationError = new Error.ValidationError();
     });
 
     it("username is empty", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         username: new Error.ValidatorError({
           message: userFailedValidation.USERNAME_REQUIRED_MESSAGE,
           path: "username",
@@ -48,8 +55,8 @@ describe("User model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newUser.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockUser.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -59,7 +66,7 @@ describe("User model unit tests", () => {
     });
 
     it("username is too long", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         username: new Error.ValidatorError({
           message: userFailedValidation.USERNAME_ABOVE_MAX_LENGTH_MESSAGE,
           path: "username",
@@ -67,8 +74,8 @@ describe("User model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newUser.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockUser.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -78,7 +85,7 @@ describe("User model unit tests", () => {
     });
 
     it("email is empty", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         email: new Error.ValidatorError({
           message: userFailedValidation.EMAIL_REQUIRED_MESSAGE,
           path: "email",
@@ -86,8 +93,8 @@ describe("User model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newUser.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockUser.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -99,7 +106,7 @@ describe("User model unit tests", () => {
     invalidUserInputs.EMAIL_INVALID_CASES.forEach(
       ([testName, invalidEmail]) => {
         it(testName, () => {
-          validationError.errors = {
+          mockValidationError.errors = {
             email: new Error.ValidatorError({
               message: userFailedValidation.EMAIL_INVALID_MESSAGE,
               path: "email",
@@ -107,8 +114,8 @@ describe("User model unit tests", () => {
             }),
           };
 
-          validateSyncStub.returns(validationError);
-          const mongooseErrors = newUser.validateSync();
+          validateSyncStub.returns(mockValidationError);
+          const mongooseErrors = mockUser.validateSync();
 
           assert.notStrictEqual(mongooseErrors, undefined);
           assert.strictEqual(
@@ -120,7 +127,7 @@ describe("User model unit tests", () => {
     );
 
     it("password is empty", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         password: new Error.ValidatorError({
           message: userFailedValidation.PASSWORD_REQUIRED_MESSAGE,
           path: "password",
@@ -128,8 +135,8 @@ describe("User model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newUser.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockUser.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -139,7 +146,7 @@ describe("User model unit tests", () => {
     });
 
     it("role is empty", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         role: new Error.ValidatorError({
           message: userFailedValidation.ROLE_REQUIRED_MESSAGE,
           path: "role",
@@ -147,8 +154,8 @@ describe("User model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newUser.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockUser.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
@@ -158,7 +165,7 @@ describe("User model unit tests", () => {
     });
 
     it("role is invalid", () => {
-      validationError.errors = {
+      mockValidationError.errors = {
         role: new Error.ValidatorError({
           message: userFailedValidation.ROLE_INVALID_MESSAGE,
           path: "role",
@@ -166,8 +173,8 @@ describe("User model unit tests", () => {
         }),
       };
 
-      validateSyncStub.returns(validationError);
-      const mongooseErrors = newUser.validateSync();
+      validateSyncStub.returns(mockValidationError);
+      const mongooseErrors = mockUser.validateSync();
 
       assert.notStrictEqual(mongooseErrors, undefined);
       assert.strictEqual(
