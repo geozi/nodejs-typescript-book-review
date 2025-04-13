@@ -1,3 +1,7 @@
+/**
+ * Review mapper.
+ * @module src/mappers/reviewMapper
+ */
 import { BSONError } from "bson";
 import { Request } from "express";
 import { IReview } from "interfaces/documents/IReview";
@@ -10,10 +14,22 @@ import { reviewFailedValidation } from "messages/validation/reviewValidationMess
 import { Review } from "models/Review";
 import { Types } from "mongoose";
 
+/**
+ * Checks if the value type is string.
+ *
+ * @param {unknown} value A value.
+ * @returns {boolean} True if the value type is string, false otherwise.
+ */
 function isString(value: unknown): boolean {
   return typeof value === "string";
 }
 
+/**
+ * Converts an {@link IRequest} object to an {@link IReview} object.
+ *
+ * @param {IRequest} req - An HTTP request.
+ * @returns {IReview} An {@link IReview} object.
+ */
 export const reqBodyToReview = (req: IRequest): IReview => {
   const { subject, description, book } = req.body;
   const user = req.user;
@@ -31,6 +47,13 @@ export const reqBodyToReview = (req: IRequest): IReview => {
   return newReview;
 };
 
+/**
+ * Converts a Request object to an {@link IReviewUpdate} object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {IReviewUpdate} An {@link IReviewUpdate} object.
+ * @throws - TypeError
+ */
 export const reqBodyToReviewUpdate = (req: Request): IReviewUpdate => {
   try {
     const { id, subject, description, book } = req.body;
@@ -66,6 +89,12 @@ export const reqBodyToReviewUpdate = (req: Request): IReviewUpdate => {
   }
 };
 
+/**
+ * Converts a Request object to an {@link IBook} object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {IBook} An {@link IBook} object.
+ */
 export const reqBodyToBook = (req: Request): IBook => {
   const { book } = req.body;
 
@@ -74,6 +103,13 @@ export const reqBodyToBook = (req: Request): IBook => {
   return bookForRetrieval;
 };
 
+/**
+ * Converts a Request object to a Types.ObjectId.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {Types.ObjectId} A Types.ObjectId.
+ * @throws - TypeError
+ */
 export const reqBodyToId = (req: Request): Types.ObjectId => {
   try {
     const { id } = req.body;
@@ -97,6 +133,12 @@ export const reqBodyToId = (req: Request): Types.ObjectId => {
   }
 };
 
+/**
+ * Converts a Request object to an {@link ICompositeIndex} object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {ICompositeIndex} An {@link ICompositeIndex} object.
+ */
 export const reqBodyToICompositeIndex = (req: Request): ICompositeIndex => {
   const { subject, username } = req.body;
 
@@ -108,6 +150,12 @@ export const reqBodyToICompositeIndex = (req: Request): ICompositeIndex => {
   return compositeIndex;
 };
 
+/**
+ * Converts a Request object to an {@link IRequest} object.
+ *
+ * @param {Request} req - An HTTP request.
+ * @returns {IRequest} An {@link IRequest} object.
+ */
 export const recastReqToIReq = (req: Request): IRequest => {
   return req as IRequest;
 };

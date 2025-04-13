@@ -1,7 +1,15 @@
+/**
+ * Express validation rules for review requests.
+ * @module src/middleware/rules/reviewRules
+ */
 import { body, check, ValidationChain } from "express-validator";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { reviewConstants } from "resources/constants/reviewConstants";
 
+/**
+ * Returns a validation chain for review addition requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const reviewAdditionRules = (): ValidationChain[] => {
   return [
     check("subject")
@@ -43,6 +51,10 @@ export const reviewAdditionRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for review update requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const reviewUpdateRules = (): ValidationChain[] => {
   return [
     check("id")
@@ -84,6 +96,10 @@ export const reviewUpdateRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for review retrieval by ID requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const reviewRetrievalByIdRules = (): ValidationChain[] => {
   return [
     check("id")
@@ -96,6 +112,10 @@ export const reviewRetrievalByIdRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for review retrieval by book requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const reviewRetrievalByBookRules = (): ValidationChain[] => {
   return [
     check("book")
@@ -121,6 +141,10 @@ export const reviewRetrievalByBookRules = (): ValidationChain[] => {
   ];
 };
 
+/**
+ * Returns a validation chain for review retrieval by index requests.
+ * @returns {ValidationChain[]} Validation chain.
+ */
 export const reviewRetrievalByCompositeIndexRules = (): ValidationChain[] => {
   return [
     check("subject")

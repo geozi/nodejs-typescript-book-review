@@ -1,9 +1,24 @@
+/**
+ * Review model schema.
+ * @module src/models/Review
+ */
 import { IReview } from "interfaces/documents/IReview";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { Schema, model } from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import { reviewConstants } from "resources/constants/reviewConstants";
 
+/**
+ * Review schema for persistence in MongoDB.
+ *
+ * @type {Schema<IReview>}
+ * @property {string} subject - The subject of a review.
+ * @property {string} description - The description of a review.
+ * @property {object} book - The book under review.
+ * @property {number} book.id - The ID of the book under review.
+ * @property {string} username - The username of the user adding the review.
+ *
+ */
 const reviewSchema = new Schema<IReview>(
   {
     subject: {
