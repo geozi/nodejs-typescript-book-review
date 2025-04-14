@@ -5,9 +5,9 @@
 import { NotFoundError } from "errors/notFoundErrorClass";
 import { ServerError } from "errors/serverErrorClass";
 import { Request, Response } from "express";
+import { IReview } from "interfaces/documents/IReview";
 import { appLogger } from "logs/loggerConfig";
 import {
-  recastReqToIReq,
   reqBodyToBook,
   reqBodyToICompositeIndex,
   reqBodyToId,
@@ -39,8 +39,11 @@ export const callReviewAddition = async (
   res: Response
 ): Promise<void> => {
   try {
-    const reqAsIRequest = recastReqToIReq(req);
-    const newReview = reqBodyToReview(reqAsIRequest);
+    const newReview = reqBodyToReview(req);
+    if (!newReview.username) {
+      res.status(httpCodes.FORBIDDEN).json({});
+      return;
+    }
     const savedReview = await addReview(newReview);
 
     res
@@ -184,9 +187,15 @@ export const callReviewRetrievalByUsername = async (
   res: Response
 ): Promise<void> => {
   try {
-    const reqAsIRequest = recastReqToIReq(req);
-    const username = reqAsIRequest.user.username;
-    const retrievedReviews = await getReviewsByUsername(username);
+    let retrievedReviews: IReview[];
+
+    const username = req.get("x-user-name");
+    if (!username) {
+      res.status(httpCodes.FORBIDDEN).json({});
+      return;
+    } else {
+      retrievedReviews = await getReviewsByUsername(username);
+    }
 
     res
       .setHeader("x-api-version", apiVersionNumbers.VERSION_1_0)
