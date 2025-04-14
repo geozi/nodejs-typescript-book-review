@@ -3,6 +3,7 @@
  * @module src/routes/interServiceRoutes
  */
 import { Request, Response, Router } from "express";
+import { IUser } from "interfaces/documents/IUser";
 import passport from "passport";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 
@@ -16,7 +17,9 @@ interServiceRouter.get(
       return;
     }
 
-    res.status(httpCodes.OK).json({});
+    const { username } = req.user as IUser;
+
+    res.setHeader("x-user-name", username).status(httpCodes.OK).json();
   }
 );
 interServiceRouter.get(
@@ -28,6 +31,8 @@ interServiceRouter.get(
       return;
     }
 
-    res.status(httpCodes.OK).json({});
+    const { username } = req.user as IUser;
+
+    res.setHeader("x-user-name", username).status(httpCodes.OK).json({});
   }
 );
