@@ -189,7 +189,7 @@ export const callReviewRetrievalByUsername = async (
   try {
     let retrievedReviews: IReview[];
 
-    const username = req.get("x-user-name");
+    const username = req.body.username;
     if (!username) {
       res.status(httpCodes.FORBIDDEN).json({});
       return;
