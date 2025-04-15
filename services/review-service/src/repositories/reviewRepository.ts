@@ -130,7 +130,7 @@ export const getReviewById = async (id: Types.ObjectId): Promise<IReview> => {
  */
 export const getReviewsByBook = async (book: IBook): Promise<IReview[]> => {
   try {
-    const retrievedReviews = await Review.find({ "book.id": book });
+    const retrievedReviews = await Review.find({ book: book });
     if (retrievedReviews.length === 0) {
       throw new NotFoundError(
         reviewResponseMessages.REVIEW_S_NOT_FOUND_MESSAGE
