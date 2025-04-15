@@ -2,7 +2,6 @@ import assert from "assert";
 import { callReviewAddition } from "controllers/reviewController";
 import * as dotenv from "dotenv";
 import { Request, Response } from "express";
-import { IRequest } from "interfaces/secondary/IRequest";
 import { IUser } from "interfaces/secondary/IUser";
 import { Review } from "models/Review";
 import mongoose, { ConnectOptions } from "mongoose";
@@ -12,7 +11,7 @@ import { validReviewInputs, validUserInput } from "tests/testInputs";
 dotenv.config();
 
 describe("Review collection integration tests", () => {
-  let req: Partial<IRequest>;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let setHeaderStub: SinonStub;
   let statusStub: SinonStub;
@@ -53,9 +52,9 @@ describe("Review collection integration tests", () => {
           subject: validReviewInputs.subject,
           description: validReviewInputs.description,
           book: validReviewInputs.book,
+          username: mockUser.username,
         })
       ),
-      user: mockUser,
     };
   });
 
