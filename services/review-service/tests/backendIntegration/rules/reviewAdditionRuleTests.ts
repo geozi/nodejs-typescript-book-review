@@ -1,12 +1,17 @@
 import assert from "assert";
 import { Request, Response } from "express";
+import { IUser } from "interfaces/secondary/IUser";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { reviewFailedValidation } from "messages/validation/reviewValidationMessages";
 import { catchExpressValidationErrors } from "middleware/catchers/expressErrorCatcher";
 import { reviewAdditionRules } from "middleware/rules/reviewRules";
 import { httpCodes } from "resources/codes/responseStatusCodes";
 import sinon, { SinonSpy, SinonStub } from "sinon";
-import { invalidReviewInputs, validReviewInputs } from "tests/testInputs";
+import {
+  invalidReviewInputs,
+  validReviewInputs,
+  validUserInput,
+} from "tests/testInputs";
 
 describe("Review addition rules: integration tests", () => {
   let req: Partial<Request>;
@@ -14,6 +19,7 @@ describe("Review addition rules: integration tests", () => {
   let next: SinonSpy;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
+  let mockUser: IUser;
   const reviewAdditionArray = [
     ...reviewAdditionRules(),
     catchExpressValidationErrors,
@@ -33,6 +39,9 @@ describe("Review addition rules: integration tests", () => {
       };
       next = sinon.spy();
 
+      // Mocks
+      mockUser = validUserInput;
+
       // HTTP request
       req = {
         body: JSON.parse(
@@ -40,6 +49,7 @@ describe("Review addition rules: integration tests", () => {
             subject: validReviewInputs.subject,
             description: validReviewInputs.description,
             book: validReviewInputs.book,
+            username: mockUser.username,
           })
         ),
       };
@@ -72,6 +82,9 @@ describe("Review addition rules: integration tests", () => {
       };
       next = sinon.spy();
 
+      // Mocks
+      mockUser = validUserInput;
+
       // HTTP request
       req = {
         body: JSON.parse(
@@ -79,6 +92,7 @@ describe("Review addition rules: integration tests", () => {
             subject: validReviewInputs.subject,
             description: validReviewInputs.description,
             book: validReviewInputs.book,
+            username: mockUser.username,
           })
         ),
       };
@@ -317,6 +331,30 @@ describe("Review addition rules: integration tests", () => {
           errors: [
             {
               message: reviewFailedValidation.BOOK_ID_INVALID_MESSAGE,
+            },
+          ],
+        }),
+        true
+      );
+    });
+
+    it("username is undefined", async () => {
+      req.body.username = undefined;
+
+      for (const middleware of reviewAdditionArray) {
+        await middleware(req as Request, res as Response, next);
+      }
+
+      statusStub = res.status as SinonStub;
+      jsonSpy = res.json as SinonSpy;
+
+      assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
+      assert.strictEqual(
+        jsonSpy.calledWith({
+          message: commonResponseMessages.BAD_REQUEST_MESSAGE,
+          errors: [
+            {
+              message: reviewFailedValidation.USERNAME_REQUIRED_MESSAGE,
             },
           ],
         }),
