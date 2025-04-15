@@ -42,6 +42,9 @@ export const forwardToAccountService = async (
       return;
     }
 
+    const headers = { ...response.headers };
+    req.body.username = headers["x-user-name"];
+
     next();
   } catch (error) {
     if (error instanceof AxiosError && error.response) {

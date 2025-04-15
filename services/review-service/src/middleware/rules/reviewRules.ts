@@ -48,6 +48,9 @@ export const reviewAdditionRules = (): ValidationChain[] => {
           throw new Error(reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE);
         }
       }),
+    check("username")
+      .notEmpty()
+      .withMessage(reviewFailedValidation.USERNAME_REQUIRED_MESSAGE),
   ];
 };
 
