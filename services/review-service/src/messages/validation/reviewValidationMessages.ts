@@ -27,19 +27,19 @@ export const reviewFailedValidation = {
    * Message sent when no subject is provided.
    * @type {string}
    */
-  SUBJECT_REQUIRED_MESSAGE: "Title is a required field",
+  SUBJECT_REQUIRED_MESSAGE: "Subject is a required field",
 
   /**
    * Message sent when the provided subject is too short.
    * @type {string}
    */
-  SUBJECT_BELOW_MIN_LENGTH_MESSAGE: `Title must be at least ${reviewConstants.SUBJECT_MIN_LENGTH} characters long`,
+  SUBJECT_BELOW_MIN_LENGTH_MESSAGE: `Subject must be at least ${reviewConstants.SUBJECT_MIN_LENGTH} characters long`,
 
   /**
    * Message sent when the provided subject is too long.
    * @type {string}
    */
-  SUBJECT_ABOVE_MAX_LENGTH_MESSAGE: `Title must be no longer than ${reviewConstants.SUBJECT_MAX_LENGTH} characters long`,
+  SUBJECT_ABOVE_MAX_LENGTH_MESSAGE: `Subject must be no longer than ${reviewConstants.SUBJECT_MAX_LENGTH} characters long`,
 
   /**
    * Message sent when no description is provided.
