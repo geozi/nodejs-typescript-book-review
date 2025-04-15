@@ -163,3 +163,15 @@ export const reviewRetrievalByCompositeIndexRules = (): ValidationChain[] => {
       .withMessage(reviewFailedValidation.USERNAME_REQUIRED_MESSAGE),
   ];
 };
+
+/**
+ * Returns a validation chain for review retrieval by username.
+ * @returns {ValidationChain[]} Validation chain.
+ */
+export const reviewRetrievalByUsernameRules = (): ValidationChain[] => {
+  return [
+    check("username")
+      .notEmpty()
+      .withMessage(reviewFailedValidation.USERNAME_REQUIRED_MESSAGE),
+  ];
+};
