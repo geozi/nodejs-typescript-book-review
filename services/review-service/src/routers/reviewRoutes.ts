@@ -67,7 +67,7 @@ reviewRouter.get(
 );
 reviewRouter.get(
   "/comp-index",
-  assignRoleType(RoleType.Admin),
+  assignRoleType(RoleType.User),
   forwardToAccountService,
   ...reviewRetrievalByCompositeIndexRules(),
   catchExpressValidationErrors,
