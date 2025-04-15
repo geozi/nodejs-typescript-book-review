@@ -2,7 +2,7 @@ import assert from "assert";
 import { callReviewRetrievalByUsername } from "controllers/reviewController";
 import { Request, Response } from "express";
 import { IReview } from "interfaces/documents/IReview";
-import { IRequest } from "interfaces/secondary/IRequest";
+import { IUser } from "interfaces/secondary/IUser";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { reviewResponseMessages } from "messages/response/reviewResponseMessages";
 import { Review } from "models/Review";
@@ -11,7 +11,7 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validUserInput } from "tests/testInputs";
 
 describe("Review retrieval by username integration tests", () => {
-  let req: Partial<IRequest>;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
@@ -20,6 +20,7 @@ describe("Review retrieval by username integration tests", () => {
   let mockReviews: IReview[];
   let mockReview1: IReview;
   let mockReview2: IReview;
+  let mockUser: IUser;
 
   describe("Positive scenario", () => {
     beforeEach(() => {
@@ -37,14 +38,18 @@ describe("Review retrieval by username integration tests", () => {
       };
 
       // Mocks
+      mockUser = validUserInput;
       mockReview1 = new Review({ username: validUserInput.username });
       mockReview2 = new Review({ username: validUserInput.username });
       mockReviews = [mockReview1, mockReview2];
 
       // HTTP request
       req = {
-        body: {},
-        user: JSON.parse(JSON.stringify(validUserInput)),
+        body: JSON.parse(
+          JSON.stringify({
+            username: mockUser.username,
+          })
+        ),
       };
     });
 
@@ -90,8 +95,11 @@ describe("Review retrieval by username integration tests", () => {
 
       // HTTP request
       req = {
-        body: {},
-        user: JSON.parse(JSON.stringify(validUserInput)),
+        body: JSON.parse(
+          JSON.stringify({
+            username: mockUser.username,
+          })
+        ),
       };
     });
 

@@ -1,8 +1,7 @@
 import assert from "assert";
 import { callReviewAddition } from "controllers/reviewController";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { IReview } from "interfaces/documents/IReview";
-import { IRequest } from "interfaces/secondary/IRequest";
 import { IUser } from "interfaces/secondary/IUser";
 import { commonResponseMessages } from "messages/response/commonResponseMessages";
 import { reviewResponseMessages } from "messages/response/reviewResponseMessages";
@@ -13,7 +12,7 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import { validReviewInputs, validUserInput } from "tests/testInputs";
 
 describe("Review addition integration tests", () => {
-  let req: Partial<IRequest>;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let statusStub: SinonStub;
   let jsonSpy: SinonSpy;
@@ -52,16 +51,16 @@ describe("Review addition integration tests", () => {
             subject: validReviewInputs.subject,
             description: validReviewInputs.description,
             book: validReviewInputs.book,
+            username: mockUser.username,
           })
         ),
-        user: mockUser,
       };
     });
 
     it("response code 201", async () => {
       functionStub.resolves(mockReview);
 
-      await callReviewAddition(req as IRequest, res as Response);
+      await callReviewAddition(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -103,16 +102,16 @@ describe("Review addition integration tests", () => {
             subject: validReviewInputs.subject,
             description: validReviewInputs.description,
             book: validReviewInputs.book,
+            username: mockUser.username,
           })
         ),
-        user: mockUser,
       };
     });
 
     it("response code 500", async () => {
       functionStub.rejects();
 
-      await callReviewAddition(req as IRequest, res as Response);
+      await callReviewAddition(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
@@ -132,7 +131,7 @@ describe("Review addition integration tests", () => {
     it("response code 400", async () => {
       functionStub.rejects(new Error.ValidationError());
 
-      await callReviewAddition(req as IRequest, res as Response);
+      await callReviewAddition(req as Request, res as Response);
 
       statusStub = res.status as SinonStub;
       jsonSpy = res.json as SinonSpy;
