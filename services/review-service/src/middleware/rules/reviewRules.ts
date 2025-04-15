@@ -48,6 +48,9 @@ export const reviewAdditionRules = (): ValidationChain[] => {
           throw new Error(reviewFailedValidation.BOOK_ID_NEGATIVE_MESSAGE);
         }
       }),
+    check("username")
+      .notEmpty()
+      .withMessage(reviewFailedValidation.USERNAME_REQUIRED_MESSAGE),
   ];
 };
 
@@ -155,6 +158,18 @@ export const reviewRetrievalByCompositeIndexRules = (): ValidationChain[] => {
       .withMessage(reviewFailedValidation.SUBJECT_BELOW_MIN_LENGTH_MESSAGE)
       .isLength({ max: reviewConstants.SUBJECT_MAX_LENGTH })
       .withMessage(reviewFailedValidation.SUBJECT_ABOVE_MAX_LENGTH_MESSAGE),
+    check("username")
+      .notEmpty()
+      .withMessage(reviewFailedValidation.USERNAME_REQUIRED_MESSAGE),
+  ];
+};
+
+/**
+ * Returns a validation chain for review retrieval by username.
+ * @returns {ValidationChain[]} Validation chain.
+ */
+export const reviewRetrievalByUsernameRules = (): ValidationChain[] => {
+  return [
     check("username")
       .notEmpty()
       .withMessage(reviewFailedValidation.USERNAME_REQUIRED_MESSAGE),

@@ -30,7 +30,7 @@ function isString(value: unknown): boolean {
  * @returns {IReview} An {@link IReview} object.
  */
 export const reqBodyToReview = (req: Request): IReview => {
-  const username = req.get("x-user-name");
+  const username = req.body.username;
   const { subject, description, book } = req.body;
   const bookToReview: IBook = {
     id: book.id,

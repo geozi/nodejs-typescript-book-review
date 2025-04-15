@@ -19,6 +19,7 @@ import {
   reviewRetrievalByBookRules,
   reviewRetrievalByCompositeIndexRules,
   reviewRetrievalByIdRules,
+  reviewRetrievalByUsernameRules,
   reviewUpdateRules,
 } from "middleware/rules/reviewRules";
 import { RoleType } from "resources/enum/RoleType";
@@ -60,6 +61,8 @@ reviewRouter.get(
   "/username",
   assignRoleType(RoleType.User),
   forwardToAccountService,
+  ...reviewRetrievalByUsernameRules(),
+  catchExpressValidationErrors,
   callReviewRetrievalByUsername
 );
 reviewRouter.get(
