@@ -1,7 +1,6 @@
 import assert from "assert";
 import { BSONError } from "bson";
 import { Request } from "express";
-import { IRequest } from "interfaces/secondary/IRequest";
 import { IUser } from "interfaces/secondary/IUser";
 import {
   reqBodyToId,
@@ -19,8 +18,7 @@ import {
 } from "tests/testInputs";
 
 describe("Review mapper unit tests", () => {
-  let iReq: Partial<IRequest>;
-  let nReq: Partial<Request>; //  normal, non-extended Request
+  let req: Partial<Request>;
   let validateSyncStub: SinonStub;
   let mockId: string;
   let mockUser: IUser;
@@ -39,22 +37,22 @@ describe("Review mapper unit tests", () => {
         mockUser = JSON.parse(JSON.stringify(validUserInput));
 
         // HTTP request
-        iReq = {
+        req = {
           body: JSON.parse(
             JSON.stringify({
               subject: validReviewInputs.subject,
               description: validReviewInputs.description,
               book: validReviewInputs.book,
+              username: mockUser.username,
             })
           ),
-          user: mockUser,
         };
       });
 
       it("request has valid inputs", () => {
         validateSyncStub.returns(undefined);
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(mongooseErrors, undefined);
@@ -73,15 +71,15 @@ describe("Review mapper unit tests", () => {
         mockUser = JSON.parse(JSON.stringify(validUserInput));
 
         // HTTP request
-        iReq = {
+        req = {
           body: JSON.parse(
             JSON.stringify({
               subject: validReviewInputs.subject,
               description: validReviewInputs.description,
               book: validReviewInputs.book,
+              username: mockUser.username,
             })
           ),
-          user: mockUser,
         };
 
         validationError = new Error.ValidationError();
@@ -97,9 +95,9 @@ describe("Review mapper unit tests", () => {
         };
 
         validateSyncStub.returns(validationError);
-        iReq.body.subject = undefined;
+        req.body.subject = undefined;
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -118,9 +116,9 @@ describe("Review mapper unit tests", () => {
         };
 
         validateSyncStub.returns(validationError);
-        iReq.body.subject = invalidReviewInputs.SUBJECT_TOO_SHORT;
+        req.body.subject = invalidReviewInputs.SUBJECT_TOO_SHORT;
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -139,9 +137,9 @@ describe("Review mapper unit tests", () => {
         };
 
         validateSyncStub.returns(validationError);
-        iReq.body.subject = invalidReviewInputs.SUBJECT_TOO_LONG;
+        req.body.subject = invalidReviewInputs.SUBJECT_TOO_LONG;
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -160,9 +158,9 @@ describe("Review mapper unit tests", () => {
         };
 
         validateSyncStub.returns(validationError);
-        iReq.body.description = undefined;
+        req.body.description = undefined;
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -182,9 +180,9 @@ describe("Review mapper unit tests", () => {
         };
 
         validateSyncStub.returns(validationError);
-        iReq.body.description = invalidReviewInputs.DESCRIPTION_TOO_SHORT;
+        req.body.description = invalidReviewInputs.DESCRIPTION_TOO_SHORT;
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -204,9 +202,9 @@ describe("Review mapper unit tests", () => {
         };
 
         validateSyncStub.returns(validationError);
-        iReq.body.description = invalidReviewInputs.DESCRIPTION_TOO_LONG;
+        req.body.description = invalidReviewInputs.DESCRIPTION_TOO_LONG;
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -225,9 +223,9 @@ describe("Review mapper unit tests", () => {
         };
 
         validateSyncStub.returns(validationError);
-        iReq.body.book.id = undefined;
+        req.body.book.id = undefined;
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -246,9 +244,9 @@ describe("Review mapper unit tests", () => {
         };
 
         validateSyncStub.returns(validationError);
-        iReq.body.book.id = invalidReviewInputs.NEGATIVE_BOOK_ID;
+        req.body.book.id = invalidReviewInputs.NEGATIVE_BOOK_ID;
 
-        const newReview = reqBodyToReview(iReq as IRequest);
+        const newReview = reqBodyToReview(req as Request);
         const mongooseErrors = newReview.validateSync();
 
         assert.strictEqual(
@@ -266,7 +264,7 @@ describe("Review mapper unit tests", () => {
         mockId = "67f6813b01931bccda945c30";
 
         // HTTP request
-        nReq = {
+        req = {
           body: JSON.parse(
             JSON.stringify({
               id: mockId,
@@ -279,7 +277,7 @@ describe("Review mapper unit tests", () => {
       });
 
       it("request has valid inputs", () => {
-        const reviewToUpdate = reqBodyToReviewUpdate(nReq as Request);
+        const reviewToUpdate = reqBodyToReviewUpdate(req as Request);
 
         assert.strictEqual(reviewToUpdate.id.toString(), mockId);
       });
@@ -291,7 +289,7 @@ describe("Review mapper unit tests", () => {
         mockId = "67f6813b01931bccda945c30";
 
         // HTTP request
-        nReq = {
+        req = {
           body: JSON.parse(
             JSON.stringify({
               id: mockId,
@@ -304,30 +302,30 @@ describe("Review mapper unit tests", () => {
       });
 
       it("review ID is undefined -> TypeError", () => {
-        nReq.body.id = undefined;
+        req.body.id = undefined;
 
         try {
-          reqBodyToReviewUpdate(nReq as Request);
+          reqBodyToReviewUpdate(req as Request);
         } catch (error) {
           assert(error instanceof TypeError);
         }
       });
 
       it("review ID is an integer -> TypeError", () => {
-        nReq.body.id = invalidReviewInputs.INVALID_REVIEW_ID_INTEGER;
+        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID_INTEGER;
 
         try {
-          reqBodyToReviewUpdate(nReq as Request);
+          reqBodyToReviewUpdate(req as Request);
         } catch (error) {
           assert(error instanceof TypeError);
         }
       });
 
       it("review ID is an invalid string -> BSONError", () => {
-        nReq.body.id = invalidReviewInputs.INVALID_REVIEW_ID_STRING;
+        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID_STRING;
 
         try {
-          reqBodyToReviewUpdate(nReq as Request);
+          reqBodyToReviewUpdate(req as Request);
         } catch (error) {
           assert.strictEqual(BSONError.isBSONError(error), true);
         }
@@ -342,13 +340,13 @@ describe("Review mapper unit tests", () => {
         mockId = "67f6813b01931bccda945c30";
 
         // HTTP request
-        nReq = {
+        req = {
           body: JSON.parse(JSON.stringify({ id: mockId })),
         };
       });
 
       it("request has a valid review ID", () => {
-        const id = reqBodyToId(nReq as Request);
+        const id = reqBodyToId(req as Request);
 
         assert(id instanceof Types.ObjectId);
         assert.strictEqual(id.toString(), mockId);
@@ -361,36 +359,36 @@ describe("Review mapper unit tests", () => {
         mockId = "67f6813b01931bccda945c30";
 
         // HTTP request
-        nReq = {
+        req = {
           body: JSON.parse(JSON.stringify({ id: mockId })),
         };
       });
 
       it("review ID is undefined -> TypeError", () => {
-        nReq.body.id = undefined;
+        req.body.id = undefined;
 
         try {
-          reqBodyToId(nReq as Request);
+          reqBodyToId(req as Request);
         } catch (error) {
           assert(error instanceof TypeError);
         }
       });
 
       it("review ID is an integer -> TypeError", () => {
-        nReq.body.id = invalidReviewInputs.INVALID_REVIEW_ID_INTEGER;
+        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID_INTEGER;
 
         try {
-          reqBodyToId(nReq as Request);
+          reqBodyToId(req as Request);
         } catch (error) {
           assert(error instanceof TypeError);
         }
       });
 
       it("review ID is an invalid string -> BSONError", () => {
-        nReq.body.id = invalidReviewInputs.INVALID_REVIEW_ID_STRING;
+        req.body.id = invalidReviewInputs.INVALID_REVIEW_ID_STRING;
 
         try {
-          reqBodyToId(nReq as Request);
+          reqBodyToId(req as Request);
         } catch (error) {
           assert.strictEqual(BSONError.isBSONError(error), true);
         }
